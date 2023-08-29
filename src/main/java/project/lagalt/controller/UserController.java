@@ -2,10 +2,12 @@ package project.lagalt.controller;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import project.lagalt.model.User;
 import project.lagalt.service.UserService;
+import project.lagalt.utilites.exceptions.UserNotFoundException;
 
 import java.util.Collection;
 
@@ -28,7 +30,12 @@ public class UserController {
 
     @GetMapping("/{id}")
     public ResponseEntity<User> getUserById(@PathVariable int id){
-        return ResponseEntity.ok(userService.findById(id));
+        User user = userService.findById(id);
+        if (user == null) {
+            throw new UserNotFoundException(id);
+        }
+
+        return ResponseEntity.ok(user);
     }
 
     @PostMapping
@@ -39,6 +46,17 @@ public class UserController {
     @PutMapping
     public ResponseEntity<User> updateUser(@PathVariable int id, @RequestBody User user){
         user.setId(id);
+
+        if (userService.findById(id) == null) {
+            throw new UserNotFoundException(id);
+        }
+
         return ResponseEntity.ok(user);
     }
+
+    @ExceptionHandler(UserNotFoundException.class)
+    public ResponseEntity<String> handleUserNotFoundException(UserNotFoundException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+    }
+
 }
