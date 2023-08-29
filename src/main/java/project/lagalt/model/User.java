@@ -2,17 +2,12 @@ package project.lagalt.model;
 
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-import org.antlr.v4.runtime.misc.NotNull;
 import project.lagalt.utilites.enums.Skills;
 
 import java.util.Set;
 
 @Entity
-@Getter
-@Setter
-@Table(name = "user")
+@Table(name = "\"user\"")
 public class User {
 
     @Id
@@ -26,11 +21,43 @@ public class User {
     @Column(name = "password", length = 50, nullable = false)
     private String password;
 
-    @ElementCollection(targetClass = Skills.class)
-    @Enumerated(EnumType.STRING)
-    @CollectionTable(name = "user_skills")
     @Column(name = "skills")
+    @Enumerated(EnumType.STRING)
+    @ElementCollection
+    @CollectionTable(name = "user_skills", joinColumns = @JoinColumn(name = "user_id"))
     private Set<Skills> skills;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Set<Skills> getSkills() {
+        return skills;
+    }
+
+    public void setSkills(Set<Skills> skills) {
+        this.skills = skills;
+    }
 
     @Override
     public String toString() {
