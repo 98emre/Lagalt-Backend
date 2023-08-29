@@ -20,26 +20,26 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Collection<User> findAll() {
-        return null;
+        return userRepository.findAll();
     }
 
     @Override
     public User findById(Integer integer) {
-        return null;
+        return userRepository.findById(integer).orElse(null);
     }
 
     @Override
     public User add(User entity) {
-        return null;
+        return userRepository.save(entity);
     }
 
     @Override
     public User update(User entity) {
-        return null;
+        return userRepository.save(entity);
     }
 
     @Override
-    public User deleteById(Integer integer) {
-        return null;
+    public void deleteById(Integer integer) {
+        userRepository.deleteById(integer);
     }
 }
