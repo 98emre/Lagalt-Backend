@@ -2,7 +2,6 @@ package project.lagalt.mapper;
 
 
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import project.lagalt.model.dtos.user.UserDTO;
 import project.lagalt.model.dtos.user.UserPostDTO;
 import project.lagalt.model.dtos.user.UserUpdateDTO;

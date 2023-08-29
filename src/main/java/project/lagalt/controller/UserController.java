@@ -5,6 +5,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import project.lagalt.mapper.UserMapper;
+import project.lagalt.model.dtos.user.UserDTO;
+import project.lagalt.model.dtos.user.UserPostDTO;
+import project.lagalt.model.dtos.user.UserUpdateDTO;
 import project.lagalt.model.entities.User;
 import project.lagalt.service.UserService;
 import project.lagalt.utilites.exceptions.UserNotFoundException;
@@ -16,42 +20,43 @@ import java.util.Collection;
 public class UserController {
 
     private final UserService userService;
+    private final UserMapper userMapper;
 
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserService userService, UserMapper userMapper) {
         this.userService = userService;
+        this.userMapper = userMapper;
     }
 
 
     @GetMapping
-    public ResponseEntity<Collection<User>> getAllUser(){
-        return ResponseEntity.ok(userService.findAll());
+    public ResponseEntity<Collection<UserDTO>> getAllUser(){
+        return ResponseEntity.ok(userMapper.usersToUsersDTO(userService.findAll()));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<User> getUserById(@PathVariable int id){
+    public ResponseEntity<UserDTO> getUserById(@PathVariable int id){
         User user = userService.findById(id);
         if (user == null) {
             throw new UserNotFoundException(id);
         }
 
-        return ResponseEntity.ok(user);
+        return ResponseEntity.ok(userMapper.userToUserDTO(user));
     }
 
     @PostMapping
-    public ResponseEntity<User> addUser(@RequestBody User user){
-        return ResponseEntity.ok(userService.add(user));
+    public ResponseEntity<User> addUser(@RequestBody UserPostDTO userPostDTO){
+        return ResponseEntity.ok(userService.add(userMapper.userPostToUser(userPostDTO)));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<User> updateUser(@RequestBody User user, @PathVariable int id){
-        user.setId(id);
+    public ResponseEntity<User> updateUser(@RequestBody UserUpdateDTO userUpdateDTO, @PathVariable int id){
 
         if (userService.findById(id) == null) {
             throw new UserNotFoundException(id);
         }
-
-        return ResponseEntity.ok(userService.update(user));
+        userUpdateDTO.setId(id);
+        return ResponseEntity.ok(userService.update(userMapper.userUpdateToUser(userUpdateDTO)));
     }
 
     @DeleteMapping("/{id}")

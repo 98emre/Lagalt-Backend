@@ -82,13 +82,15 @@
 						<path>
 							<groupId>org.mapstruct</groupId>
 							<artifactId>mapstruct-processor</artifactId>
-							<version>1.4.2</version>
+							<version>1.4.2.Final</version>
 						</path>
 					</annotationProcessorPaths>
 				</configuration>
 			</plugin>
+
 		</plugins>
 	</build>
+
 	<repositories>
 		<repository>
 			<id>spring-milestones</id>
