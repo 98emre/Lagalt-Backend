@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import project.lagalt.model.User;
 import project.lagalt.repository.UserRepository;
 import project.lagalt.service.UserService;
+import project.lagalt.utilites.exceptions.UserNotFoundExceptions;
 
 import java.util.Collection;
 
@@ -24,8 +25,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findById(Integer integer) {
-        return userRepository.findById(integer).orElse(null);
+    public User findById(Integer id) {
+        return userRepository.findById(id).orElseThrow(() -> new UserNotFoundExceptions(id));
     }
 
     @Override
@@ -35,7 +36,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User update(User user) {
-        User updateUser = userRepository.findById(user.getId()).orElse(null);
+        User updateUser = userRepository.findById(user.getId()).orElseThrow(() -> new UserNotFoundExceptions(user.getId()));
 
         if(user.getUsername() != null){
             updateUser.setUsername(user.getUsername());
@@ -53,9 +54,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void deleteById(Integer integer) {
-        userRepository.findById(integer).orElse(null);
+    public void deleteById(Integer id) {
+        userRepository.findById(id).orElseThrow(() -> new UserNotFoundExceptions(id));
 
-        userRepository.deleteById(integer);
+        userRepository.deleteById(id);
     }
 }
