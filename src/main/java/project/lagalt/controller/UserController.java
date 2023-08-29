@@ -43,15 +43,28 @@ public class UserController {
         return ResponseEntity.ok(userService.add(user));
     }
 
-    @PutMapping
-    public ResponseEntity<User> updateUser(@PathVariable int id, @RequestBody User user){
+    @PutMapping("/{id}")
+    public ResponseEntity<User> updateUser(@RequestBody User user, @PathVariable int id){
         user.setId(id);
 
         if (userService.findById(id) == null) {
             throw new UserNotFoundException(id);
         }
 
-        return ResponseEntity.ok(user);
+        return ResponseEntity.ok(userService.update(user));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<User> deleteUser(@PathVariable int id){
+        User deletedUser = userService.findById(id);
+
+        if (deletedUser == null) {
+            throw new UserNotFoundException(id);
+        }
+
+        userService.deleteById(id);
+
+        return ResponseEntity.status(200).build();
     }
 
     @ExceptionHandler(UserNotFoundException.class)

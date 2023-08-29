@@ -27,6 +27,17 @@ public class User {
     @CollectionTable(name = "user_skills", joinColumns = @JoinColumn(name = "user_id"))
     private Set<Skills> skills;
 
+    public User(){
+
+    }
+
+    public User(int id, String username, String password, Set<Skills> skills) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.skills = skills;
+    }
+
     public int getId() {
         return id;
     }

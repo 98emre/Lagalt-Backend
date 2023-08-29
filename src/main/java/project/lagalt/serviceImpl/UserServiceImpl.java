@@ -5,9 +5,12 @@ import org.springframework.stereotype.Service;
 import project.lagalt.model.User;
 import project.lagalt.repository.UserRepository;
 import project.lagalt.service.UserService;
-import project.lagalt.utilites.exceptions.UserNotFoundExceptions;
+import project.lagalt.utilites.enums.Skills;
+import project.lagalt.utilites.exceptions.UserNotFoundException;
 
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -26,7 +29,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findById(Integer id) {
-        return userRepository.findById(id).orElseThrow(() -> new UserNotFoundExceptions(id));
+        return userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
     }
 
     @Override
@@ -36,26 +39,31 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User update(User user) {
-        User updateUser = userRepository.findById(user.getId()).orElseThrow(() -> new UserNotFoundExceptions(user.getId()));
+        User updatedUser = userRepository.findById(user.getId()).orElseThrow(() -> new UserNotFoundException(user.getId()));
 
         if(user.getUsername() != null){
-            updateUser.setUsername(user.getUsername());
+            updatedUser.setUsername(user.getUsername());
         }
 
         if(user.getPassword() != null){
-            updateUser.setPassword(user.getPassword());
+            updatedUser.setPassword(user.getPassword());
         }
 
         if(user.getSkills() != null){
-            updateUser.setSkills(user.getSkills());
+            Set<Skills> updatedSkills = new HashSet<>();
+
+            for(Skills s: user.getSkills()){
+                updatedSkills.add(Skills.valueOf(s.name().toUpperCase()));
+            }
+            updatedUser.setSkills(updatedSkills);
         }
 
-        return userRepository.save(updateUser);
+        return userRepository.save(updatedUser);
     }
 
     @Override
     public void deleteById(Integer id) {
-        userRepository.findById(id).orElseThrow(() -> new UserNotFoundExceptions(id));
+        userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
 
         userRepository.deleteById(id);
     }
