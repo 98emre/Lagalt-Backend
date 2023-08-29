@@ -2,7 +2,7 @@ package project.lagalt.serviceImpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import project.lagalt.model.User;
+import project.lagalt.model.entities.User;
 import project.lagalt.repository.UserRepository;
 import project.lagalt.service.UserService;
 import project.lagalt.utilites.enums.Skills;

@@ -1,6 +1,6 @@
 package project.lagalt.service;
 
-import project.lagalt.model.User;
+import project.lagalt.model.entities.User;
 
 public interface UserService extends CrudService<User, Integer> {
 }

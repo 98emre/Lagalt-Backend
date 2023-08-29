@@ -1,4 +1,4 @@
-package project.lagalt.model;
+package project.lagalt.model.entities;
 
 
 import jakarta.persistence.*;
