@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import project.lagalt.utilites.enums.Category;
 import project.lagalt.utilites.enums.Status;
 
+import java.util.Set;
+
 @Entity
 @Table(name = "project")
 public class Project {
@@ -28,6 +30,13 @@ public class Project {
 
     @Enumerated(EnumType.STRING)
     private Status status;
+
+    @ManyToMany
+    @JoinTable(name = "project_user", joinColumns = {
+            @JoinColumn(name = "project_id")}, inverseJoinColumns = {
+            @JoinColumn(name = "user_id")
+    })
+    private Set<User> users;
 
     public Project() {
 
@@ -88,6 +97,14 @@ public class Project {
 
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    public Set<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(Set<User> users) {
+        this.users = users;
     }
 
     @Override

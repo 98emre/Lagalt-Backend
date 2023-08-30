@@ -11,7 +11,7 @@ import project.lagalt.model.entities.Comment;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-08-30T13:30:19+0200",
+    date = "2023-08-30T13:35:32+0200",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 17.0.8 (Microsoft)"
 )
 @Component
