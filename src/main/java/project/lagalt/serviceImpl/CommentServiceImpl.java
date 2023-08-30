@@ -1,12 +1,15 @@
 package project.lagalt.serviceImpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import project.lagalt.model.entities.Comment;
 import project.lagalt.repository.CommentRepository;
 import project.lagalt.service.CommentService;
 
 import java.util.Collection;
 
+
+@Service
 public class CommentServiceImpl implements CommentService {
 
     private final CommentRepository commentRepository;
