@@ -15,16 +15,11 @@ public class User {
     @Column(name = "user_id")
     private int id;
 
-    @Column(name = "username", length = 50, nullable = false)
+    @Column(name = "username", length = 50, nullable = false,unique = true)
     private String username;
 
-    @Column(name = "password", length = 50, nullable = false)
-    private String password;
-
-
-    @Column(name = "email", length = 50)
+    @Column(name = "email", length = 50,unique = true)
     private String email;
-
 
     @Column(name = "fullname", length = 50)
     private String fullname;
@@ -45,10 +40,9 @@ public class User {
 
     }
 
-    public User(int id, String username, String password, String email, String fullname, Set<Skills> skills) {
+    public User(int id, String username,String email, String fullname, Set<Skills> skills) {
         this.id = id;
         this.username = username;
-        this.password = password;
         this.email = email;
         this.fullname = fullname;
         this.skills = skills;
@@ -70,13 +64,6 @@ public class User {
         this.username = username;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
 
     public String getEmail() {
         return email;
@@ -123,7 +110,6 @@ public class User {
         return "User{" +
                 "id=" + id +
                 ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
                 ", skills=" + skills +
                 '}';
     }

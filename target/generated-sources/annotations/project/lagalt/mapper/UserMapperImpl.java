@@ -14,7 +14,7 @@ import project.lagalt.utilites.enums.Skills;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-08-30T15:46:39+0200",
+    date = "2023-08-30T16:45:33+0200",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 17.0.8 (Microsoft)"
 )
 @Component
@@ -30,7 +30,6 @@ public class UserMapperImpl extends UserMapper {
 
         user.setId( userPostDTO.getId() );
         user.setUsername( userPostDTO.getUsername() );
-        user.setPassword( userPostDTO.getPassword() );
         user.setEmail( userPostDTO.getEmail() );
         user.setFullname( userPostDTO.getFullname() );
         Set<Skills> set = userPostDTO.getSkills();
@@ -51,7 +50,6 @@ public class UserMapperImpl extends UserMapper {
 
         user.setId( userUpdateDTO.getId() );
         user.setUsername( userUpdateDTO.getUsername() );
-        user.setPassword( userUpdateDTO.getPassword() );
         user.setEmail( userUpdateDTO.getEmail() );
         user.setFullname( userUpdateDTO.getFullname() );
         Set<Skills> set = userUpdateDTO.getSkills();
@@ -74,7 +72,6 @@ public class UserMapperImpl extends UserMapper {
         userDTO.setCollaboratorIds( collaboratorsToIds( user.getCollaborators() ) );
         userDTO.setId( user.getId() );
         userDTO.setUsername( user.getUsername() );
-        userDTO.setPassword( user.getPassword() );
         userDTO.setEmail( user.getEmail() );
         userDTO.setFullname( user.getFullname() );
         Set<Skills> set2 = user.getSkills();
