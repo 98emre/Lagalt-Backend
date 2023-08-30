@@ -8,10 +8,12 @@ import project.lagalt.model.dtos.collaborator.CollaboratorDTO;
 import project.lagalt.model.dtos.collaborator.CollaboratorPostDTO;
 import project.lagalt.model.dtos.collaborator.CollaboratorUpdateDTO;
 import project.lagalt.model.entities.Collaborator;
+import project.lagalt.model.entities.Project;
+import project.lagalt.model.entities.User;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-08-30T15:46:05+0200",
+    date = "2023-08-30T16:02:31+0200",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 17.0.8 (Microsoft)"
 )
 @Component
@@ -57,6 +59,8 @@ public class CollaboratorMapperImpl extends CollaboratorMapper {
 
         CollaboratorDTO collaboratorDTO = new CollaboratorDTO();
 
+        collaboratorDTO.setUserId( collaboratorUserId( collaborator ) );
+        collaboratorDTO.setProjectId( collaboratorProjectId( collaborator ) );
         collaboratorDTO.setId( collaborator.getId() );
         collaboratorDTO.setStatus( collaborator.isStatus() );
         collaboratorDTO.setRequestDate( collaborator.getRequestDate() );
@@ -77,5 +81,29 @@ public class CollaboratorMapperImpl extends CollaboratorMapper {
         }
 
         return collection;
+    }
+
+    private Integer collaboratorUserId(Collaborator collaborator) {
+        if ( collaborator == null ) {
+            return null;
+        }
+        User user = collaborator.getUser();
+        if ( user == null ) {
+            return null;
+        }
+        int id = user.getId();
+        return id;
+    }
+
+    private Integer collaboratorProjectId(Collaborator collaborator) {
+        if ( collaborator == null ) {
+            return null;
+        }
+        Project project = collaborator.getProject();
+        if ( project == null ) {
+            return null;
+        }
+        int id = project.getId();
+        return id;
     }
 }

@@ -11,6 +11,8 @@ public class CollaboratorDTO {
     private  boolean status;
     private LocalDateTime requestDate;
     private LocalDateTime approvalDate;
+    private Integer userId;
+    private Integer projectId;
 
     public int getId() {
         return id;
@@ -42,5 +44,21 @@ public class CollaboratorDTO {
 
     public void setApprovalDate(LocalDateTime approvalDate) {
         this.approvalDate = approvalDate;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    public Integer getProjectId() {
+        return projectId;
+    }
+
+    public void setProjectId(Integer projectId) {
+        this.projectId = projectId;
     }
 }
