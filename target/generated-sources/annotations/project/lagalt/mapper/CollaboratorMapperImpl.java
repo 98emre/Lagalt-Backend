@@ -11,7 +11,7 @@ import project.lagalt.model.entities.Collaborator;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-08-30T14:57:59+0200",
+    date = "2023-08-30T15:05:56+0200",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 17.0.8 (Microsoft)"
 )
 @Component
@@ -50,7 +50,7 @@ public class CollaboratorMapperImpl extends CollaboratorMapper {
     }
 
     @Override
-    public CollaboratorDTO collaboratorDTOtoCollabor(Collaborator collaborator) {
+    public CollaboratorDTO collaboratorToCollaboratorDto(Collaborator collaborator) {
         if ( collaborator == null ) {
             return null;
         }
@@ -73,7 +73,7 @@ public class CollaboratorMapperImpl extends CollaboratorMapper {
 
         Collection<CollaboratorDTO> collection = new ArrayList<CollaboratorDTO>( collaborators.size() );
         for ( Collaborator collaborator : collaborators ) {
-            collection.add( collaboratorDTOtoCollabor( collaborator ) );
+            collection.add( collaboratorToCollaboratorDto( collaborator ) );
         }
 
         return collection;

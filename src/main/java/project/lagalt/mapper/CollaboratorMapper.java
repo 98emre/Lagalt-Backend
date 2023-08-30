@@ -15,7 +15,7 @@ public abstract class CollaboratorMapper {
 
     public abstract Collaborator collaboratorUpdateDtoToCollaborator(CollaboratorUpdateDTO collaboratorUpdateDTO);
 
-    public abstract CollaboratorDTO collaboratorDTOtoCollabor(Collaborator collaborator);
+    public abstract CollaboratorDTO collaboratorToCollaboratorDto(Collaborator collaborator);
 
     public abstract Collection<CollaboratorDTO> collaboratorToCollaboratorDtos(Collection<Collaborator> collaborators);
 
