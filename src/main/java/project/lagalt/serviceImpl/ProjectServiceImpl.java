@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import project.lagalt.model.entities.Project;
 import project.lagalt.repository.ProjectRepository;
 import project.lagalt.service.ProjectService;
+import project.lagalt.utilites.exceptions.ProjectNotFoundException;
 
 import java.util.Collection;
 
@@ -25,7 +26,7 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public Project findById(Integer id) {
-        return projectRepository.findById(id).orElse(null);
+        return projectRepository.findById(id).orElseThrow(() -> new ProjectNotFoundException(id));
     }
 
     @Override
@@ -35,11 +36,35 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public Project update(Project project) {
-        return projectRepository.save(project);
+        Project updatedProject = projectRepository.findById(project.getId()).orElseThrow(() -> new ProjectNotFoundException(project.getId()));
+
+        if(project.getTitle() != null){
+            project.setTitle(project.getTitle());
+        }
+
+        if(project.getDescriptions() != null){
+            updatedProject.setDescriptions(project.getDescriptions());
+        }
+
+        if(project.getGitlink() != null){
+            updatedProject.setGitlink(project.getGitlink());
+        }
+
+        if(project.getCategory() != null){
+            updatedProject.setCategory(project.getCategory());
+        }
+
+        if(project.getStatus() != null){
+            updatedProject.setStatus(project.getStatus());
+        }
+        
+        return projectRepository.save(updatedProject);
     }
 
     @Override
     public void deleteById(Integer id) {
+        projectRepository.findById(id).orElseThrow(() -> new ProjectNotFoundException(id));
+
         projectRepository.deleteById(id);
     }
 }
