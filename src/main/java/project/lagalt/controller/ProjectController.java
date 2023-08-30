@@ -5,6 +5,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import project.lagalt.mapper.ProjectMapper;
+import project.lagalt.model.dtos.project.ProjectDTO;
+import project.lagalt.model.dtos.project.ProjectPostDTO;
+import project.lagalt.model.dtos.project.ProjectUpdateDTO;
 import project.lagalt.model.entities.Project;
 import project.lagalt.model.entities.User;
 import project.lagalt.service.ProjectService;
@@ -17,41 +21,43 @@ import java.util.Collection;
 public class ProjectController {
 
     private final ProjectService projectService;
+    private final ProjectMapper projectMapper;
 
     @Autowired
-    public ProjectController(ProjectService projectService){
+    public ProjectController(ProjectService projectService, ProjectMapper projectMapper){
         this.projectService = projectService;
+        this.projectMapper = projectMapper;
     }
 
     @GetMapping
-    public ResponseEntity<Collection<Project>> getAllProject(){
-        return ResponseEntity.ok(projectService.findAll());
+    public ResponseEntity<Collection<ProjectDTO>> getAllProject(){
+        return ResponseEntity.ok(projectMapper.ProjectsToProjectDTO(projectService.findAll()));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Project> getUserById(@PathVariable int id){
+    public ResponseEntity<ProjectDTO> getUserById(@PathVariable int id){
         Project project = projectService.findById(id);
         if (project == null) {
             throw new ProjectNotFoundException(id);
         }
 
-        return ResponseEntity.ok(project);
+        return ResponseEntity.ok(projectMapper.ProjectToProjectDTO(project));
     }
 
     @PostMapping
-    public ResponseEntity<Project> addUser(@RequestBody Project project){
-        return ResponseEntity.ok(projectService.add(project));
+    public ResponseEntity<Project> addUser(@RequestBody ProjectPostDTO projectPostDTO ){
+        return ResponseEntity.ok(projectService.add(projectMapper.ProjectPostDtoToProject(projectPostDTO)));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Project> updateUser(@RequestBody Project project, @PathVariable int id){
+    public ResponseEntity<Project> updateUser(@RequestBody ProjectUpdateDTO projectUpdateDTO, @PathVariable int id){
 
         if (projectService.findById(id) == null) {
             throw new ProjectNotFoundException(id);
         }
 
-        project.setId(id);
-        return ResponseEntity.ok(projectService.update(project));
+        projectUpdateDTO.setId(id);
+        return ResponseEntity.ok(projectService.update(projectMapper.ProjectUpdateDtoToProject(projectUpdateDTO)));
     }
 
     @DeleteMapping("/{id}")
