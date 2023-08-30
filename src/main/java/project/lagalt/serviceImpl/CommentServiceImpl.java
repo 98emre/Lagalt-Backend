@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import project.lagalt.model.entities.Comment;
 import project.lagalt.repository.CommentRepository;
 import project.lagalt.service.CommentService;
+import project.lagalt.utilites.exceptions.CommentNotFoundException;
 
 import java.util.Collection;
 
@@ -27,7 +28,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public Comment findById(Integer id) {
-        return commentRepository.findById(id).orElse(null);
+        return commentRepository.findById(id).orElseThrow(() -> new CommentNotFoundException(id));
     }
 
     @Override
@@ -37,7 +38,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public Comment update(Comment comment) {
-        Comment updateComment = commentRepository.findById(comment.getId()).orElse(null);
+        Comment updateComment = commentRepository.findById(comment.getId()).orElseThrow(() -> new CommentNotFoundException(comment.getId()));
 
         if(comment.getText() != null){
             updateComment.setText(comment.getText());
@@ -52,6 +53,8 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public void deleteById(Integer id) {
+        commentRepository.findById(id).orElseThrow(() -> new CommentNotFoundException(id));
+
         commentRepository.deleteById(id);
     }
 }
