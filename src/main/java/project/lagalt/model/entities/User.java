@@ -99,6 +99,14 @@ public class User {
         this.skills = skills;
     }
 
+    public Set<Project> getProjects() {
+        return projects;
+    }
+
+    public void setProjects(Set<Project> projects) {
+        this.projects = projects;
+    }
+
     @Override
     public String toString() {
         return "User{" +

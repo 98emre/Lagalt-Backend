@@ -38,6 +38,9 @@ public class Project {
     })
     private Set<User> users;
 
+    @OneToMany(mappedBy = "project")
+    private Set<Comment> comments;
+
     public Project() {
 
     }
@@ -105,6 +108,14 @@ public class Project {
 
     public void setUsers(Set<User> users) {
         this.users = users;
+    }
+
+    public Set<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(Set<Comment> comments) {
+        this.comments = comments;
     }
 
     @Override

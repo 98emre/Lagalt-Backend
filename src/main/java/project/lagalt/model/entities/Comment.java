@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.Set;
 
 @Entity
 @Table(name = "comment")
@@ -21,6 +22,10 @@ public class Comment {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "time")
     private LocalDateTime date;
+
+    @ManyToOne
+    @JoinColumn(name = "project_id")
+    private Project project;
 
     public Comment() {
     }
@@ -53,6 +58,14 @@ public class Comment {
 
     public void setDate(LocalDateTime date) {
         this.date = date;
+    }
+
+    public Project getProject() {
+        return project;
+    }
+
+    public void setProjects(Project project) {
+        this.project = project;
     }
 
     @PrePersist
