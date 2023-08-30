@@ -30,12 +30,12 @@ public class UserController {
 
 
     @GetMapping
-    public ResponseEntity<Collection<UserDTO>> getAllUser(){
+    public ResponseEntity<Collection<UserDTO>> getAllProject(){
         return ResponseEntity.ok(userMapper.usersToUsersDTO(userService.findAll()));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserDTO> getUserById(@PathVariable int id){
+    public ResponseEntity<UserDTO> getProjectById(@PathVariable int id){
         User user = userService.findById(id);
         if (user == null) {
             throw new UserNotFoundException(id);
@@ -45,12 +45,12 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<User> addUser(@RequestBody UserPostDTO userPostDTO){
+    public ResponseEntity<User> addProject(@RequestBody UserPostDTO userPostDTO){
         return ResponseEntity.ok(userService.add(userMapper.userPostToUser(userPostDTO)));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<User> updateUser(@RequestBody UserUpdateDTO userUpdateDTO, @PathVariable int id){
+    public ResponseEntity<User> updateProject(@RequestBody UserUpdateDTO userUpdateDTO, @PathVariable int id){
 
         if (userService.findById(id) == null) {
             throw new UserNotFoundException(id);
@@ -60,7 +60,7 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<User> deleteUser(@PathVariable int id){
+    public ResponseEntity<User> deleteProject(@PathVariable int id){
         User deletedUser = userService.findById(id);
 
         if (deletedUser == null) {
