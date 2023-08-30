@@ -17,5 +17,5 @@ public abstract class CommentMapper {
 
     public abstract CommentDTO commentToCommentDto(Comment comment);
 
-    public abstract Collection<CommentDTO> commentDtosToComment(Collection<Comment> comments);
+    public abstract Collection<CommentDTO> commentToCommentDtos(Collection<Comment> comments);
 }

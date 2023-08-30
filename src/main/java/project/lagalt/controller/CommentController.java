@@ -13,7 +13,6 @@ import project.lagalt.model.entities.Comment;
 import project.lagalt.model.entities.User;
 import project.lagalt.service.CommentService;
 import project.lagalt.utilites.exceptions.CommentNotFoundException;
-import project.lagalt.utilites.exceptions.ProjectNotFoundException;
 
 import java.util.Collection;
 
@@ -32,7 +31,7 @@ public class CommentController {
 
     @GetMapping
     public ResponseEntity<Collection<CommentDTO>> getAllComment(){
-        return ResponseEntity.ok(commentMapper.commentDtosToComment(commentService.findAll()));
+        return ResponseEntity.ok(commentMapper.commentToCommentDtos(commentService.findAll()));
     }
 
     @GetMapping("/{id}")
