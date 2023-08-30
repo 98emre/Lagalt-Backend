@@ -39,7 +39,7 @@ public class ProjectServiceImpl implements ProjectService {
         Project updatedProject = projectRepository.findById(project.getId()).orElseThrow(() -> new ProjectNotFoundException(project.getId()));
 
         if(project.getTitle() != null){
-            project.setTitle(project.getTitle());
+            updatedProject.setTitle(project.getTitle());
         }
 
         if(project.getDescriptions() != null){
@@ -57,7 +57,7 @@ public class ProjectServiceImpl implements ProjectService {
         if(project.getStatus() != null){
             updatedProject.setStatus(project.getStatus());
         }
-        
+
         return projectRepository.save(updatedProject);
     }
 
