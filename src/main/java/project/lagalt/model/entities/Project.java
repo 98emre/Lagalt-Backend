@@ -6,7 +6,7 @@ import project.lagalt.utilites.enums.Category;
 import project.lagalt.utilites.enums.Status;
 
 @Entity
-@Table(name = "table")
+@Table(name = "project")
 public class Project {
 
     @Id
@@ -14,17 +14,15 @@ public class Project {
     @Column(name = "project_id")
     private int id;
 
-
     @Column(name = "title", length = 100, nullable = false)
     private String title;
 
     @Column(name = "description", length = 1000, nullable = false)
-    private String description;
+    private String descriptions;
 
 
     @Column(name = "gitlink", length = 1000, nullable = false)
-    private String gitLink;
-
+    private String gitlink;
 
     @Enumerated(EnumType.STRING)
     private Category category;
@@ -36,11 +34,11 @@ public class Project {
 
     }
 
-    public Project(int id, String title, String description, String gitLink, Category category, Status status) {
+    public Project(int id, String title, String descriptions, String gitlink, Category category, Status status) {
         this.id = id;
         this.title = title;
-        this.description = description;
-        this.gitLink = gitLink;
+        this.descriptions = descriptions;
+        this.gitlink = gitlink;
         this.category = category;
         this.status = status;
     }
@@ -61,20 +59,20 @@ public class Project {
         this.title = title;
     }
 
-    public String getDescription() {
-        return description;
+    public String getDescriptions() {
+        return descriptions;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setDescriptions(String descriptions) {
+        this.descriptions = descriptions;
     }
 
-    public String getGitLink() {
-        return gitLink;
+    public String getGitlink() {
+        return gitlink;
     }
 
-    public void setGitLink(String gitLink) {
-        this.gitLink = gitLink;
+    public void setGitlink(String gitlink) {
+        this.gitlink = gitlink;
     }
 
     public Category getCategory() {
@@ -98,8 +96,8 @@ public class Project {
         return "Project{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
-                ", description='" + description + '\'' +
-                ", gitLink='" + gitLink + '\'' +
+                ", description='" + descriptions + '\'' +
+                ", gitLink='" + gitlink + '\'' +
                 ", category=" + category +
                 ", status=" + status +
                 '}';
