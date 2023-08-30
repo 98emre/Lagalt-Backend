@@ -4,6 +4,7 @@ package project.lagalt.model.dtos.comment;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Data
 public class CommentDTO {
@@ -11,6 +12,7 @@ public class CommentDTO {
     private int id;
     private String text;
     private LocalDateTime date;
+    private Integer projectId;
 
     public int getId() {
         return id;
@@ -34,5 +36,13 @@ public class CommentDTO {
 
     public void setDate(LocalDateTime date) {
         this.date = date;
+    }
+
+    public Integer getProjectId() {
+        return projectId;
+    }
+
+    public void setProjectId(Integer projectId) {
+        this.projectId = projectId;
     }
 }

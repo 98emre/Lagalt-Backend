@@ -8,10 +8,11 @@ import project.lagalt.model.dtos.comment.CommentDTO;
 import project.lagalt.model.dtos.comment.CommentPostDTO;
 import project.lagalt.model.dtos.comment.CommentUpdateDTO;
 import project.lagalt.model.entities.Comment;
+import project.lagalt.model.entities.Project;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-08-30T15:46:05+0200",
+    date = "2023-08-30T15:59:03+0200",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 17.0.8 (Microsoft)"
 )
 @Component
@@ -55,6 +56,7 @@ public class CommentMapperImpl extends CommentMapper {
 
         CommentDTO commentDTO = new CommentDTO();
 
+        commentDTO.setProjectId( commentProjectId( comment ) );
         commentDTO.setId( comment.getId() );
         commentDTO.setText( comment.getText() );
         commentDTO.setDate( comment.getDate() );
@@ -74,5 +76,17 @@ public class CommentMapperImpl extends CommentMapper {
         }
 
         return collection;
+    }
+
+    private Integer commentProjectId(Comment comment) {
+        if ( comment == null ) {
+            return null;
+        }
+        Project project = comment.getProject();
+        if ( project == null ) {
+            return null;
+        }
+        int id = project.getId();
+        return id;
     }
 }
