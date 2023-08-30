@@ -69,8 +69,8 @@ public class CollaboratorController {
         return ResponseEntity.status(200).build();
     }
 
-    @ExceptionHandler(CommentNotFoundException.class)
-    public ResponseEntity<String> handleCommentNotFoundException(CommentNotFoundException ex) {
+    @ExceptionHandler(CollaboratorNotFoundException.class)
+    public ResponseEntity<String> handleCollaboratorNotFoundException(CollaboratorNotFoundException ex) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
     }
 }
