@@ -11,14 +11,14 @@ import project.lagalt.model.entities.Comment;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-08-30T13:25:48+0200",
+    date = "2023-08-30T13:30:19+0200",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 17.0.8 (Microsoft)"
 )
 @Component
 public class CommentMapperImpl extends CommentMapper {
 
     @Override
-    public Comment CommentPostDtoToComment(CommentPostDTO commentPostDTO) {
+    public Comment commentPostDtoToComment(CommentPostDTO commentPostDTO) {
         if ( commentPostDTO == null ) {
             return null;
         }
@@ -33,7 +33,7 @@ public class CommentMapperImpl extends CommentMapper {
     }
 
     @Override
-    public Comment CommentUpdateDtoToComment(CommentUpdateDTO commentUpdateDTO) {
+    public Comment commentUpdateDtoToComment(CommentUpdateDTO commentUpdateDTO) {
         if ( commentUpdateDTO == null ) {
             return null;
         }
@@ -48,7 +48,7 @@ public class CommentMapperImpl extends CommentMapper {
     }
 
     @Override
-    public CommentDTO CommentDtoToComment(Comment comment) {
+    public CommentDTO commentToCommentDto(Comment comment) {
         if ( comment == null ) {
             return null;
         }
@@ -63,14 +63,14 @@ public class CommentMapperImpl extends CommentMapper {
     }
 
     @Override
-    public Collection<CommentDTO> CommentDtosToComment(Collection<Comment> comments) {
+    public Collection<CommentDTO> commentDtosToComment(Collection<Comment> comments) {
         if ( comments == null ) {
             return null;
         }
 
         Collection<CommentDTO> collection = new ArrayList<CommentDTO>( comments.size() );
         for ( Comment comment : comments ) {
-            collection.add( CommentDtoToComment( comment ) );
+            collection.add( commentToCommentDto( comment ) );
         }
 
         return collection;
