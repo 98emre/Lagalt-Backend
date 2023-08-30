@@ -3,6 +3,7 @@ package project.lagalt.model.entities;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -19,12 +20,12 @@ public class Comment {
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "time")
-    private Date date;
+    private LocalDateTime date;
 
     public Comment() {
     }
 
-    public Comment(int id, String text, Date date) {
+    public Comment(int id, String text, LocalDateTime date) {
         this.id = id;
         this.text = text;
         this.date = date;
@@ -46,11 +47,17 @@ public class Comment {
         this.text = text;
     }
 
-    public Date getDate() {
+    public LocalDateTime getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDateTime date) {
         this.date = date;
+    }
+
+    @PrePersist
+    @PreUpdate
+    public void prePersistDate() {
+        date = LocalDateTime.now();
     }
 }
