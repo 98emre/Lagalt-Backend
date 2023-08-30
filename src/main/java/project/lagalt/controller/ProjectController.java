@@ -31,7 +31,7 @@ public class ProjectController {
 
     @GetMapping
     public ResponseEntity<Collection<ProjectDTO>> getAllProject(){
-        return ResponseEntity.ok(projectMapper.ProjectsToProjectDTO(projectService.findAll()));
+        return ResponseEntity.ok(projectMapper.projectsToProjectDTO(projectService.findAll()));
     }
 
     @GetMapping("/{id}")
@@ -41,12 +41,12 @@ public class ProjectController {
             throw new ProjectNotFoundException(id);
         }
 
-        return ResponseEntity.ok(projectMapper.ProjectToProjectDTO(project));
+        return ResponseEntity.ok(projectMapper.projectToProjectDTO(project));
     }
 
     @PostMapping
     public ResponseEntity<Project> addUser(@RequestBody ProjectPostDTO projectPostDTO ){
-        return ResponseEntity.ok(projectService.add(projectMapper.ProjectPostDtoToProject(projectPostDTO)));
+        return ResponseEntity.ok(projectService.add(projectMapper.projectPostDtoToProject(projectPostDTO)));
     }
 
     @PutMapping("/{id}")
@@ -57,7 +57,7 @@ public class ProjectController {
         }
 
         projectUpdateDTO.setId(id);
-        return ResponseEntity.ok(projectService.update(projectMapper.ProjectUpdateDtoToProject(projectUpdateDTO)));
+        return ResponseEntity.ok(projectService.update(projectMapper.projectUpdateDtoToProject(projectUpdateDTO)));
     }
 
     @DeleteMapping("/{id}")

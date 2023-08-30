@@ -12,10 +12,10 @@ import java.util.Collection;
 @Mapper(componentModel = "spring")
 public abstract class CommentMapper {
 
-    public abstract Comment CommentPostDtoToComment(CommentPostDTO commentPostDTO);
-    public abstract Comment CommentUpdateDtoToComment(CommentUpdateDTO commentUpdateDTO);
+    public abstract Comment commentPostDtoToComment(CommentPostDTO commentPostDTO);
+    public abstract Comment commentUpdateDtoToComment(CommentUpdateDTO commentUpdateDTO);
 
-    public abstract CommentDTO CommentToCommentDto(Comment comment);
+    public abstract CommentDTO commentToCommentDto(Comment comment);
 
-    public abstract Collection<CommentDTO> CommentDtosToComment(Collection<Comment> comments);
+    public abstract Collection<CommentDTO> commentDtosToComment(Collection<Comment> comments);
 }

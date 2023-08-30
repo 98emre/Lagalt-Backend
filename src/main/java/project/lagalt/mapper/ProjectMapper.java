@@ -12,12 +12,12 @@ import java.util.Collection;
 @Mapper(componentModel = "spring")
 public abstract class ProjectMapper {
 
-    public abstract Project ProjectPostDtoToProject(ProjectPostDTO projectPostDTO);
+    public abstract Project projectPostDtoToProject(ProjectPostDTO projectPostDTO);
 
-    public abstract Project ProjectUpdateDtoToProject(ProjectUpdateDTO projectUpdateDTO);
+    public abstract Project projectUpdateDtoToProject(ProjectUpdateDTO projectUpdateDTO);
 
-    public abstract ProjectDTO ProjectToProjectDTO(Project project);
+    public abstract ProjectDTO projectToProjectDTO(Project project);
 
-    public abstract Collection<ProjectDTO> ProjectsToProjectDTO(Collection<Project> projects);
+    public abstract Collection<ProjectDTO> projectsToProjectDTO(Collection<Project> projects);
 
 }
