@@ -38,6 +38,9 @@ public class User {
     @ManyToMany(mappedBy = "users")
     private Set<Project> projects;
 
+    @OneToMany(mappedBy = "user")
+    private Set<Collaborator> collaborators;
+
     public User(){
 
     }
@@ -105,6 +108,14 @@ public class User {
 
     public void setProjects(Set<Project> projects) {
         this.projects = projects;
+    }
+
+    public Set<Collaborator> getCollaborators() {
+        return collaborators;
+    }
+
+    public void setCollaborators(Set<Collaborator> collaborators) {
+        this.collaborators = collaborators;
     }
 
     @Override
