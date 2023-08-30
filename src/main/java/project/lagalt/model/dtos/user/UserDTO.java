@@ -14,6 +14,8 @@ public class UserDTO {
     private String email;
     private String fullname;
     private Set<Skills> skills;
+    private Set<Integer> projectIds;
+    private Set<Integer> collaboratorIds;
 
     public int getId() {
         return id;
@@ -61,5 +63,21 @@ public class UserDTO {
 
     public void setSkills(Set<Skills> skills) {
         this.skills = skills;
+    }
+
+    public Set<Integer> getProjectIds() {
+        return projectIds;
+    }
+
+    public void setProjectIds(Set<Integer> projectIds) {
+        this.projectIds = projectIds;
+    }
+
+    public Set<Integer> getCollaboratorIds() {
+        return collaboratorIds;
+    }
+
+    public void setCollaboratorIds(Set<Integer> collaboratorIds) {
+        this.collaboratorIds = collaboratorIds;
     }
 }
