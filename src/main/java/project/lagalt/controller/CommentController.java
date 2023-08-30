@@ -2,11 +2,14 @@ package project.lagalt.controller;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import project.lagalt.model.entities.Comment;
 import project.lagalt.model.entities.User;
 import project.lagalt.service.CommentService;
+import project.lagalt.utilites.exceptions.CommentNotFoundException;
+import project.lagalt.utilites.exceptions.ProjectNotFoundException;
 
 import java.util.Collection;
 
@@ -31,7 +34,7 @@ public class CommentController {
     public ResponseEntity<Comment> getCommentById(@PathVariable int id){
         Comment comment = commentService.findById(id);
         if (comment == null) {
-            return null;
+            throw new CommentNotFoundException(id);
         }
 
         return ResponseEntity.ok(comment);
@@ -46,7 +49,7 @@ public class CommentController {
     public ResponseEntity<Comment> updateComment(@RequestBody Comment comment, @PathVariable int id){
 
         if (commentService.findById(id) == null) {
-            return null;
+            throw new CommentNotFoundException(id);
         }
 
         comment.setId(id);
@@ -58,11 +61,16 @@ public class CommentController {
         Comment deletedComment = commentService.findById(id);
 
         if (deletedComment == null) {
-            return null;
+            throw new CommentNotFoundException(id);
         }
 
         commentService.deleteById(id);
 
         return ResponseEntity.status(200).build();
+    }
+
+    @ExceptionHandler(CommentNotFoundException.class)
+    public ResponseEntity<String> handleCommentNotFoundException(CommentNotFoundException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
     }
 }
