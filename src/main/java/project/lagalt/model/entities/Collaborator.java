@@ -3,6 +3,7 @@ package project.lagalt.model.entities;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
 import java.util.Set;
 
 @Entity
@@ -14,6 +15,12 @@ public class Collaborator {
     private int id;
     @Column(name = "status")
     private boolean status;
+
+    @Column(name = "request_date")
+    private LocalDateTime requestDate;
+
+    @Column(name = "approval_date")
+    private LocalDateTime approvalDate;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -59,4 +66,31 @@ public class Collaborator {
     public void setProject(Project project) {
         this.project = project;
     }
+
+    public LocalDateTime getRequestDate() {
+        return requestDate;
+    }
+
+    public void setRequestDate(LocalDateTime requestDate) {
+        this.requestDate = requestDate;
+    }
+
+    public LocalDateTime getApprovalDate() {
+        return approvalDate;
+    }
+
+    public void setApprovalDate(LocalDateTime approvalDate) {
+        this.approvalDate = approvalDate;
+    }
+
+    @PrePersist
+    @PreUpdate
+    public void updateApprovalDate() {
+        if (status && approvalDate == null) {
+            approvalDate = LocalDateTime.now();
+        } else if (!status) {
+            approvalDate = null;
+        }
+    }
 }
+
