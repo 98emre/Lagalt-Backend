@@ -2,11 +2,13 @@ package project.lagalt.controller;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import project.lagalt.model.entities.Collaborator;
 import project.lagalt.model.entities.User;
 import project.lagalt.service.CollaboratorService;
+import project.lagalt.utilites.exceptions.CollaboratorNotFoundException;
 import project.lagalt.utilites.exceptions.CommentNotFoundException;
 
 import java.util.Collection;
@@ -32,7 +34,7 @@ public class CollaboratorController {
         Collaborator collaborator = collaboratorService.findById(id);
 
         if (collaborator == null) {
-            return null;
+            throw new CollaboratorNotFoundException(id);
         }
 
         return ResponseEntity.ok(collaborator);
@@ -47,7 +49,7 @@ public class CollaboratorController {
     public ResponseEntity<Collaborator> updateCollaborator(@RequestBody Collaborator collaborator, @PathVariable int id){
 
         if (collaboratorService.findById(id) == null) {
-            throw new CommentNotFoundException(id);
+            throw new CollaboratorNotFoundException(id);
         }
 
         collaborator.setId(id);
@@ -59,11 +61,16 @@ public class CollaboratorController {
         Collaborator deletedCollaborator= collaboratorService.findById(id);
 
         if (deletedCollaborator == null) {
-            return null;
+            throw new CollaboratorNotFoundException(id);
         }
 
         collaboratorService.deleteById(id);
 
         return ResponseEntity.status(200).build();
+    }
+
+    @ExceptionHandler(CommentNotFoundException.class)
+    public ResponseEntity<String> handleCommentNotFoundException(CommentNotFoundException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
     }
 }
