@@ -14,7 +14,7 @@ import project.lagalt.utilites.enums.Skills;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-08-30T08:48:38+0200",
+    date = "2023-08-30T09:27:49+0200",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 17.0.8 (Microsoft)"
 )
 @Component
@@ -31,6 +31,8 @@ public class UserMapperImpl extends UserMapper {
         user.setId( userPostDTO.getId() );
         user.setUsername( userPostDTO.getUsername() );
         user.setPassword( userPostDTO.getPassword() );
+        user.setEmail( userPostDTO.getEmail() );
+        user.setFullname( userPostDTO.getFullname() );
         Set<Skills> set = userPostDTO.getSkills();
         if ( set != null ) {
             user.setSkills( new HashSet<Skills>( set ) );
@@ -50,6 +52,8 @@ public class UserMapperImpl extends UserMapper {
         user.setId( userUpdateDTO.getId() );
         user.setUsername( userUpdateDTO.getUsername() );
         user.setPassword( userUpdateDTO.getPassword() );
+        user.setEmail( userUpdateDTO.getEmail() );
+        user.setFullname( userUpdateDTO.getFullname() );
         Set<Skills> set = userUpdateDTO.getSkills();
         if ( set != null ) {
             user.setSkills( new HashSet<Skills>( set ) );
@@ -69,6 +73,8 @@ public class UserMapperImpl extends UserMapper {
         userDTO.setId( user.getId() );
         userDTO.setUsername( user.getUsername() );
         userDTO.setPassword( user.getPassword() );
+        userDTO.setEmail( user.getEmail() );
+        userDTO.setFullname( user.getFullname() );
         Set<Skills> set = user.getSkills();
         if ( set != null ) {
             userDTO.setSkills( new HashSet<Skills>( set ) );

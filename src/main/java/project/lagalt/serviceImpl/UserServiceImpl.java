@@ -49,6 +49,14 @@ public class UserServiceImpl implements UserService {
             updatedUser.setPassword(user.getPassword());
         }
 
+        if(user.getEmail() != null){
+            updatedUser.setEmail(user.getEmail());
+        }
+
+        if(user.getFullname() != null){
+            updatedUser.setEmail(user.getFullname());
+        }
+
         if(user.getSkills() != null){
             Set<Skills> updatedSkills = new HashSet<>();
 
