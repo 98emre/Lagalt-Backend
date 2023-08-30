@@ -33,7 +33,7 @@ public class Project {
     private Status status;
 
     public Project() {
-        
+
     }
 
     public Project(int id, String title, String description, String gitLink, Category category, Status status) {
