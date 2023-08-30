@@ -30,6 +30,9 @@ public class Collaborator {
     @JoinColumn(name = "project_id")
     private Project project;
 
+    public Collaborator() {
+    }
+
     public Collaborator(int id, boolean status) {
         this.id = id;
         this.status = status;
@@ -85,9 +88,14 @@ public class Collaborator {
 
     @PrePersist
     @PreUpdate
-    public void updateApprovalDate() {
+    public void updateDate() {
+        if (requestDate == null) {
+            requestDate = LocalDateTime.now();
+        }
+
         if (status && approvalDate == null) {
             approvalDate = LocalDateTime.now();
+            requestDate = null;
         } else if (!status) {
             approvalDate = null;
         }
