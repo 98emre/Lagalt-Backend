@@ -11,7 +11,7 @@ import project.lagalt.model.entities.Project;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-08-30T15:46:05+0200",
+    date = "2023-08-30T15:51:46+0200",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 17.0.8 (Microsoft)"
 )
 @Component
@@ -61,6 +61,8 @@ public class ProjectMapperImpl extends ProjectMapper {
 
         ProjectDTO projectDTO = new ProjectDTO();
 
+        projectDTO.setCommentIds( commentsToIds( project.getComments() ) );
+        projectDTO.setCollaboratorIds( collaboratorsToIds( project.getCollaborators() ) );
         projectDTO.setId( project.getId() );
         projectDTO.setTitle( project.getTitle() );
         projectDTO.setDescriptions( project.getDescriptions() );
