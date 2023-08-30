@@ -11,14 +11,14 @@ import project.lagalt.model.entities.Project;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-08-30T11:35:52+0200",
+    date = "2023-08-30T11:40:00+0200",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 17.0.8 (Microsoft)"
 )
 @Component
 public class ProjectMapperImpl extends ProjectMapper {
 
     @Override
-    public Project ProjectPostDtoTOProject(ProjectPostDTO projectPostDTO) {
+    public Project ProjectPostDtoToProject(ProjectPostDTO projectPostDTO) {
         if ( projectPostDTO == null ) {
             return null;
         }
@@ -36,7 +36,7 @@ public class ProjectMapperImpl extends ProjectMapper {
     }
 
     @Override
-    public Project ProjectUpdateDtoTOProject(ProjectUpdateDTO projectUpdateDTO) {
+    public Project ProjectUpdateDtoToProject(ProjectUpdateDTO projectUpdateDTO) {
         if ( projectUpdateDTO == null ) {
             return null;
         }
