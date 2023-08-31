@@ -74,6 +74,11 @@
 			<version>1.4.2.Final</version>
 			<scope>provided</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>1.18.28</version>
+		</dependency>
 		<!-- Mapstruct End -->
 
 	</dependencies>

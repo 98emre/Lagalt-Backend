@@ -14,7 +14,7 @@ import project.lagalt.utilites.enums.Skills;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-08-30T16:45:33+0200",
+    date = "2023-08-31T12:13:55+0200",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 17.0.8 (Microsoft)"
 )
 @Component
