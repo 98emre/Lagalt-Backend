@@ -17,6 +17,7 @@ import project.lagalt.utilites.exceptions.ProjectNotFoundException;
 import java.util.Collection;
 
 @RestController
+@CrossOrigin
 @RequestMapping(path = "api/projects")
 public class ProjectController {
 

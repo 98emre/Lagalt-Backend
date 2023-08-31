@@ -30,7 +30,7 @@ public class UserMapperImpl extends UserMapper {
 
         user.setId( userPostDTO.getId() );
         user.setUsername( userPostDTO.getUsername() );
-        user.setPassword( userPostDTO.getPassword() );
+        user.setDescription( userPostDTO.getDescription() );
         user.setEmail( userPostDTO.getEmail() );
         user.setFullname( userPostDTO.getFullname() );
         Set<Skills> set = userPostDTO.getSkills();
@@ -51,7 +51,7 @@ public class UserMapperImpl extends UserMapper {
 
         user.setId( userUpdateDTO.getId() );
         user.setUsername( userUpdateDTO.getUsername() );
-        user.setPassword( userUpdateDTO.getPassword() );
+        user.setDescription( userUpdateDTO.getDescription() );
         user.setEmail( userUpdateDTO.getEmail() );
         user.setFullname( userUpdateDTO.getFullname() );
         Set<Skills> set = userUpdateDTO.getSkills();
@@ -74,7 +74,7 @@ public class UserMapperImpl extends UserMapper {
         userDTO.setCollaboratorIds( collaboratorsToIds( user.getCollaborators() ) );
         userDTO.setId( user.getId() );
         userDTO.setUsername( user.getUsername() );
-        userDTO.setPassword( user.getPassword() );
+        userDTO.setDescription( user.getDescription() );
         userDTO.setEmail( user.getEmail() );
         userDTO.setFullname( user.getFullname() );
         Set<Skills> set2 = user.getSkills();
