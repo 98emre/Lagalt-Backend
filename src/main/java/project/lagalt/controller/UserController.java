@@ -16,6 +16,7 @@ import project.lagalt.utilites.exceptions.UserNotFoundException;
 import java.util.Collection;
 
 @RestController
+@CrossOrigin
 @RequestMapping(path = "api/users")
 public class UserController {
 

@@ -12,6 +12,7 @@ public class UserUpdateDTO {
     private String username;
     private String password;
     private String email;
+    private String description;
     private String fullname;
     private Set<Skills> skills;
 
@@ -45,6 +46,14 @@ public class UserUpdateDTO {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getDescription(){
+        return description;
+    }
+
+    public void setDescription(String description){
+        this.description = description;
     }
 
     public String getFullname() {
