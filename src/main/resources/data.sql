@@ -2,7 +2,7 @@
 
 INSERT INTO "user" ("fullname", "username", "email", "description") VALUES ('Arne Arnesson', 'Arnis', 'arne@hotmail.com', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce eu fermentum nulla. Vivamus sit amet sem pellentesque, malesuada velit et');
 INSERT INTO "user" ("fullname", "username", "email", "description") VALUES ('Bilal Svensson', 'bille', 'bilal@hotmail.com', 'Sed egestas vitae lorem eu semper. Aliquam sit amet purus egestas lacus ultrices placerat et nec justo. Nullam.');
-
+INSERT INTO "user" ("fullname", "username", "email", "description") VALUES ('Bilal kurtsson', 'bengan', 'kurtis@hotmail.com', 'Sed egestas vitae lorem eu semper. Aliquam sit amet purus egestas lacus ultrices placerat et nec justo. Nullam.');
 -- Project
 
 INSERT INTO project ("title", "description", "gitlink", "category") VALUES ('Title 1', 'Description 1', 'https://github.com/AugustDanell/Lagalt-Frontend', 'MUSIC');

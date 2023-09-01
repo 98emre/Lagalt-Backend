@@ -33,6 +33,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Collection<User> findAllByName(String name) {
+        return userRepository.findAllByFullnameContaining(name);
+    }
+
+    @Override
     public User add(User entity) {
         return userRepository.save(entity);
     }

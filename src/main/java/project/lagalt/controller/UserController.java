@@ -45,6 +45,11 @@ public class UserController {
         return ResponseEntity.ok(userMapper.userToUserDTO(user));
     }
 
+    @GetMapping("/search")
+    public ResponseEntity<Collection<UserDTO>> findByName(@RequestParam String name){
+        return ResponseEntity.ok(userMapper.usersToUsersDTO(userService.findAllByName(name)));
+    }
+
     @PostMapping
     public ResponseEntity<User> addProject(@RequestBody UserPostDTO userPostDTO){
         return ResponseEntity.ok(userService.add(userMapper.userPostToUser(userPostDTO)));
