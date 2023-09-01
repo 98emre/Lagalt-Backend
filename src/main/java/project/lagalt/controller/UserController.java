@@ -50,7 +50,7 @@ public class UserController {
         return ResponseEntity.ok(userService.add(userMapper.userPostToUser(userPostDTO)));
     }
 
-    @PutMapping("/{id}")
+    @PatchMapping("/{id}")
     public ResponseEntity<User> updateProject(@RequestBody UserUpdateDTO userUpdateDTO, @PathVariable int id){
 
         if (userService.findById(id) == null) {

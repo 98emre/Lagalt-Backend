@@ -14,7 +14,7 @@ import project.lagalt.utilites.enums.Skills;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-08-30T15:46:39+0200",
+    date = "2023-09-01T09:42:26+0200",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 17.0.8 (Microsoft)"
 )
 @Component
@@ -74,8 +74,8 @@ public class UserMapperImpl extends UserMapper {
         userDTO.setCollaboratorIds( collaboratorsToIds( user.getCollaborators() ) );
         userDTO.setId( user.getId() );
         userDTO.setUsername( user.getUsername() );
-        userDTO.setDescription( user.getDescription() );
         userDTO.setEmail( user.getEmail() );
+        userDTO.setDescription( user.getDescription() );
         userDTO.setFullname( user.getFullname() );
         Set<Skills> set2 = user.getSkills();
         if ( set2 != null ) {

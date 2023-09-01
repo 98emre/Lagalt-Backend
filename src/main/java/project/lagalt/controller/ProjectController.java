@@ -50,7 +50,7 @@ public class ProjectController {
         return ResponseEntity.ok(projectService.add(projectMapper.projectPostDtoToProject(projectPostDTO)));
     }
 
-    @PutMapping("/{id}")
+    @PatchMapping("/{id}")
     public ResponseEntity<Project> updateUser(@RequestBody ProjectUpdateDTO projectUpdateDTO, @PathVariable int id){
 
         if (projectService.findById(id) == null) {
