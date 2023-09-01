@@ -18,6 +18,7 @@ import java.util.Collection;
 
 @RestController
 @RequestMapping("api/collaborators")
+@CrossOrigin
 public class CollaboratorController {
 
     private final CollaboratorService collaboratorService;

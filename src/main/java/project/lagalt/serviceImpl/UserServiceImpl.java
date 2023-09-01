@@ -1,6 +1,8 @@
 package project.lagalt.serviceImpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.security.oauth2.jwt.JwtDecoders;
 import org.springframework.stereotype.Service;
 import project.lagalt.model.entities.User;
 import project.lagalt.repository.UserRepository;
@@ -70,5 +72,17 @@ public class UserServiceImpl implements UserService {
         userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
 
         userRepository.deleteById(id);
+    }
+
+    @Override
+    public void createUserFromToken(String token) {
+        Jwt jwt = JwtDecoders.fromIssuerLocation("https://lemur-8.cloud-iam.com/auth/realms/case-lagalt").decode(token);
+
+        String username = jwt.getClaim("preferred_username");
+        System.out.println("username " + username);
+        User user = new User();
+        user.setUsername(username);
+
+        userRepository.save(user);
     }
 }

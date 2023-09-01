@@ -17,6 +17,7 @@ import java.util.Collection;
 
 @RestController
 @RequestMapping(path = "api/users")
+@CrossOrigin
 public class UserController {
 
     private final UserService userService;
@@ -30,12 +31,12 @@ public class UserController {
 
 
     @GetMapping
-    public ResponseEntity<Collection<UserDTO>> getAllProject(){
+    public ResponseEntity<Collection<UserDTO>> getAllUser(){
         return ResponseEntity.ok(userMapper.usersToUsersDTO(userService.findAll()));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserDTO> getProjectById(@PathVariable int id){
+    public ResponseEntity<UserDTO> getUserById(@PathVariable int id){
         User user = userService.findById(id);
         if (user == null) {
             throw new UserNotFoundException(id);
@@ -44,13 +45,22 @@ public class UserController {
         return ResponseEntity.ok(userMapper.userToUserDTO(user));
     }
 
-    @PostMapping
-    public ResponseEntity<User> addProject(@RequestBody UserPostDTO userPostDTO){
+    @PostMapping("/add-user-dto")
+    public ResponseEntity<User> addUser(@RequestBody UserPostDTO userPostDTO){
         return ResponseEntity.ok(userService.add(userMapper.userPostToUser(userPostDTO)));
     }
 
+    @PostMapping("/add-user-token")
+    public ResponseEntity<?> addUserFromToken(@RequestHeader("Authorization") String bearerToken){
+        String token = bearerToken.replace("Bearer ", "");
+        System.out.println("Received Token: " + token);
+
+        userService.createUserFromToken(token);
+        return ResponseEntity.ok().build();
+    }
+
     @PutMapping("/{id}")
-    public ResponseEntity<User> updateProject(@RequestBody UserUpdateDTO userUpdateDTO, @PathVariable int id){
+    public ResponseEntity<User> updateUser(@RequestBody UserUpdateDTO userUpdateDTO, @PathVariable int id){
 
         if (userService.findById(id) == null) {
             throw new UserNotFoundException(id);
@@ -60,7 +70,7 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<User> deleteProject(@PathVariable int id){
+    public ResponseEntity<User> deleteUser(@PathVariable int id){
         User deletedUser = userService.findById(id);
 
         if (deletedUser == null) {
