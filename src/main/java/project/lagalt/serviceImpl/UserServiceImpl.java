@@ -8,6 +8,7 @@ import project.lagalt.model.entities.User;
 import project.lagalt.repository.UserRepository;
 import project.lagalt.service.UserService;
 import project.lagalt.utilites.enums.Skills;
+import project.lagalt.utilites.exceptions.UserAlreadyExistsException;
 import project.lagalt.utilites.exceptions.UserNotFoundException;
 
 import java.util.Collection;
@@ -35,8 +36,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User add(User entity) {
-        return userRepository.save(entity);
+    public User add(User user) {
+
+        if(userRepository.existsByUsername(user.getUsername()) || userRepository.existsByUsername(user.getEmail())){
+            throw new UserAlreadyExistsException(user.getUsername());
+        }
+
+        return userRepository.save(user);
     }
 
     @Override
@@ -82,6 +88,10 @@ public class UserServiceImpl implements UserService {
         System.out.println("username " + username);
         User user = new User();
         user.setUsername(username);
+
+        if(userRepository.existsByUsername(user.getUsername()) || userRepository.existsByUsername(user.getEmail())){
+            throw new UserAlreadyExistsException(username);
+        }
 
         userRepository.save(user);
     }
