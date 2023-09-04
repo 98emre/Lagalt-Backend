@@ -14,8 +14,8 @@ import project.lagalt.utilites.enums.Skills;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-09-04T10:36:59+0200",
-    comments = "version: 1.4.2.Final, compiler: javac, environment: Java 17.0.8 (Microsoft)"
+    date = "2023-09-04T15:27:06+0200",
+    comments = "version: 1.4.2.Final, compiler: Eclipse JDT (IDE) 3.35.0.v20230721-1147, environment: Java 17.0.7 (Eclipse Adoptium)"
 )
 @Component
 public class UserMapperImpl extends UserMapper {
