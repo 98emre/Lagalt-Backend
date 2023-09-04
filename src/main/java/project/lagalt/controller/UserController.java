@@ -55,20 +55,25 @@ public class UserController {
         return ResponseEntity.ok(userMapper.userToUserDTO(user));
     }
 
-    @PostMapping("/add-user")
-    public ResponseEntity<User> addUser(@RequestBody UserPostDTO userPostDTO){
-        return ResponseEntity.ok(userService.add(userMapper.userPostToUser(userPostDTO)));
+    @GetMapping("/token/username")
+    public ResponseEntity<UserDTO> getUserByToken(@RequestHeader("Authorization") String bearerToken){
+        String token = bearerToken.replace("Bearer ", "");
+        User user = userService.findByToken(token);
+
+        if (user == null) {
+            throw new UserNotFoundException("Token");
+        }
+
+        return ResponseEntity.ok(userMapper.userToUserDTO(user));
     }
 
-
-
-    @PostMapping("/add-user-token")
+    @PostMapping("/add-user")
     public ResponseEntity<?> addUserFromToken(@RequestHeader("Authorization") String bearerToken){
         String token = bearerToken.replace("Bearer ", "");
         System.out.println("Received Token: " + token);
 
         userService.createUserFromToken(token);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.status(201).build();
     }
 
     @PatchMapping("/{id}")
