@@ -13,6 +13,7 @@ public class CommentDTO {
     private String text;
     private LocalDateTime date;
     private Integer projectId;
+    private Set<Integer> userIds;
 
     public int getId() {
         return id;
@@ -44,5 +45,13 @@ public class CommentDTO {
 
     public void setProjectId(Integer projectId) {
         this.projectId = projectId;
+    }
+
+    public Set<Integer> getUserIds() {
+        return userIds;
+    }
+
+    public void setUserIds(Set<Integer> userIds) {
+        this.userIds = userIds;
     }
 }
