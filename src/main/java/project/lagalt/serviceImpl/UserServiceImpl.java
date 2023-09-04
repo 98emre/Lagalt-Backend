@@ -34,7 +34,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Collection<User> findAllByName(String name) {
-        return userRepository.findAllByFullnameContaining(name);
+        return userRepository.findAllByFullnameIgnoreCaseContaining(name);
     }
 
     @Override

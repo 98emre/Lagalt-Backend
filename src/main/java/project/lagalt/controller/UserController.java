@@ -16,7 +16,6 @@ import project.lagalt.utilites.exceptions.UserNotFoundException;
 import java.util.Collection;
 
 @RestController
-@CrossOrigin
 @RequestMapping(path = "api/users")
 public class UserController {
 
@@ -45,6 +44,7 @@ public class UserController {
         return ResponseEntity.ok(userMapper.userToUserDTO(user));
     }
 
+    @CrossOrigin
     @GetMapping("/search")
     public ResponseEntity<Collection<UserDTO>> findByName(@RequestParam String name){
         return ResponseEntity.ok(userMapper.usersToUsersDTO(userService.findAllByName(name)));

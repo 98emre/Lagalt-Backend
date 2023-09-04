@@ -10,5 +10,5 @@ import java.util.Set;
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
 
-    Set<User> findAllByFullnameContaining(String name);
+    Set<User> findAllByFullnameIgnoreCaseContaining(String name);
 }
