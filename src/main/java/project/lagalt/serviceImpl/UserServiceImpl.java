@@ -1,11 +1,14 @@
 package project.lagalt.serviceImpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.security.oauth2.jwt.JwtDecoders;
 import org.springframework.stereotype.Service;
 import project.lagalt.model.entities.User;
 import project.lagalt.repository.UserRepository;
 import project.lagalt.service.UserService;
 import project.lagalt.utilites.enums.Skills;
+import project.lagalt.utilites.exceptions.UserAlreadyExistsException;
 import project.lagalt.utilites.exceptions.UserNotFoundException;
 
 import java.util.Collection;
@@ -33,8 +36,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User add(User entity) {
-        return userRepository.save(entity);
+    public User add(User user) {
+
+        if(userRepository.existsByUsername(user.getUsername()) || userRepository.existsByUsername(user.getEmail())){
+            throw new UserAlreadyExistsException(user.getUsername());
+        }
+
+        return userRepository.save(user);
     }
 
     @Override
@@ -74,5 +82,28 @@ public class UserServiceImpl implements UserService {
         userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
 
         userRepository.deleteById(id);
+    }
+
+    @Override
+    public void createUserFromToken(String token) {
+        Jwt jwt = JwtDecoders.fromIssuerLocation("https://lemur-8.cloud-iam.com/auth/realms/case-lagalt").decode(token);
+
+        String username = jwt.getClaim("preferred_username");
+
+        if(userRepository.existsByUsername(username)){
+            throw new UserAlreadyExistsException(username);
+        }
+
+        System.out.println("username " + username);
+        User user = new User();
+        user.setUsername(username);
+
+
+        userRepository.save(user);
+    }
+
+    @Override
+    public User findByUsername(String username) {
+        return userRepository.findByUsername(username).orElseThrow(() -> new UserNotFoundException(username));
     }
 }

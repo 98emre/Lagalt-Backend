@@ -15,10 +15,10 @@ public class User {
     @Column(name = "user_id")
     private int id;
 
-    @Column(name = "username", length = 50, nullable = false)
+    @Column(name = "username", length = 50, nullable = false,unique = true)
     private String username;
 
-    @Column(name = "email", length = 50)
+    @Column(name = "email", length = 50,unique = true)
     private String email;
 
     @Column(name="description", length = 200)
@@ -40,11 +40,14 @@ public class User {
     @OneToMany(mappedBy = "user")
     private Set<Collaborator> collaborators;
 
+    @ManyToMany(mappedBy = "users")
+    private Set<Comment> comments;
+
     public User(){
 
     }
 
-    public User(int id, String username, String password, String email, String fullname, Set<Skills> skills) {
+    public User(int id, String username,String email, String fullname, Set<Skills> skills) {
         this.id = id;
         this.username = username;
         this.email = email;
@@ -116,12 +119,22 @@ public class User {
         this.collaborators = collaborators;
     }
 
+    public Set<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(Set<Comment> comments) {
+        this.comments = comments;
+    }
+
     @Override
     public String toString() {
         return "User{" +
                 "id=" + id +
                 ", username='" + username + '\'' +
-                ", password='" + description + '\'' +
+                ", email='" + email + '\'' +
+                ", description='" + description + '\'' +
+                ", fullname='" + fullname + '\'' +
                 ", skills=" + skills +
                 '}';
     }

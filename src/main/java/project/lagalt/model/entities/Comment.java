@@ -18,7 +18,6 @@ public class Comment {
     @Column(name = "text", length = 100)
     private String text;
 
-
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "time")
     private LocalDateTime date;
@@ -26,6 +25,15 @@ public class Comment {
     @ManyToOne
     @JoinColumn(name = "project_id")
     private Project project;
+
+    @ManyToMany
+    @JoinTable(
+            name = "comment_user",
+            joinColumns = @JoinColumn(name = "comment_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id")
+    )
+    private Set<User> users;
+
 
     public Comment() {
     }
@@ -66,6 +74,18 @@ public class Comment {
 
     public void setProjects(Project project) {
         this.project = project;
+    }
+
+    public void setProject(Project project) {
+        this.project = project;
+    }
+
+    public Set<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(Set<User> users) {
+        this.users = users;
     }
 
     @PrePersist

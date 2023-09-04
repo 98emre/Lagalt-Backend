@@ -19,6 +19,7 @@ import java.util.Collection;
 @RestController
 @CrossOrigin
 @RequestMapping(path = "api/projects")
+@CrossOrigin
 public class ProjectController {
 
     private final ProjectService projectService;

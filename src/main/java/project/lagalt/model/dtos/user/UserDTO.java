@@ -10,13 +10,13 @@ import java.util.Set;
 public class UserDTO {
     private int id;
     private String username;
-    private String password;
     private String email;
     private String description;
     private String fullname;
     private Set<Skills> skills;
     private Set<Integer> projectIds;
     private Set<Integer> collaboratorIds;
+    private Set<Integer> commentIds;
 
     public int getId() {
         return id;
@@ -32,14 +32,6 @@ public class UserDTO {
 
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public String getEmail() {
@@ -88,5 +80,13 @@ public class UserDTO {
 
     public void setCollaboratorIds(Set<Integer> collaboratorIds) {
         this.collaboratorIds = collaboratorIds;
+    }
+
+    public Set<Integer> getCommentIds() {
+        return commentIds;
+    }
+
+    public void setCommentIds(Set<Integer> commentIds) {
+        this.commentIds = commentIds;
     }
 }
