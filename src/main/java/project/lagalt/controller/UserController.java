@@ -35,7 +35,7 @@ public class UserController {
         return ResponseEntity.ok(userMapper.usersToUsersDTO(userService.findAll()));
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/id/{id}")
     public ResponseEntity<UserDTO> getUserById(@PathVariable int id){
         User user = userService.findById(id);
         if (user == null) {
@@ -45,7 +45,17 @@ public class UserController {
         return ResponseEntity.ok(userMapper.userToUserDTO(user));
     }
 
-    @PostMapping("/add-user-dto")
+    @GetMapping("/username/{username}")
+    public ResponseEntity<UserDTO> getUserByName(@PathVariable String username){
+        User user = userService.findByUsername(username);
+        if (user == null) {
+            throw new UserNotFoundException(username);
+        }
+
+        return ResponseEntity.ok(userMapper.userToUserDTO(user));
+    }
+
+    @PostMapping("/add-user")
     public ResponseEntity<User> addUser(@RequestBody UserPostDTO userPostDTO){
         return ResponseEntity.ok(userService.add(userMapper.userPostToUser(userPostDTO)));
     }
