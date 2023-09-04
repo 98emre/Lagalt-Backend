@@ -11,6 +11,7 @@ import project.lagalt.model.dtos.user.UserPostDTO;
 import project.lagalt.model.dtos.user.UserUpdateDTO;
 import project.lagalt.model.entities.User;
 import project.lagalt.service.UserService;
+import project.lagalt.utilites.exceptions.UserAlreadyExistsException;
 import project.lagalt.utilites.exceptions.UserNotFoundException;
 
 import java.util.Collection;
@@ -28,7 +29,6 @@ public class UserController {
         this.userService = userService;
         this.userMapper = userMapper;
     }
-
 
     @GetMapping
     public ResponseEntity<Collection<UserDTO>> getAllUser(){
@@ -95,6 +95,12 @@ public class UserController {
     @ExceptionHandler(UserNotFoundException.class)
     public ResponseEntity<String> handleUserNotFoundException(UserNotFoundException ex) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+    }
+
+
+    @ExceptionHandler(UserAlreadyExistsException.class)
+    public ResponseEntity<String> handleUserAlreadyExistsException(UserAlreadyExistsException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(ex.getMessage());
     }
 
 }
