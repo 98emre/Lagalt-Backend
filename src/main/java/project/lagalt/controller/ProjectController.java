@@ -30,12 +30,12 @@ public class ProjectController {
         this.projectMapper = projectMapper;
     }
 
-    @GetMapping
+    @GetMapping("public")
     public ResponseEntity<Collection<ProjectDTO>> getAllProject(){
         return ResponseEntity.ok(projectMapper.projectsToProjectDTO(projectService.findAll()));
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("public/{id}")
     public ResponseEntity<ProjectDTO> getUserById(@PathVariable int id){
         Project project = projectService.findById(id);
         if (project == null) {

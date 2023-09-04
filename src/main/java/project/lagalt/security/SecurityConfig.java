@@ -29,7 +29,11 @@ public class SecurityConfig {
                http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth ->
-                                auth.requestMatchers("api/projects/**","api/comments/**")
+                                auth.requestMatchers(
+                                    "api/projects/public/**",
+                                    "api/comments/public/**",
+                                    "api/users/public/**"
+                                )
                                 .permitAll().
                                 anyRequest().authenticated())
                 .oauth2ResourceServer(oauth2 -> oauth2.jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthConverter)))

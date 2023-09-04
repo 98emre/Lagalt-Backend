@@ -30,12 +30,12 @@ public class CommentController {
         this.commentMapper = commentMapper;
     }
 
-    @GetMapping
+    @GetMapping("public")
     public ResponseEntity<Collection<CommentDTO>> getAllComment(){
         return ResponseEntity.ok(commentMapper.commentToCommentDtos(commentService.findAll()));
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("public/{id}")
     public ResponseEntity<CommentDTO> getCommentById(@PathVariable int id){
         Comment comment = commentService.findById(id);
         if (comment == null) {
