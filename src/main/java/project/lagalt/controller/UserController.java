@@ -54,19 +54,14 @@ public class UserController {
 
         return ResponseEntity.ok(userMapper.userToUserDTO(user));
     }
-
+    
     @PostMapping("/add-user")
-    public ResponseEntity<User> addUser(@RequestBody UserPostDTO userPostDTO){
-        return ResponseEntity.ok(userService.add(userMapper.userPostToUser(userPostDTO)));
-    }
-
-    @PostMapping("/add-user-token")
     public ResponseEntity<?> addUserFromToken(@RequestHeader("Authorization") String bearerToken){
         String token = bearerToken.replace("Bearer ", "");
         System.out.println("Received Token: " + token);
 
         userService.createUserFromToken(token);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.status(201).build();
     }
 
     @PutMapping("/{id}")
