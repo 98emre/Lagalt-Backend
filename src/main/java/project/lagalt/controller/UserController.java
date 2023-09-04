@@ -35,7 +35,7 @@ public class UserController {
         return ResponseEntity.ok(userMapper.usersToUsersDTO(userService.findAll()));
     }
 
-    @GetMapping("public/id/{id}")
+    @GetMapping("public/{id}")
     public ResponseEntity<UserDTO> getUserById(@PathVariable int id){
         User user = userService.findById(id);
         if (user == null) {
