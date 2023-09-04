@@ -13,6 +13,7 @@ import project.lagalt.utilites.exceptions.UserNotFoundException;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -101,5 +102,14 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findByUsername(String username) {
         return userRepository.findByUsername(username).orElseThrow(() -> new UserNotFoundException(username));
+    }
+
+    @Override
+    public User findByToken(String username) {
+        Jwt jwt = JwtDecoders.fromIssuerLocation("https://lemur-8.cloud-iam.com/auth/realms/case-lagalt").decode(username);
+
+        String name = jwt.getClaim("preferred_username");
+
+        return userRepository.findByUsername(name).orElseThrow(() -> new UserNotFoundException(name));
     }
 }
