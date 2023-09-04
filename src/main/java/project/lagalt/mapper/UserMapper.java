@@ -8,6 +8,7 @@ import project.lagalt.model.dtos.user.UserDTO;
 import project.lagalt.model.dtos.user.UserPostDTO;
 import project.lagalt.model.dtos.user.UserUpdateDTO;
 import project.lagalt.model.entities.Collaborator;
+import project.lagalt.model.entities.Comment;
 import project.lagalt.model.entities.Project;
 import project.lagalt.model.entities.User;
 
@@ -23,6 +24,7 @@ public abstract  class UserMapper {
 
     @Mapping(target = "projectIds", source = "projects")
     @Mapping(target = "collaboratorIds", source = "collaborators")
+    @Mapping(target = "commentIds", source = "comments")
     public abstract UserDTO userToUserDTO(User user);
 
     public abstract Collection<UserDTO> usersToUsersDTO(Collection<User> users);
@@ -40,6 +42,14 @@ public abstract  class UserMapper {
             return null;
         }
         return collaborators.stream().map(c-> c.getId()).collect(Collectors.toSet());
+    }
+
+    Set<Integer> commentsToIds(Set<Comment> comments){
+        if(comments == null){
+            return  null;
+        }
+
+        return comments.stream().map(c -> c.getId()).collect(Collectors.toSet());
     }
 }
 
