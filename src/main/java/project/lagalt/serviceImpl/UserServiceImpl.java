@@ -85,13 +85,15 @@ public class UserServiceImpl implements UserService {
         Jwt jwt = JwtDecoders.fromIssuerLocation("https://lemur-8.cloud-iam.com/auth/realms/case-lagalt").decode(token);
 
         String username = jwt.getClaim("preferred_username");
+
+        if(userRepository.existsByUsername(username)){
+            throw new UserAlreadyExistsException(username);
+        }
+
         System.out.println("username " + username);
         User user = new User();
         user.setUsername(username);
 
-        if(userRepository.existsByUsername(user.getUsername()) || userRepository.existsByUsername(user.getEmail())){
-            throw new UserAlreadyExistsException(username);
-        }
 
         userRepository.save(user);
     }
