@@ -36,7 +36,7 @@ public class ProjectController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ProjectDTO> getUserById(@PathVariable int id){
+    public ResponseEntity<ProjectDTO> getProjectById(@PathVariable int id){
         Project project = projectService.findById(id);
         if (project == null) {
             throw new ProjectNotFoundException(id);
@@ -46,12 +46,12 @@ public class ProjectController {
     }
 
     @PostMapping
-    public ResponseEntity<Project> addUser(@RequestBody ProjectPostDTO projectPostDTO ){
+    public ResponseEntity<Project> addProject(@RequestBody ProjectPostDTO projectPostDTO ){
         return ResponseEntity.ok(projectService.add(projectMapper.projectPostDtoToProject(projectPostDTO)));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Project> updateUser(@RequestBody ProjectUpdateDTO projectUpdateDTO, @PathVariable int id){
+    public ResponseEntity<Project> updateProject(@RequestBody ProjectUpdateDTO projectUpdateDTO, @PathVariable int id){
 
         if (projectService.findById(id) == null) {
             throw new ProjectNotFoundException(id);
@@ -62,7 +62,7 @@ public class ProjectController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<User> deleteUser(@PathVariable int id){
+    public ResponseEntity<User> deleteProject(@PathVariable int id){
         Project deletedProject= projectService.findById(id);
 
         if (deletedProject == null) {
