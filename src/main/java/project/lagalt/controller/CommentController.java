@@ -19,7 +19,6 @@ import project.lagalt.utilites.exceptions.CommentNotFoundException;
 
 import java.util.Collection;
 
-@CrossOrigin
 @RestController
 @RequestMapping(path = "api/comments")
 @CrossOrigin
