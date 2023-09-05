@@ -8,10 +8,11 @@ import project.lagalt.model.dtos.project.ProjectDTO;
 import project.lagalt.model.dtos.project.ProjectPostDTO;
 import project.lagalt.model.dtos.project.ProjectUpdateDTO;
 import project.lagalt.model.entities.Project;
+import project.lagalt.model.entities.User;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-09-01T14:53:39+0200",
+    date = "2023-09-05T10:51:37+0200",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 17.0.8 (Microsoft)"
 )
 @Component
@@ -63,6 +64,7 @@ public class ProjectMapperImpl extends ProjectMapper {
 
         projectDTO.setCommentIds( commentsToIds( project.getComments() ) );
         projectDTO.setCollaboratorIds( collaboratorsToIds( project.getCollaborators() ) );
+        projectDTO.setUserId( projectUserId( project ) );
         projectDTO.setId( project.getId() );
         projectDTO.setTitle( project.getTitle() );
         projectDTO.setDescriptions( project.getDescriptions() );
@@ -85,5 +87,17 @@ public class ProjectMapperImpl extends ProjectMapper {
         }
 
         return collection;
+    }
+
+    private Integer projectUserId(Project project) {
+        if ( project == null ) {
+            return null;
+        }
+        User user = project.getUser();
+        if ( user == null ) {
+            return null;
+        }
+        int id = user.getId();
+        return id;
     }
 }

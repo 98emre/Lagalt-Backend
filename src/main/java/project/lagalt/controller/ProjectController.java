@@ -4,6 +4,10 @@ package project.lagalt.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 import project.lagalt.mapper.ProjectMapper;
 import project.lagalt.model.dtos.project.ProjectDTO;
@@ -12,8 +16,11 @@ import project.lagalt.model.dtos.project.ProjectUpdateDTO;
 import project.lagalt.model.entities.Project;
 import project.lagalt.model.entities.User;
 import project.lagalt.service.ProjectService;
+import project.lagalt.service.UserService;
 import project.lagalt.utilites.exceptions.ProjectNotFoundException;
+import project.lagalt.utilites.exceptions.UserNotFoundException;
 
+import java.security.Principal;
 import java.util.Collection;
 
 @RestController
@@ -22,11 +29,13 @@ import java.util.Collection;
 public class ProjectController {
 
     private final ProjectService projectService;
+    private final UserService userService;
     private final ProjectMapper projectMapper;
 
     @Autowired
-    public ProjectController(ProjectService projectService, ProjectMapper projectMapper){
+    public ProjectController(ProjectService projectService, UserService userService, ProjectMapper projectMapper){
         this.projectService = projectService;
+        this.userService = userService;
         this.projectMapper = projectMapper;
     }
 
@@ -46,8 +55,15 @@ public class ProjectController {
     }
 
     @PostMapping
-    public ResponseEntity<Project> addProject(@RequestBody ProjectPostDTO projectPostDTO ){
-        return ResponseEntity.ok(projectService.add(projectMapper.projectPostDtoToProject(projectPostDTO)));
+    public ResponseEntity<ProjectDTO> addProject(@RequestBody ProjectPostDTO projectPostDTO, @AuthenticationPrincipal Jwt jwt){
+        String username = jwt.getClaim("preferred_username");
+
+        Project project = projectMapper.projectPostDtoToProject(projectPostDTO);
+        User user = userService.findByUsername(username);
+        project.setUser(user);
+        projectService.add(project);
+
+        return ResponseEntity.ok(projectMapper.projectToProjectDTO(project));
     }
 
     @PutMapping("/{id}")
