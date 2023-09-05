@@ -4,10 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.jwt.JwtDecoders;
 import org.springframework.stereotype.Service;
+import project.lagalt.model.entities.Project;
 import project.lagalt.model.entities.User;
+import project.lagalt.repository.ProjectRepository;
 import project.lagalt.repository.UserRepository;
 import project.lagalt.service.UserService;
 import project.lagalt.utilites.enums.Skills;
+import project.lagalt.utilites.exceptions.ProjectNotFoundException;
 import project.lagalt.utilites.exceptions.UserAlreadyExistsException;
 import project.lagalt.utilites.exceptions.UserNotFoundException;
 
@@ -20,10 +23,12 @@ import java.util.Set;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final ProjectRepository projectRepository;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository, ProjectRepository projectRepository) {
         this.userRepository = userRepository;
+        this.projectRepository = projectRepository;
     }
 
     @Override
@@ -97,7 +102,6 @@ public class UserServiceImpl implements UserService {
             throw new UserAlreadyExistsException(username);
         }
 
-        System.out.println("username " + username);
         User user = new User();
         user.setUsername(username);
         user.setEmail(email);

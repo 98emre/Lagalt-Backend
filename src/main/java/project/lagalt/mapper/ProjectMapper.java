@@ -24,6 +24,7 @@ public abstract class ProjectMapper {
 
     @Mapping(target = "commentIds", source = "comments")
     @Mapping(target = "collaboratorIds", source = "collaborators")
+    @Mapping(target = "userId",source = "user.id")
     public abstract ProjectDTO projectToProjectDTO(Project project);
 
     public abstract Collection<ProjectDTO> projectsToProjectDTO(Collection<Project> projects);

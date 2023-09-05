@@ -2,9 +2,11 @@ package project.lagalt.controller;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 import project.lagalt.mapper.UserMapper;
 import project.lagalt.model.dtos.user.UserDTO;
 import project.lagalt.model.dtos.user.UserPostDTO;
@@ -108,5 +110,4 @@ public class UserController {
     public ResponseEntity<String> handleUserAlreadyExistsException(UserAlreadyExistsException ex) {
         return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
     }
-
 }

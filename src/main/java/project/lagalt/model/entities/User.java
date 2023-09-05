@@ -34,7 +34,7 @@ public class User {
     @CollectionTable(name = "user_skills", joinColumns = @JoinColumn(name = "user_id"))
     private Set<Skills> skills;
 
-    @ManyToMany(mappedBy = "users")
+    @OneToMany(mappedBy = "user")
     private Set<Project> projects;
 
     @OneToMany(mappedBy = "user")

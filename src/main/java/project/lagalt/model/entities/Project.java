@@ -31,12 +31,9 @@ public class Project {
     @Enumerated(EnumType.STRING)
     private Status status;
 
-    @ManyToMany
-    @JoinTable(name = "project_user", joinColumns = {
-            @JoinColumn(name = "project_id")}, inverseJoinColumns = {
-            @JoinColumn(name = "user_id")
-    })
-    private Set<User> users;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @OneToMany(mappedBy = "project")
     private Set<Comment> comments;
@@ -104,12 +101,12 @@ public class Project {
         this.status = status;
     }
 
-    public Set<User> getUsers() {
-        return users;
+    public User getUser() {
+        return user;
     }
 
-    public void setUsers(Set<User> users) {
-        this.users = users;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Set<Comment> getComments() {

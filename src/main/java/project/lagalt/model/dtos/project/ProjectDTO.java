@@ -16,6 +16,7 @@ public class ProjectDTO {
     private String gitlink;
     private Category category;
     private Status status;
+    private Integer userId;
     private Set<Integer> commentIds;
     private Set<Integer> collaboratorIds;
 
@@ -65,6 +66,14 @@ public class ProjectDTO {
 
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
     public Set<Integer> getCommentIds() {
