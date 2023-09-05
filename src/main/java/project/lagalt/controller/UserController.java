@@ -28,12 +28,12 @@ public class UserController {
         this.userMapper = userMapper;
     }
 
-    @GetMapping
+    @GetMapping("public")
     public ResponseEntity<Collection<UserDTO>> getAllUser(){
         return ResponseEntity.ok(userMapper.usersToUsersDTO(userService.findAll()));
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("public/{id}")
     public ResponseEntity<UserDTO> getUserById(@PathVariable int id){
         User user = userService.findById(id);
         if (user == null) {
@@ -48,7 +48,7 @@ public class UserController {
         return ResponseEntity.ok(userMapper.usersToUsersDTO(userService.findAllByName(name, name)));
     }
 
-    @GetMapping("/username/{username}")
+    @GetMapping("public/username/{username}")
     public ResponseEntity<UserDTO> getUserByName(@PathVariable String username){
         User user = userService.findByUsername(username);
         if (user == null) {
@@ -58,7 +58,7 @@ public class UserController {
         return ResponseEntity.ok(userMapper.userToUserDTO(user));
     }
 
-    @GetMapping("/token/username")
+    @GetMapping("public/token/username")
     public ResponseEntity<UserDTO> getUserByToken(@RequestHeader("Authorization") String bearerToken){
         String token = bearerToken.replace("Bearer ", "");
         User user = userService.findByToken(token);

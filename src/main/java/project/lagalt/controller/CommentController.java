@@ -21,6 +21,7 @@ import java.util.Collection;
 
 @RestController
 @RequestMapping(path = "api/comments")
+@CrossOrigin
 public class CommentController {
 
     private final CommentService commentService;
