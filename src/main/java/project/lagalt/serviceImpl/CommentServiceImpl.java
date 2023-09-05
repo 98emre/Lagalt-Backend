@@ -3,22 +3,34 @@ package project.lagalt.serviceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import project.lagalt.model.entities.Comment;
+import project.lagalt.model.entities.Project;
+import project.lagalt.model.entities.User;
 import project.lagalt.repository.CommentRepository;
+import project.lagalt.repository.ProjectRepository;
+import project.lagalt.repository.UserRepository;
 import project.lagalt.service.CommentService;
 import project.lagalt.utilites.exceptions.CommentNotFoundException;
+import project.lagalt.utilites.exceptions.ProjectNotFoundException;
+import project.lagalt.utilites.exceptions.UserNotFoundException;
 
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 
 @Service
 public class CommentServiceImpl implements CommentService {
 
     private final CommentRepository commentRepository;
+    private  final ProjectRepository projectRepository;
+    private  final UserRepository userRepository;
 
 
     @Autowired
-    public CommentServiceImpl(CommentRepository commentRepository) {
+    public CommentServiceImpl(CommentRepository commentRepository, ProjectRepository projectRepository, UserRepository userRepositorys) {
         this.commentRepository = commentRepository;
+        this.projectRepository = projectRepository;
+        this.userRepository = userRepositorys;
     }
 
     @Override
@@ -56,5 +68,24 @@ public class CommentServiceImpl implements CommentService {
         commentRepository.findById(id).orElseThrow(() -> new CommentNotFoundException(id));
 
         commentRepository.deleteById(id);
+    }
+
+    @Override
+    public Comment addCommentToProject(int projectId, Comment comment, String username) {
+        Project project = projectRepository.findById(projectId).orElseThrow(() -> new ProjectNotFoundException(projectId));
+        User user = userRepository.findByUsername(username).orElseThrow(() -> new UserNotFoundException(username));
+        comment.setProject(project);
+
+        Set<User> updatedUsers = comment.getUsers();
+
+        if(updatedUsers == null){
+            updatedUsers = new HashSet<>();
+        }
+
+        updatedUsers.add(user);
+
+        comment.setUsers(updatedUsers);
+
+        return commentRepository.save(comment);
     }
 }

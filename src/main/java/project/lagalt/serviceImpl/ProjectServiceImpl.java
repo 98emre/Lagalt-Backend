@@ -2,21 +2,26 @@ package project.lagalt.serviceImpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import project.lagalt.model.entities.Comment;
 import project.lagalt.model.entities.Project;
+import project.lagalt.repository.CommentRepository;
 import project.lagalt.repository.ProjectRepository;
 import project.lagalt.service.ProjectService;
 import project.lagalt.utilites.exceptions.ProjectNotFoundException;
 
 import java.util.Collection;
+import java.util.Set;
 
 @Service
 public class ProjectServiceImpl implements ProjectService {
 
     private final ProjectRepository projectRepository;
+    private final CommentRepository commentRepository;
 
     @Autowired
-    public ProjectServiceImpl(ProjectRepository projectRepository) {
+    public ProjectServiceImpl(ProjectRepository projectRepository, CommentRepository commentRepository) {
         this.projectRepository = projectRepository;
+        this.commentRepository = commentRepository;
     }
 
     @Override
@@ -38,23 +43,23 @@ public class ProjectServiceImpl implements ProjectService {
     public Project update(Project project) {
         Project updatedProject = projectRepository.findById(project.getId()).orElseThrow(() -> new ProjectNotFoundException(project.getId()));
 
-        if(project.getTitle() != null){
+        if (project.getTitle() != null) {
             updatedProject.setTitle(project.getTitle());
         }
 
-        if(project.getDescriptions() != null){
+        if (project.getDescriptions() != null) {
             updatedProject.setDescriptions(project.getDescriptions());
         }
 
-        if(project.getGitlink() != null){
+        if (project.getGitlink() != null) {
             updatedProject.setGitlink(project.getGitlink());
         }
 
-        if(project.getCategory() != null){
+        if (project.getCategory() != null) {
             updatedProject.setCategory(project.getCategory());
         }
 
-        if(project.getStatus() != null){
+        if (project.getStatus() != null) {
             updatedProject.setStatus(project.getStatus());
         }
 
@@ -66,5 +71,10 @@ public class ProjectServiceImpl implements ProjectService {
         projectRepository.findById(id).orElseThrow(() -> new ProjectNotFoundException(id));
 
         projectRepository.deleteById(id);
+    }
+
+    @Override
+    public Collection<Project> findAllByTitle(String title) {
+        return projectRepository.findAllByTitleIgnoreCaseContaining(title);
     }
 }

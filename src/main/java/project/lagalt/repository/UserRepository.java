@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 import project.lagalt.model.entities.User;
 
 import java.util.Optional;
+import java.util.Set;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
@@ -14,4 +15,6 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     Boolean existsByUsername(String username);
 
     Boolean existsByEmail(String email);
+
+    Set<User> findAllByUsernameIgnoreCaseContainingOrFullnameIgnoreCaseContaining(String userName, String fullName);
 }

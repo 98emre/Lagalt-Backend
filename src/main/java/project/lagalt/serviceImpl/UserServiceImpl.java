@@ -23,12 +23,10 @@ import java.util.Set;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
-    private final ProjectRepository projectRepository;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, ProjectRepository projectRepository) {
+    public UserServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
-        this.projectRepository = projectRepository;
     }
 
     @Override
@@ -119,5 +117,10 @@ public class UserServiceImpl implements UserService {
         String name = jwt.getClaim("preferred_username");
 
         return userRepository.findByUsername(name).orElseThrow(() -> new UserNotFoundException(name));
+    }
+
+    @Override
+    public Collection<User> findAllByName(String userName, String fullName) {
+        return userRepository.findAllByUsernameIgnoreCaseContainingOrFullnameIgnoreCaseContaining(userName, fullName);
     }
 }

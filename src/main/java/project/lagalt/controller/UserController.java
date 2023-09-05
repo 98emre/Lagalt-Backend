@@ -3,13 +3,9 @@ package project.lagalt.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
 import project.lagalt.mapper.UserMapper;
 import project.lagalt.model.dtos.user.UserDTO;
-import project.lagalt.model.dtos.user.UserPostDTO;
 import project.lagalt.model.dtos.user.UserUpdateDTO;
 import project.lagalt.model.entities.User;
 import project.lagalt.service.UserService;
@@ -37,7 +33,7 @@ public class UserController {
         return ResponseEntity.ok(userMapper.usersToUsersDTO(userService.findAll()));
     }
 
-    @GetMapping("/id/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<UserDTO> getUserById(@PathVariable int id){
         User user = userService.findById(id);
         if (user == null) {
@@ -45,6 +41,11 @@ public class UserController {
         }
 
         return ResponseEntity.ok(userMapper.userToUserDTO(user));
+    }
+
+    @GetMapping("public/search")
+    public ResponseEntity<Collection<UserDTO>> findByName(@RequestParam String name){
+        return ResponseEntity.ok(userMapper.usersToUsersDTO(userService.findAllByName(name, name)));
     }
 
     @GetMapping("/username/{username}")
