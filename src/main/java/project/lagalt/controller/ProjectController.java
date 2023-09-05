@@ -45,7 +45,7 @@ public class ProjectController {
     }
 
     @GetMapping("public/{id}")
-    public ResponseEntity<ProjectDTO> getUserById(@PathVariable int id){
+    public ResponseEntity<ProjectDTO> getProjectById(@PathVariable int id){
         Project project = projectService.findById(id);
         if (project == null) {
             throw new ProjectNotFoundException(id);
@@ -66,8 +66,14 @@ public class ProjectController {
         return ResponseEntity.ok(projectMapper.projectToProjectDTO(project));
     }
 
+
+    @GetMapping("public/search")
+    public ResponseEntity<Collection<ProjectDTO>> findByTitle(@RequestParam String title){
+        return ResponseEntity.ok(projectMapper.projectsToProjectDTO(projectService.findAllByTitle(title)));
+    }
+
     @PatchMapping("/{id}")
-    public ResponseEntity<Project> updateUser(@RequestBody ProjectUpdateDTO projectUpdateDTO, @PathVariable int id){
+    public ResponseEntity<Project> updateProject(@RequestBody ProjectUpdateDTO projectUpdateDTO, @PathVariable int id){
         if (projectService.findById(id) == null) {
             throw new ProjectNotFoundException(id);
         }

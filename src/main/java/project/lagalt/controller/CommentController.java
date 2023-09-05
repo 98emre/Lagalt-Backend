@@ -4,6 +4,8 @@ package project.lagalt.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 import project.lagalt.mapper.CommentMapper;
 import project.lagalt.model.dtos.comment.CommentDTO;
@@ -12,6 +14,7 @@ import project.lagalt.model.dtos.comment.CommentUpdateDTO;
 import project.lagalt.model.entities.Comment;
 import project.lagalt.model.entities.User;
 import project.lagalt.service.CommentService;
+import project.lagalt.service.UserService;
 import project.lagalt.utilites.exceptions.CommentNotFoundException;
 
 import java.util.Collection;
@@ -19,13 +22,14 @@ import java.util.Collection;
 @CrossOrigin
 @RestController
 @RequestMapping(path = "api/comments")
+@CrossOrigin
 public class CommentController {
 
     private final CommentService commentService;
     private final CommentMapper commentMapper;
 
     @Autowired
-    public CommentController(CommentService commentService, CommentMapper commentMapper) {
+    public CommentController(CommentService commentService, CommentMapper commentMapper, UserService userService) {
         this.commentService = commentService;
         this.commentMapper = commentMapper;
     }
@@ -45,9 +49,13 @@ public class CommentController {
         return ResponseEntity.ok(commentMapper.commentToCommentDto(comment));
     }
 
-    @PostMapping
-    public ResponseEntity<Comment> addComment(@RequestBody CommentPostDTO commentPostDTO){
-        return ResponseEntity.ok(commentService.add(commentMapper.commentPostDtoToComment(commentPostDTO)));
+    @PostMapping("/project/{projectId}")
+    public ResponseEntity<Comment> addCommentToProject(@PathVariable Integer projectId, @RequestBody CommentPostDTO commentPostDTO, @AuthenticationPrincipal Jwt jwt){
+        String username = jwt.getClaim("preferred_username");
+        Comment comment = commentMapper.commentPostDtoToComment(commentPostDTO);
+        Comment savedComment = commentService.addCommentToProject(projectId, comment,username);
+
+        return ResponseEntity.ok(savedComment);
     }
 
     @PatchMapping("/{id}")
