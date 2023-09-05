@@ -79,7 +79,12 @@
 			<artifactId>lombok</artifactId>
 			<version>1.18.28</version>
 		</dependency>
-		<!-- Mapstruct End -->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-config</artifactId>
+            <version>6.2.0-M2</version>
+        </dependency>
+        <!-- Mapstruct End -->
 
 	</dependencies>
 
