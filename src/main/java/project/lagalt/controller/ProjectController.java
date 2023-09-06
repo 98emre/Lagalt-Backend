@@ -60,6 +60,11 @@ public class ProjectController {
 
         Project project = projectMapper.projectPostDtoToProject(projectPostDTO);
         User user = userService.findByUsername(username);
+
+        if(user == null){
+            throw new UserNotFoundException(username);
+        }
+
         project.setUser(user);
         projectService.add(project);
 
@@ -97,6 +102,11 @@ public class ProjectController {
 
     @ExceptionHandler(ProjectNotFoundException.class)
     public ResponseEntity<String> handleProjectNotFoundException(ProjectNotFoundException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+    }
+
+    @ExceptionHandler(UserNotFoundException.class)
+    public ResponseEntity<String> handleUserNotFoundException(UserNotFoundException ex) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
     }
 
