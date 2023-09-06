@@ -22,15 +22,11 @@ import java.util.Set;
 public class CommentServiceImpl implements CommentService {
 
     private final CommentRepository commentRepository;
-    private  final ProjectRepository projectRepository;
-    private  final UserRepository userRepository;
 
 
     @Autowired
     public CommentServiceImpl(CommentRepository commentRepository, ProjectRepository projectRepository, UserRepository userRepositorys) {
         this.commentRepository = commentRepository;
-        this.projectRepository = projectRepository;
-        this.userRepository = userRepositorys;
     }
 
     @Override
@@ -45,6 +41,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public Comment add(Comment comment) {
+
         return commentRepository.save(comment);
     }
 
@@ -69,19 +66,4 @@ public class CommentServiceImpl implements CommentService {
 
         commentRepository.deleteById(id);
     }
-
-    @Override
-    public Comment addCommentToProject(int projectId, Comment comment, String username) {
-      /*  Project project = projectRepository.findById(projectId).orElseThrow(() -> new ProjectNotFoundException(projectId));
-        User user = userRepository.findByUsername(username).orElseThrow(() -> new UserNotFoundException(username));
-        comment.setProject(project);
-
-
-
-        return commentRepository.save(comment);
-     */
-
-        return  null;
-    }
-
 }
