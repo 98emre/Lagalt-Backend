@@ -48,6 +48,13 @@ public class CommentController {
         return ResponseEntity.ok(commentMapper.commentToCommentDto(comment));
     }
 
+
+    @PostMapping
+    public ResponseEntity<Comment> addComment(@RequestBody CommentPostDTO commentPostDTO){
+        return ResponseEntity.ok(commentService.add(commentMapper.commentPostDtoToComment(commentPostDTO)));
+    }
+
+    /*
     @PostMapping("/project/{projectId}")
     public ResponseEntity<Comment> addCommentToProject(@PathVariable Integer projectId, @RequestBody CommentPostDTO commentPostDTO, @AuthenticationPrincipal Jwt jwt){
         String username = jwt.getClaim("preferred_username");
@@ -55,7 +62,7 @@ public class CommentController {
         Comment savedComment = commentService.addCommentToProject(projectId, comment,username);
 
         return ResponseEntity.ok(savedComment);
-    }
+    } */
 
     @PatchMapping("/{id}")
     public ResponseEntity<Comment> updateComment(@RequestBody CommentUpdateDTO commentUpdateDTO, @PathVariable int id){

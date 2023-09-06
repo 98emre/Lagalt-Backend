@@ -26,13 +26,9 @@ public class Comment {
     @JoinColumn(name = "project_id")
     private Project project;
 
-    @ManyToMany
-    @JoinTable(
-            name = "comment_user",
-            joinColumns = @JoinColumn(name = "comment_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id")
-    )
-    private Set<User> users;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
 
     public Comment() {
@@ -80,12 +76,12 @@ public class Comment {
         this.project = project;
     }
 
-    public Set<User> getUsers() {
-        return users;
+    public User getUser() {
+        return user;
     }
 
-    public void setUsers(Set<User> users) {
-        this.users = users;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @PrePersist

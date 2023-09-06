@@ -72,20 +72,16 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public Comment addCommentToProject(int projectId, Comment comment, String username) {
-        Project project = projectRepository.findById(projectId).orElseThrow(() -> new ProjectNotFoundException(projectId));
+      /*  Project project = projectRepository.findById(projectId).orElseThrow(() -> new ProjectNotFoundException(projectId));
         User user = userRepository.findByUsername(username).orElseThrow(() -> new UserNotFoundException(username));
         comment.setProject(project);
 
-        Set<User> updatedUsers = comment.getUsers();
 
-        if(updatedUsers == null){
-            updatedUsers = new HashSet<>();
-        }
-
-        updatedUsers.add(user);
-
-        comment.setUsers(updatedUsers);
 
         return commentRepository.save(comment);
+     */
+
+        return  null;
     }
+
 }
