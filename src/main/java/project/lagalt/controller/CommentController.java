@@ -63,7 +63,17 @@ public class CommentController {
 
        Comment comment = commentMapper.commentPostDtoToComment(commentPostDTO);
        User user = userService.findByUsername(username);
+
+       if(user == null){
+           throw new UserNotFoundException(username);
+       }
+
        Project project = projectService.findById(projectId);
+
+       if(project == null){
+           throw new ProjectNotFoundException(projectId);
+       }
+
        comment.setProject(project);
        comment.setUser(user);
 
@@ -101,5 +111,14 @@ public class CommentController {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
     }
 
+    @ExceptionHandler(UserNotFoundException.class)
+    public ResponseEntity<String> handleUserNotFoundException(UserNotFoundException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+    }
+
+    @ExceptionHandler(ProjectNotFoundException.class)
+    public ResponseEntity<String> handleProjectNotFoundExceptionn(ProjectNotFoundException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+    }
 
 }
