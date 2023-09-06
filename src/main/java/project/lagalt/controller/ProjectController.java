@@ -15,6 +15,7 @@ import project.lagalt.model.dtos.project.ProjectPostDTO;
 import project.lagalt.model.dtos.project.ProjectUpdateDTO;
 import project.lagalt.model.entities.Project;
 import project.lagalt.model.entities.User;
+import project.lagalt.service.CollaboratorService;
 import project.lagalt.service.ProjectService;
 import project.lagalt.service.UserService;
 import project.lagalt.utilites.exceptions.ProjectNotFoundException;
@@ -30,6 +31,8 @@ public class ProjectController {
 
     private final ProjectService projectService;
     private final UserService userService;
+
+    private final CollaboratorService collaboratorService;
     private final ProjectMapper projectMapper;
 
     @Autowired

@@ -4,14 +4,19 @@ package project.lagalt.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 import project.lagalt.mapper.CollaboratorMapper;
 import project.lagalt.model.dtos.collaborator.CollaboratorDTO;
 import project.lagalt.model.dtos.collaborator.CollaboratorPostDTO;
 import project.lagalt.model.dtos.collaborator.CollaboratorUpdateDTO;
 import project.lagalt.model.entities.Collaborator;
+import project.lagalt.model.entities.Project;
 import project.lagalt.model.entities.User;
 import project.lagalt.service.CollaboratorService;
+import project.lagalt.service.ProjectService;
+import project.lagalt.service.UserService;
 import project.lagalt.utilites.exceptions.CollaboratorNotFoundException;
 
 import java.util.Collection;
@@ -24,10 +29,15 @@ public class CollaboratorController {
     private final CollaboratorService collaboratorService;
     private final CollaboratorMapper collaboratorMapper;
 
+    private final UserService userService;
+    private final ProjectService projectService;
+
     @Autowired
-    public CollaboratorController(CollaboratorService collaboratorService, CollaboratorMapper collaboratorMapper) {
+    public CollaboratorController(CollaboratorService collaboratorService, CollaboratorMapper collaboratorMapper, UserService userService, ProjectService projectService) {
         this.collaboratorService = collaboratorService;
         this.collaboratorMapper = collaboratorMapper;
+        this.userService = userService;
+        this.projectService = projectService;
     }
 
     @GetMapping
@@ -46,9 +56,20 @@ public class CollaboratorController {
         return ResponseEntity.ok(collaboratorMapper.collaboratorToCollaboratorDto(collaborator));
     }
 
-    @PostMapping
-    public ResponseEntity<Collaborator> addCollaborator(@RequestBody CollaboratorPostDTO collaboratorPostDTO){
-        return ResponseEntity.ok(collaboratorService.add(collaboratorMapper.collaboratorPostDtoToCollaborator(collaboratorPostDTO)));
+    @PostMapping("project/{projectId}")
+    public ResponseEntity<CollaboratorDTO> addCollaborator(@PathVariable Integer projectId, @RequestBody CollaboratorPostDTO collaboratorPostDTO, @AuthenticationPrincipal Jwt jwt){
+        String username = jwt.getClaim("preferred_username");
+
+        User user = userService.findByUsername(username);
+        Project project = projectService.findById(projectId);
+
+        Collaborator collaborator = collaboratorMapper.collaboratorPostDtoToCollaborator(collaboratorPostDTO);
+        collaborator.setProject(project);
+        collaborator.setUser(user);
+
+        collaboratorService.add(collaborator);
+
+        return ResponseEntity.ok(collaboratorMapper.collaboratorToCollaboratorDto(collaborator));
     }
 
     @PatchMapping("/{id}")
