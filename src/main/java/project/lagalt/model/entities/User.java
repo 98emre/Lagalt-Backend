@@ -40,7 +40,7 @@ public class User {
     @OneToMany(mappedBy = "user")
     private Set<Collaborator> collaborators;
 
-    @ManyToMany(mappedBy = "users")
+    @OneToMany(mappedBy = "user")
     private Set<Comment> comments;
 
     public User(){

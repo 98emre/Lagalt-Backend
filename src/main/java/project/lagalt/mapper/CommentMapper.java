@@ -21,17 +21,9 @@ public abstract class CommentMapper {
     public abstract Comment commentUpdateDtoToComment(CommentUpdateDTO commentUpdateDTO);
 
     @Mapping(target = "projectId", source = "project.id")
-    @Mapping(target = "userIds",source = "users")
+    @Mapping(target = "userId",source = "user.id")
     public abstract CommentDTO commentToCommentDto(Comment comment);
 
     public abstract Collection<CommentDTO> commentToCommentDtos(Collection<Comment> comments);
-
-    Set<Integer> usersToIds(Set<User> users){
-        if(users == null){
-            return null;
-        }
-
-        return users.stream().map(u -> u.getId()).collect(Collectors.toSet());
-    }
 
 }
