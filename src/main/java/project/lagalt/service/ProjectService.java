@@ -13,4 +13,6 @@ public interface ProjectService extends CrudService<Project,Integer> {
     Collection<Collaborator> findAllPendingByCollaborator(Project project);
     Collection<Collaborator> findAllApprovedByCollaborator(Project project);
 
+    boolean findCollaboratorExist(Integer ProjectId, User user);
+
 }
