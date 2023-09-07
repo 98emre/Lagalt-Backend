@@ -79,14 +79,15 @@ public class UserController {
         return ResponseEntity.status(201).build();
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<User> updateUser(@RequestBody UserUpdateDTO userUpdateDTO, @PathVariable int id){
+    @PatchMapping("/{id}")
+    public ResponseEntity<UserDTO> updateUser(@RequestBody UserUpdateDTO userUpdateDTO, @PathVariable int id){
 
         if (userService.findById(id) == null) {
             throw new UserNotFoundException(id);
         }
         userUpdateDTO.setId(id);
-        return ResponseEntity.ok(userService.update(userMapper.userUpdateToUser(userUpdateDTO)));
+        User user = userService.update(userMapper.userUpdateToUser(userUpdateDTO));
+        return ResponseEntity.ok(userMapper.userToUserDTO(user));
     }
 
     @DeleteMapping("/{id}")
