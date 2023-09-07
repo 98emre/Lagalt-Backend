@@ -32,7 +32,6 @@ public class ProjectController {
     private final ProjectService projectService;
     private final UserService userService;
 
-    private final CollaboratorService collaboratorService;
     private final ProjectMapper projectMapper;
 
     @Autowired

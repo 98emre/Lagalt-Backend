@@ -39,8 +39,8 @@ public class CollaboratorServiceImpl implements CollaboratorService {
     public Collaborator update(Collaborator collaborator) {
         Collaborator updateCollaborator = collaboratorRepository.findById(collaborator.getId()).orElseThrow(()-> new CollaboratorNotFoundException(collaborator.getId()));
 
-        if(collaborator.isStatus()){
-            updateCollaborator.setStatus(collaborator.isStatus());
+        if(collaborator.getStatus() != null){
+            updateCollaborator.setStatus(collaborator.getStatus());
         }
 
         if(collaborator.getApprovalDate() != null){
@@ -60,4 +60,5 @@ public class CollaboratorServiceImpl implements CollaboratorService {
 
         collaboratorRepository.deleteById(id);
     }
+
 }

@@ -11,4 +11,6 @@ public interface UserService extends CrudService<User, Integer> {
 
     public User findByToken(String username);
     Collection<User> findAllByName(String userName, String fullName);
+
+
 }

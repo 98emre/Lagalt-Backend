@@ -2,6 +2,7 @@ package project.lagalt.serviceImpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import project.lagalt.model.entities.Collaborator;
 import project.lagalt.model.entities.Comment;
 import project.lagalt.model.entities.Project;
 import project.lagalt.repository.CommentRepository;
@@ -16,12 +17,10 @@ import java.util.Set;
 public class ProjectServiceImpl implements ProjectService {
 
     private final ProjectRepository projectRepository;
-    private final CommentRepository commentRepository;
 
     @Autowired
-    public ProjectServiceImpl(ProjectRepository projectRepository, CommentRepository commentRepository) {
+    public ProjectServiceImpl(ProjectRepository projectRepository) {
         this.projectRepository = projectRepository;
-        this.commentRepository = commentRepository;
     }
 
     @Override
@@ -76,5 +75,10 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public Collection<Project> findAllByTitle(String title) {
         return projectRepository.findAllByTitleIgnoreCaseContaining(title);
+    }
+
+    @Override
+    public Collection<Project> findAllCollaboratorRequest(Set<Collaborator> collaborators) {
+        return null;
     }
 }

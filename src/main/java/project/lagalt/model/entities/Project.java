@@ -40,6 +40,7 @@ public class Project {
 
     @OneToMany(mappedBy = "project")
     private Set<Collaborator> collaborators;
+    
     public Project() {
 
     }

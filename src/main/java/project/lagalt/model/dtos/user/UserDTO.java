@@ -16,7 +16,6 @@ public class UserDTO {
     private Set<Integer> projectIds;
     private Set<Integer> collaboratorIds;
     private Set<Integer> commentIds;
-
     public int getId() {
         return id;
     }
@@ -80,4 +79,5 @@ public class UserDTO {
     public void setCommentIds(Set<Integer> commentIds) {
         this.commentIds = commentIds;
     }
+
 }

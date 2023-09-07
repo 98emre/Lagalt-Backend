@@ -18,6 +18,8 @@ import project.lagalt.service.CollaboratorService;
 import project.lagalt.service.ProjectService;
 import project.lagalt.service.UserService;
 import project.lagalt.utilites.exceptions.CollaboratorNotFoundException;
+import project.lagalt.utilites.exceptions.ProjectNotFoundException;
+import project.lagalt.utilites.exceptions.UserNotFoundException;
 
 import java.util.Collection;
 
@@ -56,12 +58,21 @@ public class CollaboratorController {
         return ResponseEntity.ok(collaboratorMapper.collaboratorToCollaboratorDto(collaborator));
     }
 
-    @PostMapping("project/{projectId}")
+    @PostMapping("/{projectId}/collaborator")
     public ResponseEntity<CollaboratorDTO> addCollaborator(@PathVariable Integer projectId, @RequestBody CollaboratorPostDTO collaboratorPostDTO, @AuthenticationPrincipal Jwt jwt){
         String username = jwt.getClaim("preferred_username");
 
         User user = userService.findByUsername(username);
+
+        if(user == null){
+            throw new UserNotFoundException(username);
+        }
+
         Project project = projectService.findById(projectId);
+
+        if(project == null){
+            throw new ProjectNotFoundException(projectId);
+        }
 
         Collaborator collaborator = collaboratorMapper.collaboratorPostDtoToCollaborator(collaboratorPostDTO);
         collaborator.setProject(project);
@@ -98,6 +109,16 @@ public class CollaboratorController {
 
     @ExceptionHandler(CollaboratorNotFoundException.class)
     public ResponseEntity<String> handleCollaboratorNotFoundException(CollaboratorNotFoundException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+    }
+
+    @ExceptionHandler(UserNotFoundException.class)
+    public ResponseEntity<String> handleUserNotFoundException(UserNotFoundException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+    }
+
+    @ExceptionHandler(ProjectNotFoundException.class)
+    public ResponseEntity<String> handleProjectNotFoundExceptionn(ProjectNotFoundException ex) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
     }
 }

@@ -2,6 +2,8 @@ package project.lagalt.model.entities;
 
 
 import jakarta.persistence.*;
+import project.lagalt.utilites.enums.Application;
+
 import java.time.LocalDateTime;
 
 @Entity
@@ -12,7 +14,7 @@ public class Collaborator {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Column(name = "status")
-    private boolean status;
+    private Application status;
 
     @Column(name = "request_date")
     private LocalDateTime requestDate;
@@ -31,10 +33,6 @@ public class Collaborator {
     public Collaborator() {
     }
 
-    public Collaborator(int id, boolean status) {
-        this.id = id;
-        this.status = status;
-    }
 
     public int getId() {
         return id;
@@ -44,11 +42,11 @@ public class Collaborator {
         this.id = id;
     }
 
-    public boolean isStatus() {
+    public Application getStatus() {
         return status;
     }
 
-    public void setStatus(boolean status) {
+    public void setStatus(Application status) {
         this.status = status;
     }
 
@@ -87,14 +85,14 @@ public class Collaborator {
     @PrePersist
     @PreUpdate
     public void updateDate() {
-        if (requestDate == null) {
+        if (status == Application.PENDING) {
             requestDate = LocalDateTime.now();
         }
 
-        if (status && approvalDate == null) {
+        if (status == Application.APPROVED && approvalDate == null) {
             approvalDate = LocalDateTime.now();
             requestDate = null;
-        } else if (!status) {
+        } else if (status == Application.PENDING || status == Application.DECLINED) {
             approvalDate = null;
         }
     }
