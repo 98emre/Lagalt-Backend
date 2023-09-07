@@ -142,9 +142,9 @@ public class ProjectController {
             throw new ProjectNotFoundException(project.getId());
         }
 
-        if(project.getUser().getId() != user.getId()){
+        /*if(project.getUser().getId() != user.getId()){
             throw new UserNoAccessToCollabortorException(username);
-        }
+        }*/
         
         Collection<Collaborator> approvedCollaborators = projectService.findAllApprovedByCollaborator(project);
         return ResponseEntity.ok(collaboratorMapper.collaboratorToCollaboratorDtos(approvedCollaborators));
