@@ -2,26 +2,26 @@ package project.lagalt.serviceImpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import project.lagalt.model.entities.Comment;
+import project.lagalt.model.entities.Collaborator;
 import project.lagalt.model.entities.Project;
-import project.lagalt.repository.CommentRepository;
+import project.lagalt.repository.CollaboratorRepository;
 import project.lagalt.repository.ProjectRepository;
 import project.lagalt.service.ProjectService;
+import project.lagalt.utilites.enums.Application;
 import project.lagalt.utilites.exceptions.ProjectNotFoundException;
 
 import java.util.Collection;
-import java.util.Set;
 
 @Service
 public class ProjectServiceImpl implements ProjectService {
 
     private final ProjectRepository projectRepository;
-    private final CommentRepository commentRepository;
+    private final CollaboratorRepository collaboratorRepository;
 
     @Autowired
-    public ProjectServiceImpl(ProjectRepository projectRepository, CommentRepository commentRepository) {
+    public ProjectServiceImpl(ProjectRepository projectRepository, CollaboratorRepository collaboratorRepository) {
         this.projectRepository = projectRepository;
-        this.commentRepository = commentRepository;
+        this.collaboratorRepository = collaboratorRepository;
     }
 
     @Override
@@ -77,4 +77,16 @@ public class ProjectServiceImpl implements ProjectService {
     public Collection<Project> findAllByTitle(String title) {
         return projectRepository.findAllByTitleIgnoreCaseContaining(title);
     }
+
+    @Override
+    public Collection<Collaborator> findAllPendingByCollaborator(Project project) {
+        return collaboratorRepository.findByProjectAndStatus(project, Application.PENDING);
+    }
+
+    @Override
+    public Collection<Collaborator> findAllApprovedByCollaborator(Project project) {
+        return collaboratorRepository.findByProjectAndStatus(project, Application.APPROVED);
+    }
+
+
 }

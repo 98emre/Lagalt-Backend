@@ -2,6 +2,8 @@ package project.lagalt.model.dtos.collaborator;
 
 
 import lombok.Data;
+import project.lagalt.utilites.enums.Application;
+import project.lagalt.utilites.enums.Status;
 
 import java.time.LocalDateTime;
 
@@ -9,7 +11,7 @@ import java.time.LocalDateTime;
 public class CollaboratorPostDTO {
 
     private int id;
-    private  boolean status;
+    private Application status;
     private LocalDateTime requestDate;
     private LocalDateTime approvalDate;
 
@@ -21,11 +23,11 @@ public class CollaboratorPostDTO {
         this.id = id;
     }
 
-    public boolean isStatus() {
+    public Application getStatus() {
         return status;
     }
 
-    public void setStatus(boolean status) {
+    public void setStatus(Application status) {
         this.status = status;
     }
 
