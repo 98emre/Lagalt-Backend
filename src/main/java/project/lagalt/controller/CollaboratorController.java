@@ -17,9 +17,7 @@ import project.lagalt.model.entities.User;
 import project.lagalt.service.CollaboratorService;
 import project.lagalt.service.ProjectService;
 import project.lagalt.service.UserService;
-import project.lagalt.utilites.exceptions.CollaboratorNotFoundException;
-import project.lagalt.utilites.exceptions.ProjectNotFoundException;
-import project.lagalt.utilites.exceptions.UserNotFoundException;
+import project.lagalt.utilites.exceptions.*;
 
 import java.util.Collection;
 
@@ -74,6 +72,15 @@ public class CollaboratorController {
             throw new ProjectNotFoundException(projectId);
         }
 
+        if(project.getUser().getId() == user.getId()){
+            throw new CollaboratorCheckOwnerException(username);
+        }
+
+        if(projectService.findCollaboratorExist(projectId,user)){
+            throw new CollaboratorAlreadyExistException(username);
+        }
+
+
         Collaborator collaborator = collaboratorMapper.collaboratorPostDtoToCollaborator(collaboratorPostDTO);
         collaborator.setProject(project);
         collaborator.setUser(user);
@@ -106,6 +113,16 @@ public class CollaboratorController {
         collaboratorService.deleteById(id);
 
         return ResponseEntity.status(200).build();
+    }
+
+
+    @ExceptionHandler(CollaboratorAlreadyExistException.class)
+    public ResponseEntity<String> handleCollaboratorAlreadyExistException(CollaboratorAlreadyExistException ex) {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
+    }
+    @ExceptionHandler(CollaboratorCheckOwnerException.class)
+    public ResponseEntity<String> handleCollaboratorCheckOwnerException(CollaboratorCheckOwnerException ex) {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
     }
 
     @ExceptionHandler(CollaboratorNotFoundException.class)
