@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import project.lagalt.model.entities.Collaborator;
 import project.lagalt.model.entities.Project;
+import project.lagalt.model.entities.User;
 import project.lagalt.repository.CollaboratorRepository;
 import project.lagalt.repository.ProjectRepository;
 import project.lagalt.service.ProjectService;
@@ -11,6 +12,7 @@ import project.lagalt.utilites.enums.Application;
 import project.lagalt.utilites.exceptions.ProjectNotFoundException;
 
 import java.util.Collection;
+import java.util.Set;
 
 @Service
 public class ProjectServiceImpl implements ProjectService {
@@ -88,5 +90,15 @@ public class ProjectServiceImpl implements ProjectService {
         return collaboratorRepository.findByProjectAndStatus(project, Application.APPROVED);
     }
 
+    @Override
+    public boolean findCollaboratorExist(Integer projectId, User user) {
+        Project project = projectRepository.findById(projectId).orElseThrow(() -> new ProjectNotFoundException(projectId));
 
+        for(Collaborator c: project.getCollaborators()){
+            if(c.getUser().getId() == user.getId()){
+                return true;
+            }
+        }
+        return  false;
+    }
 }
