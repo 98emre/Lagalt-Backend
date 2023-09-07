@@ -30,13 +30,13 @@ public class User {
     @CollectionTable(name = "user_skills", joinColumns = @JoinColumn(name = "user_id"))
     private Set<Skills> skills;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private Set<Project> projects;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private Set<Collaborator> collaborators;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private Set<Comment> comments;
 
     public User(){

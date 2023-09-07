@@ -35,10 +35,10 @@ public class Project {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(mappedBy = "project")
+    @OneToMany(mappedBy = "project",cascade = CascadeType.ALL)
     private Set<Comment> comments;
 
-    @OneToMany(mappedBy = "project")
+    @OneToMany(mappedBy = "project",cascade = CascadeType.ALL)
     private Set<Collaborator> collaborators;
 
     public Project() {

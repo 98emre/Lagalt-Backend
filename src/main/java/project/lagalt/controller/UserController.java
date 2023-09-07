@@ -73,10 +73,11 @@ public class UserController {
     @PostMapping("/add-user")
     public ResponseEntity<?> addUserFromToken(@RequestHeader("Authorization") String bearerToken){
         String token = bearerToken.replace("Bearer ", "");
-        System.out.println("Received Token: " + token);
-
         userService.createUserFromToken(token);
-        return ResponseEntity.status(201).build();
+
+        User user = userService.findByToken(token);
+
+        return ResponseEntity.ok(userMapper.userToUserDTO(user));
     }
 
     @PatchMapping("/{id}")
