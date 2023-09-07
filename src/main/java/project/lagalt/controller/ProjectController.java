@@ -80,14 +80,15 @@ public class ProjectController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<Project> updateProject(@RequestBody ProjectUpdateDTO projectUpdateDTO, @PathVariable int id){
+    public ResponseEntity<ProjectDTO> updateProject(@RequestBody ProjectUpdateDTO projectUpdateDTO, @PathVariable int id){
 
         if (projectService.findById(id) == null) {
             throw new ProjectNotFoundException(id);
         }
 
         projectUpdateDTO.setId(id);
-        return ResponseEntity.ok(projectService.update(projectMapper.projectUpdateDtoToProject(projectUpdateDTO)));
+        Project project = projectService.update(projectMapper.projectUpdateDtoToProject(projectUpdateDTO));
+        return ResponseEntity.ok(projectMapper.projectToProjectDTO(project));
     }
 
     @DeleteMapping("/{id}")
