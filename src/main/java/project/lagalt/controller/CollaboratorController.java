@@ -84,14 +84,15 @@ public class CollaboratorController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<Collaborator> updateCollaborator(@RequestBody CollaboratorUpdateDTO collaboratorUpdateDTO, @PathVariable int id){
+    public ResponseEntity<CollaboratorDTO> updateCollaborator(@RequestBody CollaboratorUpdateDTO collaboratorUpdateDTO, @PathVariable int id){
 
         if (collaboratorService.findById(id) == null) {
             throw new CollaboratorNotFoundException(id);
         }
 
         collaboratorUpdateDTO.setId(id);
-        return ResponseEntity.ok(collaboratorService.update(collaboratorMapper.collaboratorUpdateDtoToCollaborator(collaboratorUpdateDTO)));
+        Collaborator collaborator = collaboratorService.update(collaboratorMapper.collaboratorUpdateDtoToCollaborator(collaboratorUpdateDTO));
+        return ResponseEntity.ok(collaboratorMapper.collaboratorToCollaboratorDto(collaborator));
     }
 
     @DeleteMapping("/{id}")
