@@ -83,14 +83,15 @@ public class CommentController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<Comment> updateComment(@RequestBody CommentUpdateDTO commentUpdateDTO, @PathVariable int id){
+    public ResponseEntity<CommentDTO> updateComment(@RequestBody CommentUpdateDTO commentUpdateDTO, @PathVariable int id){
 
         if (commentService.findById(id) == null) {
             throw new CommentNotFoundException(id);
         }
 
         commentUpdateDTO.setId(id);
-        return ResponseEntity.ok(commentService.update(commentMapper.commentUpdateDtoToComment(commentUpdateDTO)));
+        Comment comment = commentService.update(commentMapper.commentUpdateDtoToComment(commentUpdateDTO));
+        return ResponseEntity.ok(commentMapper.commentToCommentDto(comment));
     }
 
     @DeleteMapping("/{id}")
