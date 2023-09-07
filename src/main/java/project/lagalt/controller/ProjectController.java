@@ -19,6 +19,7 @@ import project.lagalt.model.entities.User;
 import project.lagalt.service.ProjectService;
 import project.lagalt.service.UserService;
 import project.lagalt.utilites.exceptions.ProjectNotFoundException;
+import project.lagalt.utilites.exceptions.UserNoAccessToCollabortorException;
 import project.lagalt.utilites.exceptions.UserNotFoundException;
 
 import java.util.Collection;
@@ -105,23 +106,53 @@ public class ProjectController {
     }
 
     @GetMapping("/{projectId}/collaborators/pending")
-    public ResponseEntity<Collection<CollaboratorDTO>> getPendingCollaborators(@PathVariable Integer projectId) {
+    public ResponseEntity<Collection<CollaboratorDTO>> getPendingCollaborators(@PathVariable Integer projectId,  @AuthenticationPrincipal Jwt jwt) {
+        String username = jwt.getClaim("preferred_username");
+
+        User user = userService.findByUsername(username);
+        if(user == null){
+            throw new UserNotFoundException(username);
+        }
+
         Project project = projectService.findById(projectId);
         if (project == null) {
-            return ResponseEntity.notFound().build();
+            throw new ProjectNotFoundException(project.getId());
         }
+
+        if(project.getUser().getId() != user.getId()){
+            throw new UserNoAccessToCollabortorException(username);
+        }
+
         Collection<Collaborator> pendingCollaborators = projectService.findAllPendingByCollaborator(project);
         return ResponseEntity.ok(collaboratorMapper.collaboratorToCollaboratorDtos(pendingCollaborators));
     }
 
     @GetMapping("/{projectId}/collaborators/approved")
-    public ResponseEntity<Collection<CollaboratorDTO>> getApprovedCollaborators(@PathVariable Integer projectId) {
-        Project project = projectService.findById(projectId);
-        if (project == null) {
-            return ResponseEntity.notFound().build();
+    public ResponseEntity<Collection<CollaboratorDTO>> getApprovedCollaborators(@PathVariable Integer projectId, @AuthenticationPrincipal Jwt jwt) {
+        String username = jwt.getClaim("preferred_username");
+
+        User user = userService.findByUsername(username);
+        if(user == null){
+            throw new UserNotFoundException(username);
         }
+
+        Project project = projectService.findById(projectId);
+
+        if (project == null) {
+            throw new ProjectNotFoundException(project.getId());
+        }
+
+        if(project.getUser().getId() != user.getId()){
+            throw new UserNoAccessToCollabortorException(username);
+        }
+        
         Collection<Collaborator> approvedCollaborators = projectService.findAllApprovedByCollaborator(project);
         return ResponseEntity.ok(collaboratorMapper.collaboratorToCollaboratorDtos(approvedCollaborators));
+    }
+
+    @ExceptionHandler(UserNoAccessToCollabortorException.class)
+    public ResponseEntity<String> handleUserNoAccessToCollabortorExceptionn(UserNoAccessToCollabortorException ex) {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
     }
 
     @ExceptionHandler(ProjectNotFoundException.class)
