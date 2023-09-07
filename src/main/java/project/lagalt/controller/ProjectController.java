@@ -4,24 +4,23 @@ package project.lagalt.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
+import project.lagalt.mapper.CollaboratorMapper;
 import project.lagalt.mapper.ProjectMapper;
+import project.lagalt.model.dtos.collaborator.CollaboratorDTO;
 import project.lagalt.model.dtos.project.ProjectDTO;
 import project.lagalt.model.dtos.project.ProjectPostDTO;
 import project.lagalt.model.dtos.project.ProjectUpdateDTO;
+import project.lagalt.model.entities.Collaborator;
 import project.lagalt.model.entities.Project;
 import project.lagalt.model.entities.User;
-import project.lagalt.service.CollaboratorService;
 import project.lagalt.service.ProjectService;
 import project.lagalt.service.UserService;
 import project.lagalt.utilites.exceptions.ProjectNotFoundException;
 import project.lagalt.utilites.exceptions.UserNotFoundException;
 
-import java.security.Principal;
 import java.util.Collection;
 
 @RestController
@@ -32,12 +31,14 @@ public class ProjectController {
     private final ProjectService projectService;
     private final UserService userService;
 
+    private final CollaboratorMapper collaboratorMapper;
     private final ProjectMapper projectMapper;
 
     @Autowired
-    public ProjectController(ProjectService projectService, UserService userService, ProjectMapper projectMapper){
+    public ProjectController(ProjectService projectService, UserService userService, CollaboratorMapper collaboratorMapper, ProjectMapper projectMapper){
         this.projectService = projectService;
         this.userService = userService;
+        this.collaboratorMapper = collaboratorMapper;
         this.projectMapper = projectMapper;
     }
 
@@ -100,6 +101,26 @@ public class ProjectController {
         projectService.deleteById(id);
 
         return ResponseEntity.status(200).build();
+    }
+
+    @GetMapping("/{projectId}/collaborators/pending")
+    public ResponseEntity<Collection<CollaboratorDTO>> getPendingCollaborators(@PathVariable Integer projectId) {
+        Project project = projectService.findById(projectId);
+        if (project == null) {
+            return ResponseEntity.notFound().build();
+        }
+        Collection<Collaborator> pendingCollaborators = projectService.findAllPendingByCollaborator(project);
+        return ResponseEntity.ok(collaboratorMapper.collaboratorToCollaboratorDtos(pendingCollaborators));
+    }
+
+    @GetMapping("/{projectId}/collaborators/approved")
+    public ResponseEntity<Collection<CollaboratorDTO>> getApprovedCollaborators(@PathVariable Integer projectId) {
+        Project project = projectService.findById(projectId);
+        if (project == null) {
+            return ResponseEntity.notFound().build();
+        }
+        Collection<Collaborator> approvedCollaborators = projectService.findAllApprovedByCollaborator(project);
+        return ResponseEntity.ok(collaboratorMapper.collaboratorToCollaboratorDtos(approvedCollaborators));
     }
 
     @ExceptionHandler(ProjectNotFoundException.class)
