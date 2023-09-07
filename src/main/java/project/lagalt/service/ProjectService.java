@@ -10,5 +10,7 @@ import java.util.Set;
 
 public interface ProjectService extends CrudService<Project,Integer> {
     Collection<Project> findAllByTitle(String title);
-    Collection<Project> findAllCollaboratorRequest(Set<Collaborator> collaborators);
+    Collection<Collaborator> findAllPendingByCollaborator(Project project);
+    Collection<Collaborator> findAllApprovedByCollaborator(Project project);
+
 }
