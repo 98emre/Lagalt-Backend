@@ -46,11 +46,12 @@ public class User {
 
     }
 
-    public User(int id, String username,String email, String fullname, Set<Skills> skills) {
+    public User(int id, String username,String email, String fullname, String description, Set<Skills> skills) {
         this.id = id;
         this.username = username;
         this.email = email;
         this.fullname = fullname;
+        this.description = description;
         this.skills = skills;
     }
 

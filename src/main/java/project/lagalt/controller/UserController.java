@@ -30,6 +30,7 @@ public class UserController {
 
     @GetMapping("public")
     public ResponseEntity<Collection<UserDTO>> getAllUser(){
+        System.out.println("dddd " + userService.findAll());
         return ResponseEntity.ok(userMapper.usersToUsersDTO(userService.findAll()));
     }
 
