@@ -11,6 +11,7 @@ public class UserDTO {
     private int id;
     private String username;
     private String email;
+    private String description;
     private String fullname;
     private Set<Skills> skills;
     private Set<Integer> projectIds;
@@ -38,6 +39,14 @@ public class UserDTO {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getFullname() {

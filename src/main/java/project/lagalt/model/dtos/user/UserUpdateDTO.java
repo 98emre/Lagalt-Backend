@@ -12,6 +12,7 @@ public class UserUpdateDTO {
     private String username;
     private String email;
     private String fullname;
+    private String description;
     private Set<Skills> skills;
 
     public int getId() {
@@ -36,6 +37,14 @@ public class UserUpdateDTO {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getFullname() {

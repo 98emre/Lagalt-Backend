@@ -11,6 +11,7 @@ public class UserPostDTO {
     private int id;
     private String username;
     private String email;
+    private String description;
     private String fullname;
     private Set<Skills> skills;
 
@@ -36,6 +37,14 @@ public class UserPostDTO {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getFullname() {
