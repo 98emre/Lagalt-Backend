@@ -1,5 +1,7 @@
 package project.lagalt.model.dtos.project;
 
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 import project.lagalt.utilites.enums.Category;
 import project.lagalt.utilites.enums.Status;
@@ -8,12 +10,25 @@ import project.lagalt.utilites.enums.Status;
 public class ProjectUpdateDTO {
 
     private int id;
-    private String title;
-    private String descriptions;
-    private String gitlink;
-    private Category category;
-    private Status status;
 
+    @Size(max = 100, message = "Title is Max Length")
+    @NotNull
+    private String title;
+
+    @Size(max = 1000, message = "Descriptions is Max Length")
+    @NotNull
+    private String descriptions;
+
+    @Size(max = 1000, message = "Git link is Max Length")
+    @NotNull
+    private String gitlink;
+
+    @NotNull
+    private Category category;
+
+    @NotNull
+    private Status status;
+    
     public int getId() {
         return id;
     }
