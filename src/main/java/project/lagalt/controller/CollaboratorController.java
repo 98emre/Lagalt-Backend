@@ -55,7 +55,10 @@ public class CollaboratorController {
             throw new CollaboratorNotFoundException(id);
         }
 
-        return ResponseEntity.ok(collaboratorMapper.collaboratorToCollaboratorDto(collaborator));
+        CollaboratorDTO collaboratorDTO = collaboratorMapper.collaboratorToCollaboratorDto(collaborator);
+
+
+        return ResponseEntity.ok(collaboratorDTO);
     }
 
     @PostMapping("/{projectId}/add-collaborator")
@@ -104,7 +107,9 @@ public class CollaboratorController {
 
         collaboratorUpdateDTO.setId(id);
         Collaborator collaborator = collaboratorService.update(collaboratorMapper.collaboratorUpdateDtoToCollaborator(collaboratorUpdateDTO));
-        return ResponseEntity.ok(collaboratorMapper.collaboratorToCollaboratorDto(collaborator));
+        CollaboratorDTO collaboratorDTO = collaboratorMapper.collaboratorToCollaboratorDto(collaborator);
+        
+        return ResponseEntity.ok(collaboratorDTO);
     }
 
     @DeleteMapping("/{id}")
