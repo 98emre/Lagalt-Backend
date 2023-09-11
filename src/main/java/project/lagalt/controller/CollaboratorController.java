@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 import project.lagalt.mapper.CollaboratorMapper;
 import project.lagalt.model.dtos.collaborator.CollaboratorDTO;
@@ -19,6 +20,7 @@ import project.lagalt.service.ProjectService;
 import project.lagalt.service.UserService;
 import project.lagalt.utilites.exceptions.*;
 
+import java.net.URI;
 import java.util.Collection;
 
 @RestController
@@ -84,10 +86,13 @@ public class CollaboratorController {
         Collaborator collaborator = collaboratorMapper.collaboratorPostDtoToCollaborator(collaboratorPostDTO);
         collaborator.setProject(project);
         collaborator.setUser(user);
-
         collaboratorService.add(collaborator);
 
-        return ResponseEntity.ok(collaboratorMapper.collaboratorToCollaboratorDto(collaborator));
+        CollaboratorDTO collaboratorDTO = collaboratorMapper.collaboratorToCollaboratorDto(collaborator);
+        URI location = URI.create("/api/collaborators/public/" + collaborator.getId());
+
+
+        return ResponseEntity.created(location).body(collaboratorDTO);
     }
 
     @PatchMapping("/{id}/update")
@@ -112,7 +117,7 @@ public class CollaboratorController {
 
         collaboratorService.deleteById(id);
 
-        return ResponseEntity.status(200).build();
+        return ResponseEntity.noContent().build();
     }
 
 
@@ -139,4 +144,10 @@ public class CollaboratorController {
     public ResponseEntity<String> handleProjectNotFoundException(ProjectNotFoundException ex) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
     }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<String> handleAllOtherExceptions(Exception ex) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error occurred.");
+    }
+
 }
