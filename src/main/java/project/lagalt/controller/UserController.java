@@ -41,7 +41,10 @@ public class UserController {
             throw new UserNotFoundException(id);
         }
 
-        return ResponseEntity.ok(userMapper.userToUserDTO(user));
+        UserDTO userDTO = userMapper.userToUserDTO(user);
+
+
+        return ResponseEntity.ok(userDTO);
     }
 
     @GetMapping("public/search")
@@ -56,7 +59,10 @@ public class UserController {
             throw new UserNotFoundException(username);
         }
 
-        return ResponseEntity.ok(userMapper.userToUserDTO(user));
+        UserDTO userDTO = userMapper.userToUserDTO(user);
+
+
+        return ResponseEntity.ok(userDTO);
     }
 
     @GetMapping("public/token/username")
@@ -68,7 +74,8 @@ public class UserController {
             throw new UserNotFoundException("Token");
         }
 
-        return ResponseEntity.ok(userMapper.userToUserDTO(user));
+        UserDTO userDTO = userMapper.userToUserDTO(user);
+        return ResponseEntity.ok(userDTO);
     }
     
     @PostMapping("/add-user")
@@ -92,7 +99,9 @@ public class UserController {
         }
         userUpdateDTO.setId(id);
         User user = userService.update(userMapper.userUpdateToUser(userUpdateDTO));
-        return ResponseEntity.ok(userMapper.userToUserDTO(user));
+
+        UserDTO userDTO = userMapper.userToUserDTO(user);
+        return ResponseEntity.ok(userDTO);
     }
 
     @DeleteMapping("/{id}/delete")
@@ -113,9 +122,13 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
     }
 
-
     @ExceptionHandler(UserAlreadyExistsException.class)
     public ResponseEntity<String> handleUserAlreadyExistsException(UserAlreadyExistsException ex) {
         return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<String> handleAllOtherExceptions(Exception ex) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error occurred.");
     }
 }
