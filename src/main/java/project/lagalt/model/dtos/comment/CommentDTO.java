@@ -1,6 +1,9 @@
 package project.lagalt.model.dtos.comment;
 
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -10,8 +13,15 @@ import java.util.Set;
 public class CommentDTO {
 
     private int id;
+
+    @Size(max = 100, message = "Comment is Max Length")
+    @NotBlank
+    @NotNull
     private String text;
+
     private LocalDateTime date;
+
+
     private Integer projectId;
     private Integer userId;
 

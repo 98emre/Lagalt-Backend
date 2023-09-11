@@ -28,7 +28,7 @@ public class ProjectUpdateDTO {
 
     @NotNull
     private Status status;
-    
+
     public int getId() {
         return id;
     }
