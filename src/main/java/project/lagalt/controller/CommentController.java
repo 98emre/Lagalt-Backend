@@ -21,6 +21,7 @@ import project.lagalt.utilites.exceptions.CommentNotFoundException;
 import project.lagalt.utilites.exceptions.ProjectNotFoundException;
 import project.lagalt.utilites.exceptions.UserNotFoundException;
 
+import java.net.URI;
 import java.util.Collection;
 
 @RestController
@@ -53,7 +54,9 @@ public class CommentController {
             throw new CommentNotFoundException(id);
         }
 
-        return ResponseEntity.ok(commentMapper.commentToCommentDto(comment));
+        CommentDTO commentDTO = commentMapper.commentToCommentDto(comment);
+
+        return ResponseEntity.ok(commentDTO);
     }
 
 
@@ -78,8 +81,10 @@ public class CommentController {
        comment.setUser(user);
 
        commentService.add(comment);
+       CommentDTO commentDTO = commentMapper.commentToCommentDto(comment);
+       URI location = URI.create("/api/comments/public/" + comment.getId());
 
-        return ResponseEntity.ok(commentMapper.commentToCommentDto(comment));
+        return ResponseEntity.created(location).body(commentDTO);
     }
 
     @PatchMapping("/{id}/update")
@@ -91,7 +96,10 @@ public class CommentController {
 
         commentUpdateDTO.setId(id);
         Comment comment = commentService.update(commentMapper.commentUpdateDtoToComment(commentUpdateDTO));
-        return ResponseEntity.ok(commentMapper.commentToCommentDto(comment));
+        CommentDTO commentDTO = commentMapper.commentToCommentDto(comment);
+
+
+        return ResponseEntity.ok(commentDTO);
     }
 
     @DeleteMapping("/{id}/delete")
@@ -104,7 +112,7 @@ public class CommentController {
 
         commentService.deleteById(id);
 
-        return ResponseEntity.status(200).build();
+        return ResponseEntity.noContent().build();
     }
 
     @ExceptionHandler(CommentNotFoundException.class)
@@ -120,6 +128,11 @@ public class CommentController {
     @ExceptionHandler(ProjectNotFoundException.class)
     public ResponseEntity<String> handleProjectNotFoundException(ProjectNotFoundException ex) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<String> handleAllOtherExceptions(Exception ex) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error occurred.");
     }
 
 }
