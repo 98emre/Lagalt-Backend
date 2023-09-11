@@ -22,6 +22,7 @@ import project.lagalt.utilites.exceptions.ProjectNotFoundException;
 import project.lagalt.utilites.exceptions.UserNoAccessToCollabortorException;
 import project.lagalt.utilites.exceptions.UserNotFoundException;
 
+import java.net.URI;
 import java.util.Collection;
 
 @RestController
@@ -55,7 +56,10 @@ public class ProjectController {
             throw new ProjectNotFoundException(id);
         }
 
-        return ResponseEntity.ok(projectMapper.projectToProjectDTO(project));
+        ProjectDTO projectDTO = projectMapper.projectToProjectDTO(project);
+
+
+        return ResponseEntity.ok(projectDTO);
     }
 
     @PostMapping
@@ -71,8 +75,11 @@ public class ProjectController {
 
         project.setUser(user);
         projectService.add(project);
+        ProjectDTO projectDTO = projectMapper.projectToProjectDTO(project);
 
-        return ResponseEntity.ok(projectMapper.projectToProjectDTO(project));
+        URI location = URI.create("/api/projects/public/" + project.getId());
+
+        return ResponseEntity.created(location).body(projectDTO);
     }
 
     @GetMapping("public/search")
@@ -89,7 +96,9 @@ public class ProjectController {
 
         projectUpdateDTO.setId(id);
         Project project = projectService.update(projectMapper.projectUpdateDtoToProject(projectUpdateDTO));
-        return ResponseEntity.ok(projectMapper.projectToProjectDTO(project));
+        ProjectDTO projectDTO = projectMapper.projectToProjectDTO(project);
+
+        return ResponseEntity.ok(projectDTO);
     }
 
     @DeleteMapping("/{id}/delete")
@@ -147,6 +156,7 @@ public class ProjectController {
         }*/
         
         Collection<Collaborator> approvedCollaborators = projectService.findAllApprovedByCollaborator(project);
+
         return ResponseEntity.ok(collaboratorMapper.collaboratorToCollaboratorDtos(approvedCollaborators));
     }
 
@@ -163,6 +173,11 @@ public class ProjectController {
     @ExceptionHandler(UserNotFoundException.class)
     public ResponseEntity<String> handleUserNotFoundException(UserNotFoundException ex) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<String> handleAllOtherExceptions(Exception ex) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error occurred.");
     }
 
 }
