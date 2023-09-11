@@ -1,5 +1,7 @@
 package project.lagalt.model.dtos.user;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 import project.lagalt.utilites.enums.Skills;
 
@@ -9,10 +11,22 @@ import java.util.Set;
 @Data
 public class UserDTO {
     private int id;
+
+    @Size(max = 50, message = "Username is Max Length")
+    @NotBlank(message = "No Blank Username")
     private String username;
+
+
+    @Size(max = 100, message = "Email is Max Length")
     private String email;
+
+    @Size(max = 300, message = "Description is Max Length")
     private String description;
+
+    @Size(max = 50, message = "Fullname is Max Length")
     private String fullname;
+
+
     private Set<Skills> skills;
     private Set<Integer> projectIds;
     private Set<Integer> collaboratorIds;
