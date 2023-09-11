@@ -12,6 +12,7 @@ import project.lagalt.service.UserService;
 import project.lagalt.utilites.exceptions.UserAlreadyExistsException;
 import project.lagalt.utilites.exceptions.UserNotFoundException;
 
+import java.net.URI;
 import java.util.Collection;
 
 @RestController
@@ -30,7 +31,6 @@ public class UserController {
 
     @GetMapping("public")
     public ResponseEntity<Collection<UserDTO>> getAllUser(){
-        System.out.println("dddd " + userService.findAll());
         return ResponseEntity.ok(userMapper.usersToUsersDTO(userService.findAll()));
     }
 
@@ -77,8 +77,11 @@ public class UserController {
         userService.createUserFromToken(token);
 
         User user = userService.findByToken(token);
+        UserDTO userDTO = userMapper.userToUserDTO(user);
 
-        return ResponseEntity.ok(userMapper.userToUserDTO(user));
+        URI location = URI.create("/api/users/public/" + user.getId());
+
+        return ResponseEntity.created(location).body(userDTO);
     }
 
     @PatchMapping("/{id}/update")
@@ -102,7 +105,7 @@ public class UserController {
 
         userService.deleteById(id);
 
-        return ResponseEntity.status(200).build();
+        return ResponseEntity.noContent().build();
     }
 
     @ExceptionHandler(UserNotFoundException.class)
