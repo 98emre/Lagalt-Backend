@@ -32,7 +32,8 @@ public class SecurityConfig {
                         auth.requestMatchers(
                                         "api/projects/public/**",
                                         "api/comments/public/**",
-                                        "api/users/public/**"
+                                        "api/users/public/**",
+                                        "api/collaborators/public/**"
                                 )
                                 .permitAll().
                                 anyRequest().authenticated())

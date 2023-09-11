@@ -81,7 +81,7 @@ public class UserController {
         return ResponseEntity.ok(userMapper.userToUserDTO(user));
     }
 
-    @PatchMapping("/{id}")
+    @PatchMapping("/{id}/update")
     public ResponseEntity<UserDTO> updateUser(@RequestBody UserUpdateDTO userUpdateDTO, @PathVariable int id){
 
         if (userService.findById(id) == null) {
@@ -92,7 +92,7 @@ public class UserController {
         return ResponseEntity.ok(userMapper.userToUserDTO(user));
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{id}/delete")
     public ResponseEntity<User> deleteUser(@PathVariable int id){
         User deletedUser = userService.findById(id);
 

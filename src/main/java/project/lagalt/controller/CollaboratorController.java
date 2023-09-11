@@ -40,12 +40,12 @@ public class CollaboratorController {
         this.projectService = projectService;
     }
 
-    @GetMapping
+    @GetMapping("public")
     public ResponseEntity<Collection<CollaboratorDTO>> getAllCollaborator(){
         return ResponseEntity.ok(collaboratorMapper.collaboratorToCollaboratorDtos(collaboratorService.findAll()));
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("public/{id}")
     public ResponseEntity<CollaboratorDTO> getCollaboratorById(@PathVariable int id){
         Collaborator collaborator = collaboratorService.findById(id);
 
@@ -56,7 +56,7 @@ public class CollaboratorController {
         return ResponseEntity.ok(collaboratorMapper.collaboratorToCollaboratorDto(collaborator));
     }
 
-    @PostMapping("/{projectId}/collaborator")
+    @PostMapping("/{projectId}/add-collaborator")
     public ResponseEntity<CollaboratorDTO> addCollaborator(@PathVariable Integer projectId, @RequestBody CollaboratorPostDTO collaboratorPostDTO, @AuthenticationPrincipal Jwt jwt){
         String username = jwt.getClaim("preferred_username");
 
@@ -90,7 +90,7 @@ public class CollaboratorController {
         return ResponseEntity.ok(collaboratorMapper.collaboratorToCollaboratorDto(collaborator));
     }
 
-    @PatchMapping("/{id}")
+    @PatchMapping("/{id}/update")
     public ResponseEntity<CollaboratorDTO> updateCollaborator(@RequestBody CollaboratorUpdateDTO collaboratorUpdateDTO, @PathVariable int id){
 
         if (collaboratorService.findById(id) == null) {
@@ -136,7 +136,7 @@ public class CollaboratorController {
     }
 
     @ExceptionHandler(ProjectNotFoundException.class)
-    public ResponseEntity<String> handleProjectNotFoundExceptionn(ProjectNotFoundException ex) {
+    public ResponseEntity<String> handleProjectNotFoundException(ProjectNotFoundException ex) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
     }
 }

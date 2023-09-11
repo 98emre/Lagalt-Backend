@@ -80,7 +80,7 @@ public class ProjectController {
         return ResponseEntity.ok(projectMapper.projectsToProjectDTO(projectService.findAllByTitle(title)));
     }
 
-    @PatchMapping("/{id}")
+    @PatchMapping("/{id}/update")
     public ResponseEntity<ProjectDTO> updateProject(@RequestBody ProjectUpdateDTO projectUpdateDTO, @PathVariable int id){
 
         if (projectService.findById(id) == null) {
@@ -92,7 +92,7 @@ public class ProjectController {
         return ResponseEntity.ok(projectMapper.projectToProjectDTO(project));
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{id}/delete")
     public ResponseEntity<User> deleteProject(@PathVariable int id){
         Project deletedProject= projectService.findById(id);
 
@@ -105,7 +105,7 @@ public class ProjectController {
         return ResponseEntity.status(200).build();
     }
 
-    @GetMapping("/{projectId}/collaborators/pending")
+    @GetMapping("/{projectId}/collaborators/all-pending")
     public ResponseEntity<Collection<CollaboratorDTO>> getPendingCollaborators(@PathVariable Integer projectId,  @AuthenticationPrincipal Jwt jwt) {
         String username = jwt.getClaim("preferred_username");
 
@@ -127,7 +127,7 @@ public class ProjectController {
         return ResponseEntity.ok(collaboratorMapper.collaboratorToCollaboratorDtos(pendingCollaborators));
     }
 
-    @GetMapping("/{projectId}/collaborators/approved")
+    @GetMapping("/{projectId}/collaborators/all-approved")
     public ResponseEntity<Collection<CollaboratorDTO>> getApprovedCollaborators(@PathVariable Integer projectId, @AuthenticationPrincipal Jwt jwt) {
         String username = jwt.getClaim("preferred_username");
 
@@ -151,7 +151,7 @@ public class ProjectController {
     }
 
     @ExceptionHandler(UserNoAccessToCollabortorException.class)
-    public ResponseEntity<String> handleUserNoAccessToCollabortorExceptionn(UserNoAccessToCollabortorException ex) {
+    public ResponseEntity<String> handleUserNoAccessToCollaboratorException(UserNoAccessToCollabortorException ex) {
         return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
     }
 

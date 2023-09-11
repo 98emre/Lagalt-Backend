@@ -57,7 +57,7 @@ public class CommentController {
     }
 
 
-    @PostMapping("/project/{projectId}")
+    @PostMapping("/project/{projectId}/add-comment")
     public ResponseEntity<CommentDTO> addComment(@PathVariable Integer projectId, @RequestBody CommentPostDTO commentPostDTO, @AuthenticationPrincipal Jwt jwt){
        String username = jwt.getClaim("preferred_username");
 
@@ -82,7 +82,7 @@ public class CommentController {
         return ResponseEntity.ok(commentMapper.commentToCommentDto(comment));
     }
 
-    @PatchMapping("/{id}")
+    @PatchMapping("/{id}/update")
     public ResponseEntity<CommentDTO> updateComment(@RequestBody CommentUpdateDTO commentUpdateDTO, @PathVariable int id){
 
         if (commentService.findById(id) == null) {
@@ -94,7 +94,7 @@ public class CommentController {
         return ResponseEntity.ok(commentMapper.commentToCommentDto(comment));
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{id}/delete")
     public ResponseEntity<User> deleteComment(@PathVariable int id){
         Comment deletedComment = commentService.findById(id);
 
@@ -118,7 +118,7 @@ public class CommentController {
     }
 
     @ExceptionHandler(ProjectNotFoundException.class)
-    public ResponseEntity<String> handleProjectNotFoundExceptionn(ProjectNotFoundException ex) {
+    public ResponseEntity<String> handleProjectNotFoundException(ProjectNotFoundException ex) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
     }
 
