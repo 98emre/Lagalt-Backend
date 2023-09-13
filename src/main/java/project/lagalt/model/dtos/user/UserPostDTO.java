@@ -1,12 +1,11 @@
 package project.lagalt.model.dtos.user;
 
 
-import jakarta.validation.constraints.NotBlank;
+import java.util.Set;
+
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 import project.lagalt.utilites.enums.Skills;
-
-import java.util.Set;
 
 @Data
 public class UserPostDTO {

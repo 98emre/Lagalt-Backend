@@ -1,18 +1,15 @@
 package project.lagalt.mapper;
 
 
+import java.util.Collection;
+
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+
 import project.lagalt.model.dtos.comment.CommentDTO;
 import project.lagalt.model.dtos.comment.CommentPostDTO;
 import project.lagalt.model.dtos.comment.CommentUpdateDTO;
 import project.lagalt.model.entities.Comment;
-import project.lagalt.model.entities.Project;
-import project.lagalt.model.entities.User;
-
-import java.util.Collection;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring")
 public abstract class CommentMapper {

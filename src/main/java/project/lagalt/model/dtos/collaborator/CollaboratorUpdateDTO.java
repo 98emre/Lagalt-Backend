@@ -1,11 +1,10 @@
 package project.lagalt.model.dtos.collaborator;
 
 
+import java.time.LocalDateTime;
+
 import lombok.Data;
 import project.lagalt.utilites.enums.Application;
-import project.lagalt.utilites.enums.Status;
-
-import java.time.LocalDateTime;
 
 @Data
 public class CollaboratorUpdateDTO {

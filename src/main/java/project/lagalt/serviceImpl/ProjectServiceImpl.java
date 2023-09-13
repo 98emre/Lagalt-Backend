@@ -1,7 +1,10 @@
 package project.lagalt.serviceImpl;
 
+import java.util.Collection;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import project.lagalt.model.entities.Collaborator;
 import project.lagalt.model.entities.Project;
 import project.lagalt.model.entities.User;
@@ -10,9 +13,6 @@ import project.lagalt.repository.ProjectRepository;
 import project.lagalt.service.ProjectService;
 import project.lagalt.utilites.enums.Application;
 import project.lagalt.utilites.exceptions.ProjectNotFoundException;
-
-import java.util.Collection;
-import java.util.Set;
 
 @Service
 public class ProjectServiceImpl implements ProjectService {
