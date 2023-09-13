@@ -117,8 +117,8 @@
 					</annotationProcessorPaths>
 				</configuration>
 			</plugin>
-
 		</plugins>
+		<finalName>lagalt-backend</finalName>
 	</build>
 
 	<repositories>

@@ -1,4 +1,4 @@
-package com.example.demo;
+package project.lagalt;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +8,7 @@ import project.lagalt.service.UserService;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-@SpringBootTest
+@SpringBootTest(classes = LagaltApplication.class)
 @ContextConfiguration
 class LagaltApplicationTests {
 
