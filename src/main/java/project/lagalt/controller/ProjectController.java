@@ -1,12 +1,25 @@
 package project.lagalt.controller;
 
+import java.net.URI;
+import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
 import project.lagalt.mapper.CollaboratorMapper;
 import project.lagalt.mapper.ProjectMapper;
 import project.lagalt.model.dtos.collaborator.CollaboratorDTO;
@@ -22,9 +35,6 @@ import project.lagalt.utilites.exceptions.ProjectNotFoundException;
 import project.lagalt.utilites.exceptions.UserNoAccessToCollabortorException;
 import project.lagalt.utilites.exceptions.UserNotFoundException;
 
-import java.net.URI;
-import java.util.Collection;
-
 @RestController
 @RequestMapping(path = "api/projects")
 @CrossOrigin
@@ -37,7 +47,8 @@ public class ProjectController {
     private final ProjectMapper projectMapper;
 
     @Autowired
-    public ProjectController(ProjectService projectService, UserService userService, CollaboratorMapper collaboratorMapper, ProjectMapper projectMapper){
+    public ProjectController(ProjectService projectService, UserService userService,
+            CollaboratorMapper collaboratorMapper, ProjectMapper projectMapper) {
         this.projectService = projectService;
         this.userService = userService;
         this.collaboratorMapper = collaboratorMapper;
@@ -45,12 +56,12 @@ public class ProjectController {
     }
 
     @GetMapping("public")
-    public ResponseEntity<Collection<ProjectDTO>> getAllProject(){
+    public ResponseEntity<Collection<ProjectDTO>> getAllProject() {
         return ResponseEntity.ok(projectMapper.projectsToProjectDTO(projectService.findAll()));
     }
 
     @GetMapping("public/{id}")
-    public ResponseEntity<ProjectDTO> getProjectById(@PathVariable int id){
+    public ResponseEntity<ProjectDTO> getProjectById(@PathVariable int id) {
         Project project = projectService.findById(id);
         if (project == null) {
             throw new ProjectNotFoundException(id);
@@ -58,18 +69,18 @@ public class ProjectController {
 
         ProjectDTO projectDTO = projectMapper.projectToProjectDTO(project);
 
-
         return ResponseEntity.ok(projectDTO);
     }
 
     @PostMapping
-    public ResponseEntity<ProjectDTO> addProject(@RequestBody ProjectPostDTO projectPostDTO, @AuthenticationPrincipal Jwt jwt){
+    public ResponseEntity<ProjectDTO> addProject(@RequestBody ProjectPostDTO projectPostDTO,
+            @AuthenticationPrincipal Jwt jwt) {
         String username = jwt.getClaim("preferred_username");
 
         Project project = projectMapper.projectPostDtoToProject(projectPostDTO);
         User user = userService.findByUsername(username);
 
-        if(user == null){
+        if (user == null) {
             throw new UserNotFoundException(username);
         }
 
@@ -83,12 +94,13 @@ public class ProjectController {
     }
 
     @GetMapping("public/search")
-    public ResponseEntity<Collection<ProjectDTO>> findByTitle(@RequestParam String title){
+    public ResponseEntity<Collection<ProjectDTO>> findByTitle(@RequestParam String title) {
         return ResponseEntity.ok(projectMapper.projectsToProjectDTO(projectService.findAllByTitle(title)));
     }
 
     @PatchMapping("/{id}/update")
-    public ResponseEntity<ProjectDTO> updateProject(@RequestBody ProjectUpdateDTO projectUpdateDTO, @PathVariable int id){
+    public ResponseEntity<ProjectDTO> updateProject(@RequestBody ProjectUpdateDTO projectUpdateDTO,
+            @PathVariable int id) {
 
         if (projectService.findById(id) == null) {
             throw new ProjectNotFoundException(id);
@@ -102,8 +114,8 @@ public class ProjectController {
     }
 
     @DeleteMapping("/{id}/delete")
-    public ResponseEntity<User> deleteProject(@PathVariable int id){
-        Project deletedProject= projectService.findById(id);
+    public ResponseEntity<User> deleteProject(@PathVariable int id) {
+        Project deletedProject = projectService.findById(id);
 
         if (deletedProject == null) {
             throw new ProjectNotFoundException(id);
@@ -115,20 +127,21 @@ public class ProjectController {
     }
 
     @GetMapping("/{projectId}/collaborators/all-pending")
-    public ResponseEntity<Collection<CollaboratorDTO>> getPendingCollaborators(@PathVariable Integer projectId,  @AuthenticationPrincipal Jwt jwt) {
+    public ResponseEntity<Collection<CollaboratorDTO>> getPendingCollaborators(@PathVariable Integer projectId,
+            @AuthenticationPrincipal Jwt jwt) {
         String username = jwt.getClaim("preferred_username");
 
         User user = userService.findByUsername(username);
-        if(user == null){
+        if (user == null) {
             throw new UserNotFoundException(username);
         }
 
         Project project = projectService.findById(projectId);
         if (project == null) {
-            throw new ProjectNotFoundException(project.getId());
+            throw new ProjectNotFoundException(projectId);
         }
 
-        if(project.getUser().getId() != user.getId()){
+        if (project.getUser().getId() != user.getId()) {
             throw new UserNoAccessToCollabortorException(username);
         }
 
@@ -137,24 +150,27 @@ public class ProjectController {
     }
 
     @GetMapping("/{projectId}/collaborators/all-approved")
-    public ResponseEntity<Collection<CollaboratorDTO>> getApprovedCollaborators(@PathVariable Integer projectId, @AuthenticationPrincipal Jwt jwt) {
+    public ResponseEntity<Collection<CollaboratorDTO>> getApprovedCollaborators(@PathVariable Integer projectId,
+            @AuthenticationPrincipal Jwt jwt) {
         String username = jwt.getClaim("preferred_username");
 
         User user = userService.findByUsername(username);
-        if(user == null){
+        if (user == null) {
             throw new UserNotFoundException(username);
         }
 
         Project project = projectService.findById(projectId);
 
         if (project == null) {
-            throw new ProjectNotFoundException(project.getId());
+            throw new ProjectNotFoundException(projectId);
         }
 
-        /*if(project.getUser().getId() != user.getId()){
-            throw new UserNoAccessToCollabortorException(username);
-        }*/
-        
+        /*
+         * if(project.getUser().getId() != user.getId()){
+         * throw new UserNoAccessToCollabortorException(username);
+         * }
+         */
+
         Collection<Collaborator> approvedCollaborators = projectService.findAllApprovedByCollaborator(project);
 
         return ResponseEntity.ok(collaboratorMapper.collaboratorToCollaboratorDtos(approvedCollaborators));
