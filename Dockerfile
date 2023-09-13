@@ -8,6 +8,6 @@ RUN mvn package
 
 FROM openjdk:17-jdk-alpine AS final
 WORKDIR /app
-COPY --from=build /app/target/lagalt-backend-0.0.1-SNAPSHOT.jar /app/demo.jar
+COPY --from=build /app/target/lagalt-backend.jar /app/lagalt-backend.jar
 EXPOSE 8080
 CMD ["java", "-jar", "demo.jar"]
