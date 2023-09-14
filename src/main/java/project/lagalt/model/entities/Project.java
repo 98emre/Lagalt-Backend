@@ -25,9 +25,12 @@ public class Project {
     @Column(name = "gitlink", length = 1000, nullable = false)
     private String gitlink;
 
+    @Column(name = "category",nullable = false)
     @Enumerated(EnumType.STRING)
     private Category category;
 
+
+    @Column(name = "status", nullable = false)
     @Enumerated(EnumType.STRING)
     private Status status;
 

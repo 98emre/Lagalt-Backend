@@ -22,7 +22,7 @@ public class Collaborator {
     @Column(name = "approval_date")
     private LocalDateTime approvalDate;
 
-    @Column(name="motivation", length = 200)
+    @Column(name="motivation", length = 200, nullable = false)
     private String motivation;
 
     @ManyToOne
