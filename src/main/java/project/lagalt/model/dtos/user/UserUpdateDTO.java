@@ -5,6 +5,7 @@ import java.util.Set;
 
 import jakarta.validation.constraints.Size;
 import lombok.Data;
+import project.lagalt.utilites.enums.ProfileVisibility;
 import project.lagalt.utilites.enums.Skills;
 
 @Data
@@ -21,10 +22,10 @@ public class UserUpdateDTO {
     @Size(max = 200, message = "Description is Max Length")
     private String description;
 
-
     @Size(max = 50, message = "Fullname is Max Length")
     private String fullname;
 
+    private ProfileVisibility profileVisibility;
 
     private Set<Skills> skills;
 
@@ -74,5 +75,13 @@ public class UserUpdateDTO {
 
     public void setSkills(Set<Skills> skills) {
         this.skills = skills;
+    }
+
+    public ProfileVisibility getProfileVisibility() {
+        return profileVisibility;
+    }
+
+    public void setProfileVisibility(ProfileVisibility profileVisibility) {
+        this.profileVisibility = profileVisibility;
     }
 }

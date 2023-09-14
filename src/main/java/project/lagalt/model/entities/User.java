@@ -2,6 +2,7 @@ package project.lagalt.model.entities;
 
 
 import jakarta.persistence.*;
+import project.lagalt.utilites.enums.ProfileVisibility;
 import project.lagalt.utilites.enums.Skills;
 
 import java.util.Set;
@@ -33,6 +34,10 @@ public class User {
     @CollectionTable(name = "user_skills", joinColumns = @JoinColumn(name = "user_id"))
     private Set<Skills> skills;
 
+    @Column(name = "hidden")
+    @Enumerated(EnumType.STRING)
+    private ProfileVisibility profileVisibility;
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private Set<Project> projects;
 
@@ -46,13 +51,14 @@ public class User {
 
     }
 
-    public User(int id, String username,String email, String fullname, String description, Set<Skills> skills) {
+    public User(int id, String username, String email, String description, String fullname, Set<Skills> skills, ProfileVisibility profileVisibility) {
         this.id = id;
         this.username = username;
         this.email = email;
-        this.fullname = fullname;
         this.description = description;
+        this.fullname = fullname;
         this.skills = skills;
+        this.profileVisibility = profileVisibility;
     }
 
     public int getId() {
@@ -102,6 +108,14 @@ public class User {
 
     public void setSkills(Set<Skills> skills) {
         this.skills = skills;
+    }
+
+    public ProfileVisibility getProfileVisibility() {
+        return profileVisibility;
+    }
+
+    public void setProfileVisibility(ProfileVisibility profileVisibility) {
+        this.profileVisibility = profileVisibility;
     }
 
     public Set<Project> getProjects() {

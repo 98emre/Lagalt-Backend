@@ -5,6 +5,7 @@ import java.util.Set;
 
 import jakarta.validation.constraints.Size;
 import lombok.Data;
+import project.lagalt.utilites.enums.ProfileVisibility;
 import project.lagalt.utilites.enums.Skills;
 
 @Data
@@ -26,6 +27,7 @@ public class UserPostDTO {
 
 
     private Set<Skills> skills;
+    private ProfileVisibility profileVisibility;
 
     public int getId() {
         return id;
@@ -73,5 +75,13 @@ public class UserPostDTO {
 
     public void setSkills(Set<Skills> skills) {
         this.skills = skills;
+    }
+
+    public ProfileVisibility getProfileVisibility() {
+        return profileVisibility;
+    }
+
+    public void setProfileVisibility(ProfileVisibility profileVisibility) {
+        this.profileVisibility = profileVisibility;
     }
 }

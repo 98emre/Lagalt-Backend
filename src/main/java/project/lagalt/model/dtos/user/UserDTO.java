@@ -3,6 +3,7 @@ package project.lagalt.model.dtos.user;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
+import project.lagalt.utilites.enums.ProfileVisibility;
 import project.lagalt.utilites.enums.Skills;
 
 import java.util.Set;
@@ -26,8 +27,8 @@ public class UserDTO {
     @Size(max = 50, message = "Fullname is Max Length")
     private String fullname;
 
-
     private Set<Skills> skills;
+    private ProfileVisibility profileVisibility;
     private Set<Integer> projectIds;
     private Set<Integer> collaboratorIds;
     private Set<Integer> commentIds;
@@ -77,6 +78,14 @@ public class UserDTO {
 
     public void setSkills(Set<Skills> skills) {
         this.skills = skills;
+    }
+
+    public ProfileVisibility getProfileVisibility() {
+        return profileVisibility;
+    }
+
+    public void setProfileVisibility(ProfileVisibility profileVisibility) {
+        this.profileVisibility = profileVisibility;
     }
 
     public Set<Integer> getProjectIds() {
