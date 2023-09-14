@@ -20,7 +20,7 @@ public class UserDTO {
     @Size(max = 100, message = "Email is Max Length")
     private String email;
 
-    @Size(max = 300, message = "Description is Max Length")
+    @Size(max = 200, message = "Description is Max Length")
     private String description;
 
     @Size(max = 50, message = "Fullname is Max Length")

@@ -15,7 +15,7 @@ public class Comment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "text", length = 100)
+    @Column(name = "text", length = 250)
     private String text;
 
     @Temporal(TemporalType.TIMESTAMP)

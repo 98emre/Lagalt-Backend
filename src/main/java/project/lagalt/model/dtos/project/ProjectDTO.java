@@ -18,7 +18,7 @@ public class ProjectDTO {
     @NotNull
     private String title;
 
-    @Size(max = 1000, message = "Descriptions is Max Length")
+    @Size(max = 250, message = "Descriptions is Max Length")
     @NotNull
     private String descriptions;
 

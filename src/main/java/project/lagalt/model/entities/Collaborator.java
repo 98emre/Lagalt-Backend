@@ -22,6 +22,9 @@ public class Collaborator {
     @Column(name = "approval_date")
     private LocalDateTime approvalDate;
 
+    @Column(name="motivation", length = 200)
+    private String motivation;
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
@@ -32,7 +35,6 @@ public class Collaborator {
 
     public Collaborator() {
     }
-
 
     public int getId() {
         return id;
@@ -48,18 +50,6 @@ public class Collaborator {
 
     public void setStatus(Application status) {
         this.status = status;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public Project getProject() {
-        return project;
     }
 
     public void setProject(Project project) {
@@ -80,6 +70,26 @@ public class Collaborator {
 
     public void setApprovalDate(LocalDateTime approvalDate) {
         this.approvalDate = approvalDate;
+    }
+
+    public String getMotivation() {
+        return motivation;
+    }
+
+    public void setMotivation(String motivation) {
+        this.motivation = motivation;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Project getProject() {
+        return project;
     }
 
     @PrePersist

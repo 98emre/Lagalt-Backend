@@ -12,7 +12,7 @@ public class CommentUpdateDTO {
 
     private int id;
 
-    @Size(max = 100, message = "Comment is Max Length")
+    @Size(max = 250, message = "Comment is Max Length")
     @NotBlank
     @NotNull
     private String text;    private LocalDateTime date;

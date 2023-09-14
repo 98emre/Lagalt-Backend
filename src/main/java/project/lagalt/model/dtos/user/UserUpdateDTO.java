@@ -18,8 +18,7 @@ public class UserUpdateDTO {
     @Size(max = 100, message = "Email is Max Length")
     private String email;
 
-
-    @Size(max = 300, message = "Description is Max Length")
+    @Size(max = 200, message = "Description is Max Length")
     private String description;
 
 

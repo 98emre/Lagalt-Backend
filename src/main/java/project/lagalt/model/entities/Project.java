@@ -19,7 +19,7 @@ public class Project {
     @Column(name = "title", length = 100, nullable = false)
     private String title;
 
-    @Column(name = "description", length = 1000, nullable = false)
+    @Column(name = "description", length = 250, nullable = false)
     private String descriptions;
 
     @Column(name = "gitlink", length = 1000, nullable = false)
