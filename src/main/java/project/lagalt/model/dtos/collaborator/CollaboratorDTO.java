@@ -2,6 +2,7 @@ package project.lagalt.model.dtos.collaborator;
 
 import java.time.LocalDateTime;
 
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 import project.lagalt.utilites.enums.Application;
 
@@ -12,6 +13,9 @@ public class CollaboratorDTO {
     private Application status;
     private LocalDateTime requestDate;
     private LocalDateTime approvalDate;
+
+    @Size(max = 250, message = "Motivation Text is Max")
+    private String motivation;
     private Integer userId;
     private Integer projectId;
 
@@ -45,6 +49,14 @@ public class CollaboratorDTO {
 
     public void setApprovalDate(LocalDateTime approvalDate) {
         this.approvalDate = approvalDate;
+    }
+
+    public String getMotivation() {
+        return motivation;
+    }
+
+    public void setMotivation(String motivation) {
+        this.motivation = motivation;
     }
 
     public Integer getUserId() {
