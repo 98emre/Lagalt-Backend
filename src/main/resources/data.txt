@@ -1,7 +1,7 @@
 -- User
 
-INSERT INTO "user" ("fullname", "username", "email", "description") VALUES ('Arne Arnesson', 'test', 'arne@hotmail.com', 'I only eat Billys');
-INSERT INTO "user" ("fullname", "username", "email", "description") VALUES ('Bilal Svensson', 'testtest', 'bilal@hotmail.com', 'IM great at ping pong, call me aslan.');
+INSERT INTO "user" ("fullname", "username", "email", "description","hidden") VALUES ('Arne Arnesson', 'test', 'arne@hotmail.com', 'I only eat Billys',"PRIVATE");
+INSERT INTO "user" ("fullname", "username", "email", "description","hidden") VALUES ('Bilal Svensson', 'testtest', 'bilal@hotmail.com', 'IM great at ping pong, call me aslan.',"PUBLIC");
 
 -- Project
 
