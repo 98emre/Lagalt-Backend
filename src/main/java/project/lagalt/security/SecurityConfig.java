@@ -33,8 +33,7 @@ public class SecurityConfig {
                                         "api/comments/public/**",
                                         "api/users/public/**",
                                         "api/collaborators/public/**",
-                                        "api/messages/**",
-                                        "api/messageresponses/**"
+                                        "api/messages/**"
                                 )
                                 .permitAll().
                                 anyRequest().authenticated())

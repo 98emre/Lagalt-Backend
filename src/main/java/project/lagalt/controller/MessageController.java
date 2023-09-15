@@ -2,7 +2,10 @@ package project.lagalt.controller;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 import project.lagalt.mapper.MessageMapper;
 import project.lagalt.model.dtos.message.MessageDTO;
@@ -11,6 +14,11 @@ import project.lagalt.model.dtos.message.MessageUpdateDTO;
 import project.lagalt.model.entities.Message;
 import project.lagalt.model.entities.User;
 import project.lagalt.service.MessageService;
+import project.lagalt.service.UserService;
+import project.lagalt.utilites.exceptions.MessageCheckOwnerException;
+import project.lagalt.utilites.exceptions.MessageEmptyContextException;
+import project.lagalt.utilites.exceptions.MessageNotFoundException;
+import project.lagalt.utilites.exceptions.UserNotFoundException;
 
 import java.util.Collection;
 
@@ -20,11 +28,13 @@ import java.util.Collection;
 public class MessageController {
 
     private final MessageService messageService;
+    private final UserService userService;
     private final MessageMapper messageMapper;
 
     @Autowired
-    public MessageController(MessageService messageService, MessageMapper messageMapper) {
+    public MessageController(MessageService messageService, UserService userService, MessageMapper messageMapper) {
         this.messageService = messageService;
+        this.userService = userService;
         this.messageMapper = messageMapper;
     }
 
@@ -40,9 +50,37 @@ public class MessageController {
     }
 
     @PostMapping
-    public ResponseEntity<MessageDTO> addMessage(@RequestBody MessagePostDTO messagePostDTO) {
+    public ResponseEntity<MessageDTO> addMessage(@RequestBody MessagePostDTO messagePostDTO,  @AuthenticationPrincipal Jwt jwt) {
+        String username = jwt.getClaim("preferred_username");
+        Integer receiverId = messagePostDTO.getReceiverId();
+
+        User sender = userService.findByUsername(username);
+        User receiver = userService.findById(receiverId);
+
+        if(sender == null){
+            throw new UserNotFoundException(sender.getId());
+        }
+
+        if(receiver == null){
+            throw new UserNotFoundException(receiver.getId());
+        }
+
+        if(sender.getId() == receiver.getId()){
+            throw new MessageCheckOwnerException(username);
+        }
+
+        if(messagePostDTO.getTitle().trim().length() == 0  || messagePostDTO.getText().trim().length() == 0){
+            throw new MessageEmptyContextException();
+        }
+
         Message message = messageMapper.messagePostDtoToMessage(messagePostDTO);
+        message.setSender(sender);
+        message.setReceiver(receiver);
+        messageService.add(message);
+
         MessageDTO messageDTO = messageMapper.messageToMessageDto(message);
+        System.out.println("message " + messageDTO);
+
 
         return ResponseEntity.ok(messageDTO);
     }
@@ -52,7 +90,7 @@ public class MessageController {
                                                               @PathVariable int id) {
 
         if (messageService.findById(id) == null) {
-            return null;
+            throw new MessageNotFoundException(id);
         }
 
         messageUpdateDTO.setId(id);
@@ -68,11 +106,32 @@ public class MessageController {
         Message deleteMessage = messageService.findById(id);
 
         if (deleteMessage == null) {
-            return null;
+            throw new MessageNotFoundException(id);
         }
 
         messageService.deleteById(id);
 
         return ResponseEntity.noContent().build();
+    }
+
+
+    @ExceptionHandler(MessageNotFoundException.class)
+    public ResponseEntity<String> handleMessageNotFoundException(MessageNotFoundException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+    }
+
+    @ExceptionHandler(UserNotFoundException.class)
+    public ResponseEntity<String> handleUserNotFoundException(UserNotFoundException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+    }
+
+    @ExceptionHandler(MessageCheckOwnerException.class)
+    public ResponseEntity<String> handleMessageCheckOwnerException(MessageCheckOwnerException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+    }
+
+    @ExceptionHandler(MessageEmptyContextException.class)
+    public ResponseEntity<String> handleMessageEmptyContextException(MessageEmptyContextException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
     }
 }

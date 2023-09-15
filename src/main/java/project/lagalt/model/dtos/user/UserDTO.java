@@ -32,6 +32,8 @@ public class UserDTO {
     private Set<Integer> projectIds;
     private Set<Integer> collaboratorIds;
     private Set<Integer> commentIds;
+    private Set<Integer> receivedMessageIds;
+    private Set<Integer> sentMessageIds;
     public int getId() {
         return id;
     }
@@ -112,4 +114,19 @@ public class UserDTO {
         this.commentIds = commentIds;
     }
 
+    public Set<Integer> getReceivedMessageIds() {
+        return receivedMessageIds;
+    }
+
+    public void setReceivedMessageIds(Set<Integer> receivedMessageIds) {
+        this.receivedMessageIds = receivedMessageIds;
+    }
+
+    public Set<Integer> getSentMessageIds() {
+        return sentMessageIds;
+    }
+
+    public void setSentMessageIds(Set<Integer> sentMessageIds) {
+        this.sentMessageIds = sentMessageIds;
+    }
 }

@@ -39,8 +39,8 @@ public class MessageServiceImpl implements MessageService {
         Message messageUpdated  = messageRepository.findById(message.getId()).orElseThrow(() -> new MessageNotFoundException(message.getId()));
 
 
-        if(message.isRead()){
-            messageUpdated.setRead(true);
+        if(message.getMessageStatus() !=null){
+            messageUpdated.setMessageStatus(message.getMessageStatus());
         }
 
         if(message.getDate() != null){
@@ -53,10 +53,6 @@ public class MessageServiceImpl implements MessageService {
 
         if(message.getText() != null){
             messageUpdated.setText(message.getText());
-        }
-
-        if (message.getResponses() != null){
-            messageUpdated.setResponses(message.getResponses());
         }
 
         if(message.getSender() != null){

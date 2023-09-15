@@ -2,6 +2,8 @@ package project.lagalt.model.dtos.message;
 
 
 import lombok.Data;
+import project.lagalt.utilites.enums.MessageStatus;
+
 import java.time.LocalDateTime;
 import java.util.Set;
 
@@ -13,11 +15,10 @@ public class MessageDTO {
     private String title;
     private String text;
     private LocalDateTime date;
-    private boolean read;
+    private MessageStatus messageStatus;
 
     private Integer senderId;
     private Integer receiverId;
-    private Set<Integer> responseIds;
 
     public int getId() {
         return id;
@@ -51,12 +52,12 @@ public class MessageDTO {
         this.date = date;
     }
 
-    public boolean isRead() {
-        return read;
+    public MessageStatus getMessageStatus() {
+        return messageStatus;
     }
 
-    public void setRead(boolean read) {
-        this.read = read;
+    public void setMessageStatus(MessageStatus messageStatus) {
+        this.messageStatus = messageStatus;
     }
 
     public Integer getSenderId() {
@@ -75,11 +76,4 @@ public class MessageDTO {
         this.receiverId = receiverId;
     }
 
-    public Set<Integer> getResponseIds() {
-        return responseIds;
-    }
-
-    public void setResponseIds(Set<Integer> responseIds) {
-        this.responseIds = responseIds;
-    }
 }

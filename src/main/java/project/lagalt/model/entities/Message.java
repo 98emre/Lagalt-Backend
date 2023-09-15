@@ -1,6 +1,7 @@
 package project.lagalt.model.entities;
 
 import jakarta.persistence.*;
+import project.lagalt.utilites.enums.MessageStatus;
 
 import java.time.LocalDateTime;
 import java.util.Set;
@@ -14,18 +15,18 @@ public class Message {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "title")
+    @Column(name = "title",nullable = false)
     private String title;
 
-    @Column(name = "text")
+    @Column(name = "text",nullable = false)
     private String text;
 
     @Column(name = "date")
     private LocalDateTime date;
 
     @Column(name = "read")
-    private boolean read;
-
+    @Enumerated(EnumType.STRING)
+    private MessageStatus messageStatus;
 
     @ManyToOne
     @JoinColumn(name = "sender_id")
@@ -35,17 +36,14 @@ public class Message {
     @JoinColumn(name = "receiver_id")
     private User receiver;
 
-    @OneToMany(mappedBy = "message", cascade = CascadeType.ALL)
-    private Set<MessageResponse> responses;
-
     public Message() {
     }
 
-    public Message(String title, String text, LocalDateTime date, boolean read) {
+    public Message(String title, String text, LocalDateTime date, MessageStatus messageStatus) {
         this.title = title;
         this.text = text;
         this.date = date;
-        this.read = read;
+        this.messageStatus = messageStatus;
     }
 
     public int getId() {
@@ -80,12 +78,12 @@ public class Message {
         this.date = date;
     }
 
-    public boolean isRead() {
-        return read;
+    public MessageStatus getMessageStatus() {
+        return messageStatus;
     }
 
-    public void setRead(boolean read) {
-        this.read = read;
+    public void setMessageStatus(MessageStatus messageStatus) {
+        this.messageStatus = messageStatus;
     }
 
     public User getSender() {
@@ -102,14 +100,6 @@ public class Message {
 
     public void setReceiver(User receiver) {
         this.receiver = receiver;
-    }
-
-    public Set<MessageResponse> getResponses() {
-        return responses;
-    }
-
-    public void setResponses(Set<MessageResponse> responses) {
-        this.responses = responses;
     }
 
     @PrePersist
