@@ -3,7 +3,6 @@ package project.lagalt.mapper;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.MappingTarget;
 import project.lagalt.model.dtos.message.MessageDTO;
 import project.lagalt.model.dtos.message.MessagePostDTO;
 import project.lagalt.model.dtos.message.MessageUpdateDTO;
@@ -15,7 +14,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring")
-
 public abstract class MessageMapper {
 
     public abstract Message messagePostDtoToMessage(MessagePostDTO messagePostDTO);
