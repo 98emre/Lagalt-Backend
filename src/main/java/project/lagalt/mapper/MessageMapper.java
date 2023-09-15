@@ -20,8 +20,8 @@ public abstract class MessageMapper {
     public abstract Message messageUpdateDtoToMessage(MessageUpdateDTO messageUpdateDTO);
 
 
-    @Mapping(target = "senderId", source = "sender_id")
-    @Mapping(target = "receiverId", source = "receiver_id")
+    @Mapping(target = "senderId", source = "sender.id")
+    @Mapping(target = "receiverId", source = "receiver.id")
     @Mapping(target = "responseIds", source = "responses")
     public abstract MessageDTO messageToMessageDto(Message message);
 

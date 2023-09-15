@@ -18,8 +18,8 @@ public abstract class MessageResponseMapper {
 
     public abstract MessageResponse messageResponseUpdateDtoToMessageResponse(MessageUpdateDTO messageUpdateDTO);
 
-    @Mapping(target = "responderId", source = "responder_id")
-    @Mapping(target = "messageId", source = "message_id")
+    @Mapping(target = "responderId", source = "responder.id")
+    @Mapping(target = "messageId", source = "message.id")
     public abstract MessageResponseDTO messageResponseToMessageResponseDto(MessageResponse messageResponse);
 
     public abstract Collection<MessageResponseDTO> messageResponsesToMessageResponseDtos(Collection<MessageResponse> messageResponses);
