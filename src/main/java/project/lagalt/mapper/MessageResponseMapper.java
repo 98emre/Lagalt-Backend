@@ -7,6 +7,7 @@ import project.lagalt.model.dtos.message.MessagePostDTO;
 import project.lagalt.model.dtos.message.MessageUpdateDTO;
 import project.lagalt.model.dtos.messageresponse.MessageResponseDTO;
 import project.lagalt.model.dtos.messageresponse.MessageResponsePostDTO;
+import project.lagalt.model.dtos.messageresponse.MessageResponseUpdateDTO;
 import project.lagalt.model.entities.MessageResponse;
 
 import java.util.Collection;
@@ -16,7 +17,7 @@ public abstract class MessageResponseMapper {
 
     public abstract MessageResponse messageResponsePostDtoToMessageResponse(MessageResponsePostDTO messageResponsePostDTO);
 
-    public abstract MessageResponse messageResponseUpdateDtoToMessageResponse(MessageUpdateDTO messageUpdateDTO);
+    public abstract MessageResponse messageResponseUpdateDtoToMessageResponse(MessageResponseUpdateDTO messageResponseUpdateDTO);
 
     @Mapping(target = "responderId", source = "responder.id")
     @Mapping(target = "messageId", source = "message.id")
