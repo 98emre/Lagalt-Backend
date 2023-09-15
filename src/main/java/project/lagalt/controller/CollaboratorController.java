@@ -36,7 +36,7 @@ import project.lagalt.utilites.exceptions.ProjectNotFoundException;
 import project.lagalt.utilites.exceptions.UserNotFoundException;
 
 @RestController
-@RequestMapping("api/collaborators")
+@RequestMapping(path = "api/collaborators")
 @CrossOrigin
 public class CollaboratorController {
 
@@ -126,7 +126,7 @@ public class CollaboratorController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<User> deleteCollaborator(@PathVariable int id) {
+    public ResponseEntity<Collaborator> deleteCollaborator(@PathVariable int id) {
         Collaborator deletedCollaborator = collaboratorService.findById(id);
 
         if (deletedCollaborator == null) {
