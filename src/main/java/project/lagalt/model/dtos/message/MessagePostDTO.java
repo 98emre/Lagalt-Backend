@@ -13,7 +13,7 @@ public class MessagePostDTO {
     private String text;
     private LocalDateTime date;
     private boolean read;
-
+    private Integer receiver;
 
     public int getId() {
         return id;
@@ -53,5 +53,13 @@ public class MessagePostDTO {
 
     public void setRead(boolean read) {
         this.read = read;
+    }
+
+    public Integer getReceiver() {
+        return receiver;
+    }
+
+    public void setReceiver(Integer receiver) {
+        this.receiver = receiver;
     }
 }
