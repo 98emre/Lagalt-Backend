@@ -1,4 +1,4 @@
-package project.lagalt.model.dtos.Message;
+package project.lagalt.model.dtos.message;
 
 
 import lombok.Data;
