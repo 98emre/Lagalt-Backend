@@ -115,6 +115,17 @@ public class MessageController {
     }
 
 
+    @GetMapping("/{id}/sent-messages")
+    public ResponseEntity<Collection<MessageDTO>> getAllSentMessage(@PathVariable int id){
+        return ResponseEntity.ok(messageMapper.messagesToMessageDtos(messageService.getMessagesSentByUser(id)));
+    }
+
+    @GetMapping("/{id}/received-messages")
+    public ResponseEntity<Collection<MessageDTO>> getAllReceivedMessage(@PathVariable int id){
+        return ResponseEntity.ok(messageMapper.messagesToMessageDtos(messageService.getMessagesReceiverByUser(id)));
+    }
+
+
     @ExceptionHandler(MessageNotFoundException.class)
     public ResponseEntity<String> handleMessageNotFoundException(MessageNotFoundException ex) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());

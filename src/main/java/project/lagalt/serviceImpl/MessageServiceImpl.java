@@ -8,6 +8,7 @@ import project.lagalt.service.MessageService;
 import project.lagalt.utilites.exceptions.MessageNotFoundException;
 
 import java.util.Collection;
+import java.util.Set;
 
 @Service
 public class MessageServiceImpl implements MessageService {
@@ -71,5 +72,15 @@ public class MessageServiceImpl implements MessageService {
         messageRepository.findById(id).orElseThrow(() -> new MessageNotFoundException(id));
 
         messageRepository.deleteById(id);
+    }
+
+    @Override
+    public Set<Message> getMessagesSentByUser(int senderId) {
+        return messageRepository.findBySenderId(senderId);
+    }
+
+    @Override
+    public Set<Message> getMessagesReceiverByUser(int receiverId) {
+        return messageRepository.findByReceiverId(receiverId);
     }
 }
