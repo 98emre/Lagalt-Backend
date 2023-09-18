@@ -71,6 +71,14 @@ public class UserServiceImpl implements UserService {
             updatedUser.setSkills(updatedSkills);
         }
 
+        if(user.getDescription() != null){
+            updatedUser.setDescription(user.getDescription());
+        }
+
+        if(user.getProfileVisibility() != null){
+            updatedUser.setProfileVisibility(user.getProfileVisibility());
+        }
+
         return userRepository.save(updatedUser);
     }
 

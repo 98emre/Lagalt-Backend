@@ -69,6 +69,7 @@ public class User {
         this.profileVisibility = profileVisibility;
     }
 
+
     public int getId() {
         return id;
     }
