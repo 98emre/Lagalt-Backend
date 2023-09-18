@@ -61,7 +61,7 @@ public class ProjectController {
     }
 
     @GetMapping("public/{id}")
-    public ResponseEntity<ProjectDTO> getProjectById(@PathVariable int id) {
+    public ResponseEntity<ProjectDTO> getProjectById(@PathVariable(value = "id") int id) {
         Project project = projectService.findById(id);
         if (project == null) {
             throw new ProjectNotFoundException(id);
@@ -100,7 +100,7 @@ public class ProjectController {
 
     @PatchMapping("/{id}/update")
     public ResponseEntity<ProjectDTO> updateProject(@RequestBody ProjectUpdateDTO projectUpdateDTO,
-            @PathVariable int id) {
+            @PathVariable(value = "id") int id) {
 
         if (projectService.findById(id) == null) {
             throw new ProjectNotFoundException(id);
@@ -114,7 +114,7 @@ public class ProjectController {
     }
 
     @DeleteMapping("/{id}/delete")
-    public ResponseEntity<User> deleteProject(@PathVariable int id) {
+    public ResponseEntity<User> deleteProject(@PathVariable(value = "id") int id) {
         Project deletedProject = projectService.findById(id);
 
         if (deletedProject == null) {
@@ -127,7 +127,7 @@ public class ProjectController {
     }
 
     @GetMapping("/{projectId}/collaborators/all-pending")
-    public ResponseEntity<Collection<CollaboratorDTO>> getPendingCollaborators(@PathVariable Integer projectId,
+    public ResponseEntity<Collection<CollaboratorDTO>> getPendingCollaborators(@PathVariable(value = "projectId") Integer projectId,
             @AuthenticationPrincipal Jwt jwt) {
         String username = jwt.getClaim("preferred_username");
 
@@ -150,7 +150,7 @@ public class ProjectController {
     }
 
     @GetMapping("/{projectId}/collaborators/all-approved")
-    public ResponseEntity<Collection<CollaboratorDTO>> getApprovedCollaborators(@PathVariable Integer projectId,
+    public ResponseEntity<Collection<CollaboratorDTO>> getApprovedCollaborators(@PathVariable(value = "projectId") Integer projectId,
             @AuthenticationPrincipal Jwt jwt) {
         String username = jwt.getClaim("preferred_username");
 

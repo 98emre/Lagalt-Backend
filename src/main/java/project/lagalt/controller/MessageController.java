@@ -44,7 +44,7 @@ public class MessageController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<MessageDTO> getMessageById(@PathVariable Integer id) {
+    public ResponseEntity<MessageDTO> getMessageById(@PathVariable(value = "id") Integer id) {
         Message message = messageService.findById(id);
         return ResponseEntity.ok(messageMapper.messageToMessageDto(message));
     }
@@ -87,7 +87,7 @@ public class MessageController {
 
     @PatchMapping("/{id}/update")
     public ResponseEntity<MessageDTO> updateMessage(@RequestBody MessageUpdateDTO messageUpdateDTO,
-                                                              @PathVariable int id) {
+                                                              @PathVariable(value = "id") int id) {
 
         if (messageService.findById(id) == null) {
             throw new MessageNotFoundException(id);
@@ -102,7 +102,7 @@ public class MessageController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<User> deleteMessage(@PathVariable int id) {
+    public ResponseEntity<User> deleteMessage(@PathVariable(value = "id") int id) {
         Message deleteMessage = messageService.findById(id);
 
         if (deleteMessage == null) {
@@ -116,12 +116,12 @@ public class MessageController {
 
 
     @GetMapping("/{id}/sent-messages")
-    public ResponseEntity<Collection<MessageDTO>> getAllSentMessage(@PathVariable int id){
+    public ResponseEntity<Collection<MessageDTO>> getAllSentMessage(@PathVariable(value = "id") int id){
         return ResponseEntity.ok(messageMapper.messagesToMessageDtos(messageService.getMessagesSentByUser(id)));
     }
 
     @GetMapping("/{id}/received-messages")
-    public ResponseEntity<Collection<MessageDTO>> getAllReceivedMessage(@PathVariable int id){
+    public ResponseEntity<Collection<MessageDTO>> getAllReceivedMessage(@PathVariable(value = "id") int id){
         return ResponseEntity.ok(messageMapper.messagesToMessageDtos(messageService.getMessagesReceiverByUser(id)));
     }
 

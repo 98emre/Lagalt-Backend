@@ -61,7 +61,7 @@ public class CollaboratorController {
     }
 
     @GetMapping("public/{id}")
-    public ResponseEntity<CollaboratorDTO> getCollaboratorById(@PathVariable int id) {
+    public ResponseEntity<CollaboratorDTO> getCollaboratorById(@PathVariable(value = "id") int id) {
         Collaborator collaborator = collaboratorService.findById(id);
 
         if (collaborator == null) {
@@ -74,7 +74,7 @@ public class CollaboratorController {
     }
 
     @PostMapping("/{projectId}/add-collaborator")
-    public ResponseEntity<CollaboratorDTO> addCollaborator(@PathVariable Integer projectId,
+    public ResponseEntity<CollaboratorDTO> addCollaborator(@PathVariable(value = "projectId") Integer projectId,
             @RequestBody CollaboratorPostDTO collaboratorPostDTO, @AuthenticationPrincipal Jwt jwt) {
         String username = jwt.getClaim("preferred_username");
 
@@ -111,7 +111,7 @@ public class CollaboratorController {
 
     @PatchMapping("/{id}/update")
     public ResponseEntity<CollaboratorDTO> updateCollaborator(@RequestBody CollaboratorUpdateDTO collaboratorUpdateDTO,
-            @PathVariable int id) {
+            @PathVariable(value = "id") int id) {
 
         if (collaboratorService.findById(id) == null) {
             throw new CollaboratorNotFoundException(id);
@@ -126,7 +126,7 @@ public class CollaboratorController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Collaborator> deleteCollaborator(@PathVariable int id) {
+    public ResponseEntity<Collaborator> deleteCollaborator(@PathVariable(value = "id") int id) {
         Collaborator deletedCollaborator = collaboratorService.findById(id);
 
         if (deletedCollaborator == null) {

@@ -15,10 +15,10 @@ public class Message {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "title",nullable = false)
+    @Column(name = "title",nullable = false,length = 100)
     private String title;
 
-    @Column(name = "text",nullable = false)
+    @Column(name = "text",nullable = false, length = 250)
     private String text;
 
     @Column(name = "date")

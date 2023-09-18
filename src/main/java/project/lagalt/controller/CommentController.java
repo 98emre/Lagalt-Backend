@@ -48,7 +48,7 @@ public class CommentController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CommentDTO> getCommentById(@PathVariable int id){
+    public ResponseEntity<CommentDTO> getCommentById(@PathVariable(value = "id") int id){
         Comment comment = commentService.findById(id);
         if (comment == null) {
             throw new CommentNotFoundException(id);
@@ -61,7 +61,7 @@ public class CommentController {
 
 
     @PostMapping("/project/{projectId}/add-comment")
-    public ResponseEntity<CommentDTO> addComment(@PathVariable Integer projectId, @RequestBody CommentPostDTO commentPostDTO, @AuthenticationPrincipal Jwt jwt){
+    public ResponseEntity<CommentDTO> addComment(@PathVariable(value = "projectId") Integer projectId, @RequestBody CommentPostDTO commentPostDTO, @AuthenticationPrincipal Jwt jwt){
        String username = jwt.getClaim("preferred_username");
 
        Comment comment = commentMapper.commentPostDtoToComment(commentPostDTO);
@@ -88,7 +88,7 @@ public class CommentController {
     }
 
     @PatchMapping("/{id}/update")
-    public ResponseEntity<CommentDTO> updateComment(@RequestBody CommentUpdateDTO commentUpdateDTO, @PathVariable int id){
+    public ResponseEntity<CommentDTO> updateComment(@RequestBody CommentUpdateDTO commentUpdateDTO, @PathVariable(value = "id") int id){
 
         if (commentService.findById(id) == null) {
             throw new CommentNotFoundException(id);
@@ -103,7 +103,7 @@ public class CommentController {
     }
 
     @DeleteMapping("/{id}/delete")
-    public ResponseEntity<User> deleteComment(@PathVariable int id){
+    public ResponseEntity<User> deleteComment(@PathVariable(value = "id") int id){
         Comment deletedComment = commentService.findById(id);
 
         if (deletedComment == null) {

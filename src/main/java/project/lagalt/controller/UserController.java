@@ -35,7 +35,7 @@ public class UserController {
     }
 
     @GetMapping("public/{id}")
-    public ResponseEntity<UserDTO> getUserById(@PathVariable int id){
+    public ResponseEntity<UserDTO> getUserById(@PathVariable(value = "id") int id){
         User user = userService.findById(id);
         if (user == null) {
             throw new UserNotFoundException(id);
@@ -53,7 +53,7 @@ public class UserController {
     }
 
     @GetMapping("public/username/{username}")
-    public ResponseEntity<UserDTO> getUserByName(@PathVariable String username){
+    public ResponseEntity<UserDTO> getUserByName(@PathVariable(value = "username") String username){
         User user = userService.findByUsername(username);
         if (user == null) {
             throw new UserNotFoundException(username);
@@ -92,7 +92,7 @@ public class UserController {
     }
 
     @PatchMapping("/{id}/update")
-    public ResponseEntity<UserDTO> updateUser(@RequestBody UserUpdateDTO userUpdateDTO, @PathVariable int id){
+    public ResponseEntity<UserDTO> updateUser(@RequestBody UserUpdateDTO userUpdateDTO, @PathVariable(value = "id") int id){
 
         if (userService.findById(id) == null) {
             throw new UserNotFoundException(id);
@@ -105,7 +105,7 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}/delete")
-    public ResponseEntity<User> deleteUser(@PathVariable int id){
+    public ResponseEntity<User> deleteUser(@PathVariable(value = "id") int id){
         User deletedUser = userService.findById(id);
 
         if (deletedUser == null) {
