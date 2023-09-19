@@ -9,9 +9,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 import org.mapstruct.Named;
-import project.lagalt.model.dtos.user.UserDTO;
-import project.lagalt.model.dtos.user.UserPostDTO;
-import project.lagalt.model.dtos.user.UserUpdateDTO;
+import project.lagalt.model.dtos.user.*;
 import project.lagalt.model.entities.*;
 
 @Mapper(componentModel = "spring")

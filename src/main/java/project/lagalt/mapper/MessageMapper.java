@@ -3,9 +3,7 @@ package project.lagalt.mapper;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import project.lagalt.model.dtos.message.MessageDTO;
-import project.lagalt.model.dtos.message.MessagePostDTO;
-import project.lagalt.model.dtos.message.MessageUpdateDTO;
+import project.lagalt.model.dtos.message.*;
 import project.lagalt.model.entities.Message;
 
 import java.util.Collection;

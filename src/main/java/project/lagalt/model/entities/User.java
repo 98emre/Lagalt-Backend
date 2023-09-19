@@ -4,10 +4,7 @@ package project.lagalt.model.entities;
 import jakarta.persistence.*;
 import project.lagalt.utilites.enums.ProfileVisibility;
 import project.lagalt.utilites.enums.Skills;
-
 import java.util.Set;
-
-
 
 @Entity
 @Table(name = "\"user\"")

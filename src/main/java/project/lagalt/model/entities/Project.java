@@ -4,7 +4,6 @@ package project.lagalt.model.entities;
 import jakarta.persistence.*;
 import project.lagalt.utilites.enums.Category;
 import project.lagalt.utilites.enums.Status;
-
 import java.util.Set;
 
 @Entity
@@ -28,7 +27,6 @@ public class Project {
     @Column(name = "category",nullable = false)
     @Enumerated(EnumType.STRING)
     private Category category;
-
 
     @Column(name = "status", nullable = false)
     @Enumerated(EnumType.STRING)

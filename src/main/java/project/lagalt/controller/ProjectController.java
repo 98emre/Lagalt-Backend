@@ -8,32 +8,18 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import project.lagalt.mapper.CollaboratorMapper;
 import project.lagalt.mapper.ProjectMapper;
 import project.lagalt.model.dtos.collaborator.CollaboratorDTO;
-import project.lagalt.model.dtos.project.ProjectDTO;
-import project.lagalt.model.dtos.project.ProjectPostDTO;
-import project.lagalt.model.dtos.project.ProjectUpdateDTO;
+import project.lagalt.model.dtos.project.*;
 import project.lagalt.model.entities.Collaborator;
 import project.lagalt.model.entities.Project;
 import project.lagalt.model.entities.User;
 import project.lagalt.service.ProjectService;
 import project.lagalt.service.UserService;
-import project.lagalt.utilites.exceptions.ProjectNotFoundException;
-import project.lagalt.utilites.exceptions.UserNoAccessToCollabortorException;
-import project.lagalt.utilites.exceptions.UserNotFoundException;
+import project.lagalt.utilites.exceptions.*;
 
 @RestController
 @RequestMapping(path = "api/projects")

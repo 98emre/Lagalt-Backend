@@ -3,9 +3,7 @@ package project.lagalt.mapper;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import project.lagalt.model.dtos.project.ProjectDTO;
-import project.lagalt.model.dtos.project.ProjectPostDTO;
-import project.lagalt.model.dtos.project.ProjectUpdateDTO;
+import project.lagalt.model.dtos.project.*;
 import project.lagalt.model.entities.Collaborator;
 import project.lagalt.model.entities.Comment;
 import project.lagalt.model.entities.Project;

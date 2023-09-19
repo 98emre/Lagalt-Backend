@@ -8,19 +8,14 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 import project.lagalt.mapper.CommentMapper;
-import project.lagalt.model.dtos.comment.CommentDTO;
-import project.lagalt.model.dtos.comment.CommentPostDTO;
-import project.lagalt.model.dtos.comment.CommentUpdateDTO;
+import project.lagalt.model.dtos.comment.*;
 import project.lagalt.model.entities.Comment;
 import project.lagalt.model.entities.Project;
 import project.lagalt.model.entities.User;
 import project.lagalt.service.CommentService;
 import project.lagalt.service.ProjectService;
 import project.lagalt.service.UserService;
-import project.lagalt.utilites.exceptions.CommentNotFoundException;
-import project.lagalt.utilites.exceptions.ProjectNotFoundException;
-import project.lagalt.utilites.exceptions.UserNotFoundException;
-
+import project.lagalt.utilites.exceptions.*;
 import java.net.URI;
 import java.util.Collection;
 
