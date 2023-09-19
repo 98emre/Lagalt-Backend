@@ -94,7 +94,7 @@ public class ProjectController {
     }
 
     @GetMapping("public/search")
-    public ResponseEntity<Collection<ProjectDTO>> findByTitle(@RequestParam String title) {
+    public ResponseEntity<Collection<ProjectDTO>> findByTitle(@RequestParam(value = "title") String title) {
         return ResponseEntity.ok(projectMapper.projectsToProjectDTO(projectService.findAllByTitle(title)));
     }
 
