@@ -42,6 +42,37 @@ public class UserServiceTest {
     }
 
     @Test
+    void test_Find_User_By_Id() {
+        User mockUser = new User();
+        mockUser.setUsername("EmreTest");
+
+        when(userRepository.findById(1)).thenReturn(Optional.of(mockUser));
+
+        User foundUser = userService.findById(1);
+
+        assertThat(foundUser).isNotNull();
+        assertThat(foundUser.getId()).isEqualTo(mockUser.getId());
+    }
+
+    @Test
+    void test_Find_All_User() {
+        User mockUser = new User();
+        mockUser.setUsername("EmreTest");
+
+        User mockUser2 = new User();
+        mockUser2.setUsername("EmreTest2");
+
+        List<User> mockUsers = Arrays.asList(mockUser, mockUser2);
+
+        when(userRepository.findAll()).thenReturn(mockUsers);
+
+        List<User> returnedUsers = (List<User>) userService.findAll();
+        
+        assertThat(returnedUsers).hasSize(2);
+        assertThat(returnedUsers.get(0).getUsername()).isEqualTo("EmreTest");
+    }
+
+    @Test
     void test_Find_User_By_Username() {
         User mockUser = new User();
         mockUser.setUsername("EmreTest");
