@@ -22,7 +22,7 @@ public class ProjectRepositoryTest {
 
 
     @Test
-    void testSave(){
+    void test_Save_Project(){
         Project project = new Project();
         project.setTitle("Emre Project");
         project.setDescriptions("This is Emre story project");
@@ -39,7 +39,7 @@ public class ProjectRepositoryTest {
     }
 
     @Test
-    void testFindById(){
+    void test_Find_Project_By_Id(){
         Project project = new Project();
         project.setTitle("Emre Project");
         project.setDescriptions("This is Emre story project");
@@ -57,7 +57,7 @@ public class ProjectRepositoryTest {
     }
 
     @Test
-    void testFindAll(){
+    void test_Find_All_Projects(){
         Project project1 = new Project();
         project1.setTitle("Emre Project 1");
         project1.setDescriptions("This is Emre story project 1");
@@ -82,7 +82,7 @@ public class ProjectRepositoryTest {
     }
 
     @Test
-    void testUpdate(){
+    void test_Update_Project(){
         Project project = new Project();
         project.setTitle("Emre Project");
         project.setDescriptions("This is Emre story project");
@@ -101,7 +101,7 @@ public class ProjectRepositoryTest {
     }
 
     @Test
-    void testDeleteById(){
+    void test_Delete_Project_By_Id(){
         Project project = new Project();
         project.setTitle("Emre Project");
         project.setDescriptions("This is Emre story project");
@@ -117,7 +117,7 @@ public class ProjectRepositoryTest {
     }
 
     @Test
-    void findAllByTitleIgnoreCaseContaining(){
+    void find_All_Project_By_Title_Ignore_Case_Containing(){
         Project project1 = new Project();
         project1.setTitle("Emre Project 1");
         project1.setDescriptions("This is Emre story project 1");
