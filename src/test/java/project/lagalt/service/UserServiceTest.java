@@ -67,7 +67,7 @@ public class UserServiceTest {
         when(userRepository.findAll()).thenReturn(mockUsers);
 
         List<User> returnedUsers = (List<User>) userService.findAll();
-        
+
         assertThat(returnedUsers).hasSize(2);
         assertThat(returnedUsers.get(0).getUsername()).isEqualTo("EmreTest");
     }
@@ -106,7 +106,7 @@ public class UserServiceTest {
     }
 
     @Test
-    void test_update_user(){
+    void test_Update_User(){
         User oldUser = new User();
         oldUser.setId(1);
         oldUser.setUsername("oldEmre");
