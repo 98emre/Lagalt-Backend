@@ -6,9 +6,7 @@ import java.util.Collection;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-import project.lagalt.model.dtos.comment.CommentDTO;
-import project.lagalt.model.dtos.comment.CommentPostDTO;
-import project.lagalt.model.dtos.comment.CommentUpdateDTO;
+import project.lagalt.model.dtos.comment.*;
 import project.lagalt.model.entities.Comment;
 
 @Mapper(componentModel = "spring")

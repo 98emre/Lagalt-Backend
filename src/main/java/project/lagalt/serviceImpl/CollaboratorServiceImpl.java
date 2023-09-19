@@ -5,10 +5,9 @@ import org.springframework.stereotype.Service;
 import project.lagalt.model.entities.Collaborator;
 import project.lagalt.repository.CollaboratorRepository;
 import project.lagalt.service.CollaboratorService;
-import project.lagalt.utilites.exceptions.CollaboratorNotFoundException;
+import project.lagalt.utilites.exceptions.collaborator.CollaboratorNotFoundException;
 
 import java.util.Collection;
-
 
 @Service
 public class CollaboratorServiceImpl implements CollaboratorService {
@@ -61,7 +60,6 @@ public class CollaboratorServiceImpl implements CollaboratorService {
     @Override
     public void deleteById(Integer id) {
         collaboratorRepository.findById(id).orElseThrow(()-> new CollaboratorNotFoundException(id));
-
         collaboratorRepository.deleteById(id);
     }
 

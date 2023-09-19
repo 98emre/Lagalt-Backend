@@ -1,7 +1,6 @@
 package project.lagalt.service;
 
 import java.util.Collection;
-
 import project.lagalt.model.entities.Collaborator;
 import project.lagalt.model.entities.Project;
 import project.lagalt.model.entities.User;

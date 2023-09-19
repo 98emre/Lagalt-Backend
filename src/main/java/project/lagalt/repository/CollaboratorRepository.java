@@ -11,8 +11,5 @@ import java.util.Set;
 
 @Repository
 public interface CollaboratorRepository extends JpaRepository<Collaborator, Integer> {
-
-
     Set<Collaborator> findByProjectAndStatus(Project project, Application status);
-
 }

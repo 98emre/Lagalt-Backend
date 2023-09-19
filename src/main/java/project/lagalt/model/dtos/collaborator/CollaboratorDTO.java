@@ -2,9 +2,7 @@ package project.lagalt.model.dtos.collaborator;
 
 import java.time.LocalDateTime;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.Data;
 import project.lagalt.utilites.enums.Application;
 

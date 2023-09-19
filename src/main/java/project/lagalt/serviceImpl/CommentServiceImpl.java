@@ -4,20 +4,18 @@ import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import project.lagalt.model.entities.Comment;
 import project.lagalt.repository.CommentRepository;
 import project.lagalt.repository.ProjectRepository;
 import project.lagalt.repository.UserRepository;
 import project.lagalt.service.CommentService;
-import project.lagalt.utilites.exceptions.CommentNotFoundException;
+import project.lagalt.utilites.exceptions.comment.CommentNotFoundException;
 
 
 @Service
 public class CommentServiceImpl implements CommentService {
 
     private final CommentRepository commentRepository;
-
 
     @Autowired
     public CommentServiceImpl(CommentRepository commentRepository, ProjectRepository projectRepository, UserRepository userRepositorys) {
@@ -58,7 +56,6 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public void deleteById(Integer id) {
         commentRepository.findById(id).orElseThrow(() -> new CommentNotFoundException(id));
-
         commentRepository.deleteById(id);
     }
 }

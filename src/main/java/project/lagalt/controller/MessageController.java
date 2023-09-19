@@ -15,10 +15,10 @@ import project.lagalt.model.entities.Message;
 import project.lagalt.model.entities.User;
 import project.lagalt.service.MessageService;
 import project.lagalt.service.UserService;
-import project.lagalt.utilites.exceptions.MessageCheckOwnerException;
-import project.lagalt.utilites.exceptions.MessageEmptyContextException;
-import project.lagalt.utilites.exceptions.MessageNotFoundException;
-import project.lagalt.utilites.exceptions.UserNotFoundException;
+import project.lagalt.utilites.exceptions.message.MessageCheckOwnerException;
+import project.lagalt.utilites.exceptions.message.MessageEmptyContextException;
+import project.lagalt.utilites.exceptions.message.MessageNotFoundException;
+import project.lagalt.utilites.exceptions.user.UserNotFoundException;
 
 import java.util.Collection;
 

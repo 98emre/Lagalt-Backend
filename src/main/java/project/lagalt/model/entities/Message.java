@@ -2,10 +2,7 @@ package project.lagalt.model.entities;
 
 import jakarta.persistence.*;
 import project.lagalt.utilites.enums.MessageStatus;
-
 import java.time.LocalDateTime;
-import java.util.Set;
-
 
 @Entity
 @Table(name = "message")

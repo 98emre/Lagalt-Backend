@@ -5,9 +5,7 @@ import java.util.Collection;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-import project.lagalt.model.dtos.collaborator.CollaboratorDTO;
-import project.lagalt.model.dtos.collaborator.CollaboratorPostDTO;
-import project.lagalt.model.dtos.collaborator.CollaboratorUpdateDTO;
+import project.lagalt.model.dtos.collaborator.*;
 import project.lagalt.model.entities.Collaborator;
 
 @Mapper(componentModel = "spring")

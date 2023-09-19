@@ -1,4 +1,4 @@
-package project.lagalt.utilites.exceptions;
+package project.lagalt.utilites.exceptions.project;
 
 
 import org.springframework.http.HttpStatus;
