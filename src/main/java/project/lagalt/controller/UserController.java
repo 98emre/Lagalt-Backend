@@ -9,6 +9,7 @@ import project.lagalt.model.dtos.user.UserDTO;
 import project.lagalt.model.dtos.user.UserUpdateDTO;
 import project.lagalt.model.entities.User;
 import project.lagalt.service.UserService;
+import project.lagalt.utilites.enums.ProfileVisibility;
 import project.lagalt.utilites.exceptions.UserAlreadyExistsException;
 import project.lagalt.utilites.exceptions.UserNotFoundException;
 
@@ -81,6 +82,7 @@ public class UserController {
     @PostMapping("/add-user")
     public ResponseEntity<?> addUserFromToken(@RequestHeader("Authorization") String bearerToken){
         String token = bearerToken.replace("Bearer ", "");
+
         userService.createUserFromToken(token);
 
         User user = userService.findByToken(token);

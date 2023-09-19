@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import project.lagalt.model.entities.User;
 import project.lagalt.repository.UserRepository;
 import project.lagalt.service.UserService;
+import project.lagalt.utilites.enums.ProfileVisibility;
 import project.lagalt.utilites.enums.Skills;
 import project.lagalt.utilites.exceptions.UserAlreadyExistsException;
 import project.lagalt.utilites.exceptions.UserNotFoundException;
@@ -105,6 +106,7 @@ public class UserServiceImpl implements UserService {
         user.setUsername(username);
         user.setEmail(email);
         user.setFullname(fullname);
+        user.setProfileVisibility(ProfileVisibility.PUBLIC);
 
 
         userRepository.save(user);
