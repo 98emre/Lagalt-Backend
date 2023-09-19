@@ -12,7 +12,7 @@ import project.lagalt.repository.CollaboratorRepository;
 import project.lagalt.repository.ProjectRepository;
 import project.lagalt.service.ProjectService;
 import project.lagalt.utilites.enums.Application;
-import project.lagalt.utilites.exceptions.ProjectNotFoundException;
+import project.lagalt.utilites.exceptions.project.ProjectNotFoundException;
 
 @Service
 public class ProjectServiceImpl implements ProjectService {

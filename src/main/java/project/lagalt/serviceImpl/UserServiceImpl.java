@@ -14,8 +14,8 @@ import project.lagalt.repository.UserRepository;
 import project.lagalt.service.UserService;
 import project.lagalt.utilites.enums.ProfileVisibility;
 import project.lagalt.utilites.enums.Skills;
-import project.lagalt.utilites.exceptions.UserAlreadyExistsException;
-import project.lagalt.utilites.exceptions.UserNotFoundException;
+import project.lagalt.utilites.exceptions.user.UserAlreadyExistsException;
+import project.lagalt.utilites.exceptions.user.UserNotFoundException;
 
 @Service
 public class UserServiceImpl implements UserService {

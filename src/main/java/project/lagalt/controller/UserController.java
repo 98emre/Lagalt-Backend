@@ -9,7 +9,8 @@ import project.lagalt.model.dtos.user.UserDTO;
 import project.lagalt.model.dtos.user.UserUpdateDTO;
 import project.lagalt.model.entities.User;
 import project.lagalt.service.UserService;
-import project.lagalt.utilites.exceptions.*;
+import project.lagalt.utilites.exceptions.user.UserAlreadyExistsException;
+import project.lagalt.utilites.exceptions.user.UserNotFoundException;
 
 import java.net.URI;
 import java.util.Collection;

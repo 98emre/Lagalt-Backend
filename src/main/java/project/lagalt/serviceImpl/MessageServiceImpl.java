@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import project.lagalt.model.entities.Message;
 import project.lagalt.repository.MessageRepository;
 import project.lagalt.service.MessageService;
-import project.lagalt.utilites.exceptions.MessageNotFoundException;
+import project.lagalt.utilites.exceptions.message.MessageNotFoundException;
 
 import java.util.Collection;
 import java.util.Set;

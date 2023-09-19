@@ -17,7 +17,11 @@ import project.lagalt.model.entities.User;
 import project.lagalt.service.CollaboratorService;
 import project.lagalt.service.ProjectService;
 import project.lagalt.service.UserService;
-import project.lagalt.utilites.exceptions.*;
+import project.lagalt.utilites.exceptions.collaborator.CollaboratorAlreadyExistException;
+import project.lagalt.utilites.exceptions.collaborator.CollaboratorCheckOwnerException;
+import project.lagalt.utilites.exceptions.collaborator.CollaboratorNotFoundException;
+import project.lagalt.utilites.exceptions.project.ProjectNotFoundException;
+import project.lagalt.utilites.exceptions.user.UserNotFoundException;
 
 @RestController
 @RequestMapping(path = "api/collaborators")

@@ -15,7 +15,10 @@ import project.lagalt.model.entities.User;
 import project.lagalt.service.CommentService;
 import project.lagalt.service.ProjectService;
 import project.lagalt.service.UserService;
-import project.lagalt.utilites.exceptions.*;
+import project.lagalt.utilites.exceptions.comment.CommentNotFoundException;
+import project.lagalt.utilites.exceptions.project.ProjectNotFoundException;
+import project.lagalt.utilites.exceptions.user.UserNotFoundException;
+
 import java.net.URI;
 import java.util.Collection;
 

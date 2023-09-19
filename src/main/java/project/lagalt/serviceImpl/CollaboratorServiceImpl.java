@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import project.lagalt.model.entities.Collaborator;
 import project.lagalt.repository.CollaboratorRepository;
 import project.lagalt.service.CollaboratorService;
-import project.lagalt.utilites.exceptions.CollaboratorNotFoundException;
+import project.lagalt.utilites.exceptions.collaborator.CollaboratorNotFoundException;
 
 import java.util.Collection;
 

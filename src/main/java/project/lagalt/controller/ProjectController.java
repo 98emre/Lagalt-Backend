@@ -19,7 +19,9 @@ import project.lagalt.model.entities.Project;
 import project.lagalt.model.entities.User;
 import project.lagalt.service.ProjectService;
 import project.lagalt.service.UserService;
-import project.lagalt.utilites.exceptions.*;
+import project.lagalt.utilites.exceptions.project.ProjectNotFoundException;
+import project.lagalt.utilites.exceptions.user.UserNoAccessToCollabortorException;
+import project.lagalt.utilites.exceptions.user.UserNotFoundException;
 
 @RestController
 @RequestMapping(path = "api/projects")

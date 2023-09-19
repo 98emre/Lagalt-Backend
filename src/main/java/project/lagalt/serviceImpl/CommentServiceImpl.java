@@ -9,7 +9,7 @@ import project.lagalt.repository.CommentRepository;
 import project.lagalt.repository.ProjectRepository;
 import project.lagalt.repository.UserRepository;
 import project.lagalt.service.CommentService;
-import project.lagalt.utilites.exceptions.CommentNotFoundException;
+import project.lagalt.utilites.exceptions.comment.CommentNotFoundException;
 
 
 @Service
