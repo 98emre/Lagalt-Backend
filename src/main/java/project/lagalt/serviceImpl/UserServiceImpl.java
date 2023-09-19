@@ -1,23 +1,21 @@
 package project.lagalt.serviceImpl;
 
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.jwt.JwtDecoders;
 import org.springframework.stereotype.Service;
-import project.lagalt.model.entities.Project;
+
 import project.lagalt.model.entities.User;
-import project.lagalt.repository.ProjectRepository;
 import project.lagalt.repository.UserRepository;
 import project.lagalt.service.UserService;
+import project.lagalt.utilites.enums.ProfileVisibility;
 import project.lagalt.utilites.enums.Skills;
-import project.lagalt.utilites.exceptions.ProjectNotFoundException;
 import project.lagalt.utilites.exceptions.UserAlreadyExistsException;
 import project.lagalt.utilites.exceptions.UserNotFoundException;
-
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -78,6 +76,14 @@ public class UserServiceImpl implements UserService {
             updatedUser.setSkills(updatedSkills);
         }
 
+        if(user.getDescription() != null){
+            updatedUser.setDescription(user.getDescription());
+        }
+
+        if(user.getProfileVisibility() != null){
+            updatedUser.setProfileVisibility(user.getProfileVisibility());
+        }
+
         return userRepository.save(updatedUser);
     }
 
@@ -104,6 +110,7 @@ public class UserServiceImpl implements UserService {
         user.setUsername(username);
         user.setEmail(email);
         user.setFullname(fullname);
+        user.setProfileVisibility(ProfileVisibility.PUBLIC);
 
 
         userRepository.save(user);

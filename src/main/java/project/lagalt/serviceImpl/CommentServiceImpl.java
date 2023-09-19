@@ -1,21 +1,16 @@
 package project.lagalt.serviceImpl;
 
+import java.util.Collection;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import project.lagalt.model.entities.Comment;
-import project.lagalt.model.entities.Project;
-import project.lagalt.model.entities.User;
 import project.lagalt.repository.CommentRepository;
 import project.lagalt.repository.ProjectRepository;
 import project.lagalt.repository.UserRepository;
 import project.lagalt.service.CommentService;
 import project.lagalt.utilites.exceptions.CommentNotFoundException;
-import project.lagalt.utilites.exceptions.ProjectNotFoundException;
-import project.lagalt.utilites.exceptions.UserNotFoundException;
-
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
 
 
 @Service

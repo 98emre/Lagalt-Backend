@@ -1,18 +1,31 @@
 package project.lagalt.model.dtos.user;
 
-
-import lombok.Data;
-import project.lagalt.utilites.enums.Skills;
-
 import java.util.Set;
+
+import jakarta.validation.constraints.Size;
+import lombok.Data;
+import project.lagalt.utilites.enums.ProfileVisibility;
+import project.lagalt.utilites.enums.Skills;
 
 @Data
 public class UserUpdateDTO {
+
     private int id;
+
+    @Size(max = 50, message = "Username is Max Length")
     private String username;
+
+    @Size(max = 100, message = "Email is Max Length")
     private String email;
+
+    @Size(max = 200, message = "Description is Max Length")
     private String description;
+
+    @Size(max = 50, message = "Fullname is Max Length")
     private String fullname;
+
+    private ProfileVisibility profileVisibility;
+
     private Set<Skills> skills;
 
     public int getId() {
@@ -39,11 +52,11 @@ public class UserUpdateDTO {
         this.email = email;
     }
 
-    public String getDescription(){
+    public String getDescription() {
         return description;
     }
 
-    public void setDescription(String description){
+    public void setDescription(String description) {
         this.description = description;
     }
 
@@ -61,5 +74,13 @@ public class UserUpdateDTO {
 
     public void setSkills(Set<Skills> skills) {
         this.skills = skills;
+    }
+
+    public ProfileVisibility getProfileVisibility() {
+        return profileVisibility;
+    }
+
+    public void setProfileVisibility(ProfileVisibility profileVisibility) {
+        this.profileVisibility = profileVisibility;
     }
 }

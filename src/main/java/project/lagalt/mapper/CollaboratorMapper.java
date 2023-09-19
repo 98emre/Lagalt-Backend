@@ -1,16 +1,14 @@
 package project.lagalt.mapper;
 
+import java.util.Collection;
+
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+
 import project.lagalt.model.dtos.collaborator.CollaboratorDTO;
 import project.lagalt.model.dtos.collaborator.CollaboratorPostDTO;
 import project.lagalt.model.dtos.collaborator.CollaboratorUpdateDTO;
 import project.lagalt.model.entities.Collaborator;
-import project.lagalt.model.entities.User;
-
-import java.util.Collection;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring")
 public abstract class CollaboratorMapper {

@@ -1,22 +1,38 @@
 package project.lagalt.model.dtos.user;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
+import project.lagalt.utilites.enums.ProfileVisibility;
 import project.lagalt.utilites.enums.Skills;
 
 import java.util.Set;
 
-
 @Data
 public class UserDTO {
     private int id;
+
+    @Size(max = 50, message = "Username is Max Length")
+    @NotBlank(message = "No Blank Username")
     private String username;
+
+    @Size(max = 100, message = "Email is Max Length")
     private String email;
+
+    @Size(max = 200, message = "Description is Max Length")
     private String description;
+
+    @Size(max = 50, message = "Fullname is Max Length")
     private String fullname;
+
     private Set<Skills> skills;
+    private ProfileVisibility profileVisibility;
     private Set<Integer> projectIds;
     private Set<Integer> collaboratorIds;
     private Set<Integer> commentIds;
+    private Set<Integer> receivedMessageIds;
+    private Set<Integer> sentMessageIds;
+
     public int getId() {
         return id;
     }
@@ -45,7 +61,7 @@ public class UserDTO {
         return description;
     }
 
-    public void setDescription(String description){
+    public void setDescription(String description) {
         this.description = description;
     }
 
@@ -63,6 +79,14 @@ public class UserDTO {
 
     public void setSkills(Set<Skills> skills) {
         this.skills = skills;
+    }
+
+    public ProfileVisibility getProfileVisibility() {
+        return profileVisibility;
+    }
+
+    public void setProfileVisibility(ProfileVisibility profileVisibility) {
+        this.profileVisibility = profileVisibility;
     }
 
     public Set<Integer> getProjectIds() {
@@ -89,4 +113,19 @@ public class UserDTO {
         this.commentIds = commentIds;
     }
 
+    public Set<Integer> getReceivedMessageIds() {
+        return receivedMessageIds;
+    }
+
+    public void setReceivedMessageIds(Set<Integer> receivedMessageIds) {
+        this.receivedMessageIds = receivedMessageIds;
+    }
+
+    public Set<Integer> getSentMessageIds() {
+        return sentMessageIds;
+    }
+
+    public void setSentMessageIds(Set<Integer> sentMessageIds) {
+        this.sentMessageIds = sentMessageIds;
+    }
 }

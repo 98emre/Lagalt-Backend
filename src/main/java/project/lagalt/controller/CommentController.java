@@ -1,6 +1,5 @@
 package project.lagalt.controller;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +20,7 @@ import project.lagalt.utilites.exceptions.CommentNotFoundException;
 import project.lagalt.utilites.exceptions.ProjectNotFoundException;
 import project.lagalt.utilites.exceptions.UserNotFoundException;
 
+import java.net.URI;
 import java.util.Collection;
 
 @RestController
@@ -34,7 +34,8 @@ public class CommentController {
     private final ProjectService projectService;
 
     @Autowired
-    public CommentController(CommentService commentService, CommentMapper commentMapper, UserService userService, ProjectService projectService) {
+    public CommentController(CommentService commentService, CommentMapper commentMapper, UserService userService,
+            ProjectService projectService) {
         this.commentService = commentService;
         this.commentMapper = commentMapper;
         this.userService = userService;
@@ -42,48 +43,53 @@ public class CommentController {
     }
 
     @GetMapping("public")
-    public ResponseEntity<Collection<CommentDTO>> getAllComment(){
+    public ResponseEntity<Collection<CommentDTO>> getAllComment() {
         return ResponseEntity.ok(commentMapper.commentToCommentDtos(commentService.findAll()));
     }
 
     @GetMapping("public/{id}")
-    public ResponseEntity<CommentDTO> getCommentById(@PathVariable int id){
+    public ResponseEntity<CommentDTO> getCommentById(@PathVariable(value = "id") int id) {
         Comment comment = commentService.findById(id);
         if (comment == null) {
             throw new CommentNotFoundException(id);
         }
 
-        return ResponseEntity.ok(commentMapper.commentToCommentDto(comment));
+        CommentDTO commentDTO = commentMapper.commentToCommentDto(comment);
+
+        return ResponseEntity.ok(commentDTO);
     }
 
+    @PostMapping("/project/{projectId}/add-comment")
+    public ResponseEntity<CommentDTO> addComment(@PathVariable(value = "projectId") Integer projectId,
+            @RequestBody CommentPostDTO commentPostDTO, @AuthenticationPrincipal Jwt jwt) {
+        String username = jwt.getClaim("preferred_username");
 
-    @PostMapping("/project/{projectId}")
-    public ResponseEntity<CommentDTO> addComment(@PathVariable Integer projectId, @RequestBody CommentPostDTO commentPostDTO, @AuthenticationPrincipal Jwt jwt){
-       String username = jwt.getClaim("preferred_username");
+        Comment comment = commentMapper.commentPostDtoToComment(commentPostDTO);
+        User user = userService.findByUsername(username);
 
-       Comment comment = commentMapper.commentPostDtoToComment(commentPostDTO);
-       User user = userService.findByUsername(username);
+        if (user == null) {
+            throw new UserNotFoundException(username);
+        }
 
-       if(user == null){
-           throw new UserNotFoundException(username);
-       }
+        Project project = projectService.findById(projectId);
 
-       Project project = projectService.findById(projectId);
+        if (project == null) {
+            throw new ProjectNotFoundException(projectId);
+        }
 
-       if(project == null){
-           throw new ProjectNotFoundException(projectId);
-       }
+        comment.setProject(project);
+        comment.setUser(user);
 
-       comment.setProject(project);
-       comment.setUser(user);
+        commentService.add(comment);
+        CommentDTO commentDTO = commentMapper.commentToCommentDto(comment);
+        URI location = URI.create("/api/comments/public/" + comment.getId());
 
-       commentService.add(comment);
-
-        return ResponseEntity.ok(commentMapper.commentToCommentDto(comment));
+        return ResponseEntity.created(location).body(commentDTO);
     }
 
-    @PatchMapping("/{id}")
-    public ResponseEntity<CommentDTO> updateComment(@RequestBody CommentUpdateDTO commentUpdateDTO, @PathVariable int id){
+    @PatchMapping("/{id}/update")
+    public ResponseEntity<CommentDTO> updateComment(@RequestBody CommentUpdateDTO commentUpdateDTO,
+            @PathVariable(value = "id") int id) {
 
         if (commentService.findById(id) == null) {
             throw new CommentNotFoundException(id);
@@ -91,11 +97,13 @@ public class CommentController {
 
         commentUpdateDTO.setId(id);
         Comment comment = commentService.update(commentMapper.commentUpdateDtoToComment(commentUpdateDTO));
-        return ResponseEntity.ok(commentMapper.commentToCommentDto(comment));
+        CommentDTO commentDTO = commentMapper.commentToCommentDto(comment);
+
+        return ResponseEntity.ok(commentDTO);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<User> deleteComment(@PathVariable int id){
+    @DeleteMapping("/{id}/delete")
+    public ResponseEntity<User> deleteComment(@PathVariable(value = "id") int id) {
         Comment deletedComment = commentService.findById(id);
 
         if (deletedComment == null) {
@@ -104,7 +112,7 @@ public class CommentController {
 
         commentService.deleteById(id);
 
-        return ResponseEntity.status(200).build();
+        return ResponseEntity.noContent().build();
     }
 
     @ExceptionHandler(CommentNotFoundException.class)
@@ -118,8 +126,13 @@ public class CommentController {
     }
 
     @ExceptionHandler(ProjectNotFoundException.class)
-    public ResponseEntity<String> handleProjectNotFoundExceptionn(ProjectNotFoundException ex) {
+    public ResponseEntity<String> handleProjectNotFoundException(ProjectNotFoundException ex) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<String> handleAllOtherExceptions(Exception ex) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error occurred.");
     }
 
 }

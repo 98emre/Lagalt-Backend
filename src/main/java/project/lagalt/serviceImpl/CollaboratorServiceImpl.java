@@ -50,6 +50,10 @@ public class CollaboratorServiceImpl implements CollaboratorService {
         if(collaborator.getRequestDate() != null){
             updateCollaborator.setRequestDate(collaborator.getRequestDate());
         }
+
+        if(collaborator.getMotivation() != null){
+            updateCollaborator.setMotivation(collaborator.getMotivation());
+        }
         
         return collaboratorRepository.save(updateCollaborator);
     }

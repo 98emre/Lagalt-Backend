@@ -1,11 +1,13 @@
 package project.lagalt.model.dtos.collaborator;
 
 
+import java.time.LocalDateTime;
+
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 import project.lagalt.utilites.enums.Application;
-import project.lagalt.utilites.enums.Status;
-
-import java.time.LocalDateTime;
 
 @Data
 public class CollaboratorUpdateDTO {
@@ -14,6 +16,11 @@ public class CollaboratorUpdateDTO {
     private Application status;
     private LocalDateTime requestDate;
     private LocalDateTime approvalDate;
+
+    @Size(max = 250, message = "Motivation Text is Max")
+    @NotBlank
+    @NotNull
+    private String motivation;
 
     public int getId() {
         return id;
@@ -45,5 +52,13 @@ public class CollaboratorUpdateDTO {
 
     public void setApprovalDate(LocalDateTime approvalDate) {
         this.approvalDate = approvalDate;
+    }
+
+    public String getMotivation() {
+        return motivation;
+    }
+
+    public void setMotivation(String motivation) {
+        this.motivation = motivation;
     }
 }

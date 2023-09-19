@@ -1,7 +1,7 @@
 package project.lagalt.model.entities;
 
-
 import jakarta.persistence.*;
+import project.lagalt.utilites.enums.ProfileVisibility;
 import project.lagalt.utilites.enums.Skills;
 
 import java.util.Set;
@@ -15,15 +15,14 @@ public class User {
     @Column(name = "user_id")
     private int id;
 
-    @Column(name = "username", length = 50, nullable = false,unique = true)
+    @Column(name = "username", length = 50, nullable = false, unique = true)
     private String username;
 
-    @Column(name = "email", length = 50,unique = true)
+    @Column(name = "email", length = 50, unique = true)
     private String email;
 
-    @Column(name="description", length = 200)
+    @Column(name = "description", length = 200)
     private String description;
-
 
     @Column(name = "fullname", length = 50)
     private String fullname;
@@ -34,6 +33,10 @@ public class User {
     @CollectionTable(name = "user_skills", joinColumns = @JoinColumn(name = "user_id"))
     private Set<Skills> skills;
 
+    @Column(name = "hidden")
+    @Enumerated(EnumType.STRING)
+    private ProfileVisibility profileVisibility;
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private Set<Project> projects;
 
@@ -43,16 +46,25 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private Set<Comment> comments;
 
-    public User(){
+    @OneToMany(mappedBy = "sender", cascade = CascadeType.ALL)
+    private Set<Message> sentMessages;
+
+    @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL)
+    private Set<Message> receivedMessages;
+
+    public User() {
 
     }
 
-    public User(int id, String username,String email, String fullname, Set<Skills> skills) {
+    public User(int id, String username, String email, String description, String fullname, Set<Skills> skills,
+            ProfileVisibility profileVisibility) {
         this.id = id;
         this.username = username;
         this.email = email;
+        this.description = description;
         this.fullname = fullname;
         this.skills = skills;
+        this.profileVisibility = profileVisibility;
     }
 
     public int getId() {
@@ -71,20 +83,20 @@ public class User {
         this.username = username;
     }
 
-    public String getDescription(){
-        return description;
-    }
-
-    public void setDescription(String description){
-        this.description = description;
-    }
-
     public String getEmail() {
         return email;
     }
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getFullname() {
@@ -101,6 +113,14 @@ public class User {
 
     public void setSkills(Set<Skills> skills) {
         this.skills = skills;
+    }
+
+    public ProfileVisibility getProfileVisibility() {
+        return profileVisibility;
+    }
+
+    public void setProfileVisibility(ProfileVisibility profileVisibility) {
+        this.profileVisibility = profileVisibility;
     }
 
     public Set<Project> getProjects() {
@@ -125,6 +145,22 @@ public class User {
 
     public void setComments(Set<Comment> comments) {
         this.comments = comments;
+    }
+
+    public Set<Message> getSentMessages() {
+        return sentMessages;
+    }
+
+    public void setSentMessages(Set<Message> sentMessages) {
+        this.sentMessages = sentMessages;
+    }
+
+    public Set<Message> getReceivedMessages() {
+        return receivedMessages;
+    }
+
+    public void setReceivedMessages(Set<Message> receivedMessages) {
+        this.receivedMessages = receivedMessages;
     }
 
     @Override

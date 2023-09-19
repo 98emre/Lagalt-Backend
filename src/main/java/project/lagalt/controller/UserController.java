@@ -1,6 +1,5 @@
 package project.lagalt.controller;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
@@ -9,9 +8,11 @@ import project.lagalt.model.dtos.user.UserDTO;
 import project.lagalt.model.dtos.user.UserUpdateDTO;
 import project.lagalt.model.entities.User;
 import project.lagalt.service.UserService;
+import project.lagalt.utilites.enums.ProfileVisibility;
 import project.lagalt.utilites.exceptions.UserAlreadyExistsException;
 import project.lagalt.utilites.exceptions.UserNotFoundException;
 
+import java.net.URI;
 import java.util.Collection;
 
 @RestController
@@ -29,37 +30,41 @@ public class UserController {
     }
 
     @GetMapping("public")
-    public ResponseEntity<Collection<UserDTO>> getAllUser(){
+    public ResponseEntity<Collection<UserDTO>> getAllUser() {
         return ResponseEntity.ok(userMapper.usersToUsersDTO(userService.findAll()));
     }
 
     @GetMapping("public/{id}")
-    public ResponseEntity<UserDTO> getUserById(@PathVariable int id){
+    public ResponseEntity<UserDTO> getUserById(@PathVariable(value = "id") int id) {
         User user = userService.findById(id);
         if (user == null) {
             throw new UserNotFoundException(id);
         }
 
-        return ResponseEntity.ok(userMapper.userToUserDTO(user));
+        UserDTO userDTO = userMapper.userToUserDTO(user);
+
+        return ResponseEntity.ok(userDTO);
     }
 
     @GetMapping("public/search")
-    public ResponseEntity<Collection<UserDTO>> findByName(@RequestParam String name){
+    public ResponseEntity<Collection<UserDTO>> findByName(@RequestParam(value = "name") String name) {
         return ResponseEntity.ok(userMapper.usersToUsersDTO(userService.findAllByName(name, name)));
     }
 
     @GetMapping("public/username/{username}")
-    public ResponseEntity<UserDTO> getUserByName(@PathVariable String username){
+    public ResponseEntity<UserDTO> getUserByName(@PathVariable(value = "username") String username) {
         User user = userService.findByUsername(username);
         if (user == null) {
             throw new UserNotFoundException(username);
         }
 
-        return ResponseEntity.ok(userMapper.userToUserDTO(user));
+        UserDTO userDTO = userMapper.userToUserDTO(user);
+
+        return ResponseEntity.ok(userDTO);
     }
 
     @GetMapping("public/token/username")
-    public ResponseEntity<UserDTO> getUserByToken(@RequestHeader("Authorization") String bearerToken){
+    public ResponseEntity<UserDTO> getUserByToken(@RequestHeader("Authorization") String bearerToken) {
         String token = bearerToken.replace("Bearer ", "");
         User user = userService.findByToken(token);
 
@@ -67,31 +72,40 @@ public class UserController {
             throw new UserNotFoundException("Token");
         }
 
-        return ResponseEntity.ok(userMapper.userToUserDTO(user));
+        UserDTO userDTO = userMapper.userToUserDTO(user);
+        return ResponseEntity.ok(userDTO);
     }
 
     @PostMapping("/add-user")
-    public ResponseEntity<?> addUserFromToken(@RequestHeader("Authorization") String bearerToken){
+    public ResponseEntity<?> addUserFromToken(@RequestHeader("Authorization") String bearerToken) {
         String token = bearerToken.replace("Bearer ", "");
+
         userService.createUserFromToken(token);
 
         User user = userService.findByToken(token);
+        UserDTO userDTO = userMapper.userToUserDTO(user);
 
-        return ResponseEntity.ok(userMapper.userToUserDTO(user));
+        URI location = URI.create("/api/users/public/" + user.getId());
+
+        return ResponseEntity.created(location).body(userDTO);
     }
 
-    @PatchMapping("/{id}")
-    public ResponseEntity<UserDTO> updateUser(@RequestBody UserUpdateDTO userUpdateDTO, @PathVariable int id){
+    @PatchMapping("/{id}/update")
+    public ResponseEntity<UserDTO> updateUser(@RequestBody UserUpdateDTO userUpdateDTO,
+            @PathVariable(value = "id") int id) {
+
         if (userService.findById(id) == null) {
             throw new UserNotFoundException(id);
         }
         userUpdateDTO.setId(id);
         User user = userService.update(userMapper.userUpdateToUser(userUpdateDTO));
-        return ResponseEntity.ok(userMapper.userToUserDTO(user));
+
+        UserDTO userDTO = userMapper.userToUserDTO(user);
+        return ResponseEntity.ok(userDTO);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<User> deleteUser(@PathVariable int id){
+    @DeleteMapping("/{id}/delete")
+    public ResponseEntity<User> deleteUser(@PathVariable(value = "id") int id) {
         User deletedUser = userService.findById(id);
 
         if (deletedUser == null) {
@@ -100,7 +114,7 @@ public class UserController {
 
         userService.deleteById(id);
 
-        return ResponseEntity.status(200).build();
+        return ResponseEntity.noContent().build();
     }
 
     @ExceptionHandler(UserNotFoundException.class)
@@ -108,9 +122,13 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
     }
 
-
     @ExceptionHandler(UserAlreadyExistsException.class)
     public ResponseEntity<String> handleUserAlreadyExistsException(UserAlreadyExistsException ex) {
         return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<String> handleAllOtherExceptions(Exception ex) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error occurred.");
     }
 }
