@@ -8,7 +8,6 @@ import project.lagalt.model.dtos.user.UserDTO;
 import project.lagalt.model.dtos.user.UserUpdateDTO;
 import project.lagalt.model.entities.User;
 import project.lagalt.service.UserService;
-import project.lagalt.utilites.enums.ProfileVisibility;
 import project.lagalt.utilites.exceptions.UserAlreadyExistsException;
 import project.lagalt.utilites.exceptions.UserNotFoundException;
 
