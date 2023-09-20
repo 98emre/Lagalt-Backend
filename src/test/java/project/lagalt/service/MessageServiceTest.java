@@ -77,7 +77,7 @@ public class MessageServiceTest {
         assertThat(messages).hasSize(2);
         assertThat(messages.get(1).getText()).isEqualTo("Hello Emre 2");
     }
-    
+
     @Test
     void test_Update_Message(){
         Message oldMockMessage = new Message();
