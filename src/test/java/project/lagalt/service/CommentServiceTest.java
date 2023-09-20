@@ -48,7 +48,7 @@ public class CommentServiceTest {
         assertThat(foundComment).isNotNull();
         assertThat(foundComment.getId()).isEqualTo(mockComment.getId());
     }
-    
+
     @Test
     void test_Find_All_Comments() {
         Comment mockComment = new Comment();
@@ -88,7 +88,7 @@ public class CommentServiceTest {
     }
 
     @Test
-    void test_Delete_User_By_Id(){
+    void test_Delete_Comment_By_Id(){
         Comment deleteComment = new Comment();
         deleteComment.setText("Hello");
 
