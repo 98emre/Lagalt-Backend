@@ -140,7 +140,7 @@ docker run -p 8080:8080 lagalt-backend
 ```
 This command runs the "lagalt-backend" image and maps the container's port 8080 to the host's port 8080.
 
-### Dependencies in your application.properties file
+## Dependencies in your application.properties file
 
 Make sure all you have all of the following dependencies in your pom.xml file and use the latest version:
 - spring-boot-starter
