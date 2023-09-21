@@ -8,6 +8,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.oauth2.jwt.*;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.RequestPostProcessor;
 import project.lagalt.mapper.UserMapper;
 import project.lagalt.model.dtos.user.*;
 import project.lagalt.model.entities.User;
@@ -44,8 +45,21 @@ public class UserControllerTest {
 
     @MockBean
     private JwtDecoder jwtDecoder;
+
+    private RequestPostProcessor jwt() {
+        Jwt mockJwt = Jwt.withTokenValue("mock.token.value")
+                .header("alg", "none")
+                .claim("preferred_username", "user")
+                .build();
+        when(jwtDecoder.decode(anyString())).thenReturn(mockJwt);
+
+        return mockRequest -> {
+            mockRequest.addHeader("Authorization", "Bearer mock.token.value");
+            return mockRequest;
+        };
+    }
+
     @Test
-    @WithMockUser(username = "user")
     void test_Get_All_Users() throws Exception {
         User user = new User();
         user.setUsername("Emre");
@@ -56,14 +70,15 @@ public class UserControllerTest {
         mockUserDTO.setUsername("Emre");
         when(userMapper.userToUserDTO(any(User.class))).thenReturn(mockUserDTO);
 
-        mockMvc.perform(get("/api/users/public").contentType(MediaType.APPLICATION_JSON))
+        mockMvc.perform(get("/api/users/public")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .with(jwt()))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
     }
 
     @Test
-    @WithMockUser(username = "user")
     void test_Get_User_By_Id() throws Exception{
         User user = new User();
         user.setUsername("Emre");
@@ -75,14 +90,15 @@ public class UserControllerTest {
         when(userMapper.userToUserDTO(any(User.class))).thenReturn(mockUserDTO);
 
 
-        mockMvc.perform(get("/api/users/public").contentType(MediaType.APPLICATION_JSON))
+        mockMvc.perform(get("/api/users/public")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .with(jwt()))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
     }
 
     @Test
-    @WithMockUser(username = "user")
     void test_Get_User_By_Id_Not_Found() throws Exception {
         User user = new User();
         user.setUsername("Emre");
@@ -93,13 +109,14 @@ public class UserControllerTest {
         mockUserDTO.setUsername("Emre");
         when(userMapper.userToUserDTO(any(User.class))).thenReturn(mockUserDTO);
 
-        mockMvc.perform(get("/api/users/public/2").contentType(MediaType.APPLICATION_JSON))
+        mockMvc.perform(get("/api/users/public/2")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .with(jwt()))
                 .andDo(print())
                 .andExpect(status().isNotFound());
     }
 
     @Test
-    @WithMockUser(username = "user")
     void test_Get_User_By_Username_Existing() throws Exception {
         User user = new User();
         user.setUsername("Emre");
@@ -111,7 +128,8 @@ public class UserControllerTest {
         when(userMapper.userToUserDTO(any(User.class))).thenReturn(mockUserDTO);
 
         mockMvc.perform(get("/api/users/public/username/Emre")
-                        .contentType(MediaType.APPLICATION_JSON))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .with(jwt()))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
@@ -142,12 +160,9 @@ public class UserControllerTest {
         when(userMapper.userUpdateToUser(any(UserUpdateDTO.class))).thenReturn(updatedUser);
         when(userMapper.userToUserDTO(any(User.class))).thenReturn(new UserDTO());
 
-        Jwt mockJwtToken = createMockJwtToken("user", Collections.singletonList("USER"));
-        when(jwtDecoder.decode(anyString())).thenReturn(mockJwtToken);
-
         mockMvc.perform(patch("/api/users/1/update")
-                        .header("Authorization", "Bearer " + mockJwtToken.getTokenValue())
                         .contentType(MediaType.APPLICATION_JSON)
+                        .with(jwt())
                         .content(objectMapper.writeValueAsString(mockUserUpdateDTO)))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -161,13 +176,11 @@ public class UserControllerTest {
         user.setUsername("Emre");
 
         when(userService.findById(1)).thenReturn(user);
-        Jwt mockJwtToken = createMockJwtToken("user",Collections.singletonList("USER"));
 
-        when(jwtDecoder.decode(anyString())).thenReturn(mockJwtToken);
 
         mockMvc.perform(delete("/api/users/1/delete")
-                    .header("Authorization","Bearer " + mockJwtToken.getTokenValue())
-                    .contentType(MediaType.APPLICATION_JSON))
+                    .contentType(MediaType.APPLICATION_JSON)
+                        .with(jwt()))
                 .andDo(print())
                 .andExpect(status().isNoContent());
     }
@@ -180,11 +193,8 @@ public class UserControllerTest {
 
         when(userService.findById(1)).thenReturn(null);
 
-        Jwt mockJwtToken = createMockJwtToken("user",Collections.singletonList("USER"));
-        when(jwtDecoder.decode(anyString())).thenReturn(mockJwtToken);
-
         mockMvc.perform(delete("/api/users/1/delete")
-                        .header("Authorization", "Bearer " + mockJwtToken.getTokenValue())
+                        .with(jwt())
                         .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isNotFound());
@@ -192,9 +202,6 @@ public class UserControllerTest {
 
     @Test
     void test_Add_User_From_Token() throws Exception {
-        Jwt mockJwtToken = createMockJwtToken("user",Collections.singletonList("USER"));
-        when(jwtDecoder.decode(anyString())).thenReturn(mockJwtToken);
-        String bearerToken = "Bearer " + mockJwtToken.getTokenValue();
 
         User user = new User();
         user.setId(1);
@@ -204,7 +211,7 @@ public class UserControllerTest {
         when(userService.findByToken(anyString())).thenReturn(user);
 
         mockMvc.perform(post("/api/users/add-user")
-                        .header("Authorization", bearerToken)
+                        .with(jwt())
                         .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isCreated());
@@ -212,10 +219,6 @@ public class UserControllerTest {
 
     @Test
     void test_Get_User_By_Token() throws Exception {
-        Jwt mockJwtToken = createMockJwtToken("user", Collections.singletonList("USER"));
-        when(jwtDecoder.decode(anyString())).thenReturn(mockJwtToken);
-        String bearerToken = "Bearer " + mockJwtToken.getTokenValue();
-
         User user = new User();
         user.setId(1);
         user.setUsername("Emre");
@@ -223,26 +226,10 @@ public class UserControllerTest {
         when(userService.findByToken(anyString())).thenReturn(user);
 
         mockMvc.perform(get("/api/users/public/token/username")
-                        .header("Authorization", bearerToken)
+                        .with(jwt())
                         .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk());
-    }
-
-    private Jwt createMockJwtToken(String subject, Collection<String> roles) {
-
-        Map<String, Object> claims = new HashMap<>();
-        Map<String, Object> resourceAccess = new HashMap<>();
-        Map<String, Object> clientResource = new HashMap<>();
-        clientResource.put("roles", roles);
-        resourceAccess.put(clientId, clientResource);
-        claims.put("resource_access", resourceAccess);
-
-        return Jwt.withTokenValue("mock.token.value")
-                .header("alg", "none")
-                .subject(subject)
-                .claims(claims::putAll)
-                .build();
     }
 
 }
