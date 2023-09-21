@@ -20,6 +20,7 @@ import project.lagalt.utilites.exceptions.message.MessageEmptyContextException;
 import project.lagalt.utilites.exceptions.message.MessageNotFoundException;
 import project.lagalt.utilites.exceptions.user.UserNotFoundException;
 
+import java.net.URI;
 import java.util.Collection;
 
 @RestController
@@ -79,10 +80,9 @@ public class MessageController {
         messageService.add(message);
 
         MessageDTO messageDTO = messageMapper.messageToMessageDto(message);
-        System.out.println("message " + messageDTO);
+        URI location = URI.create("/api/message/public/" + message.getId());
 
-
-        return ResponseEntity.ok(messageDTO);
+        return ResponseEntity.created(location).body(messageDTO);
     }
 
     @PatchMapping("/{id}/update")
