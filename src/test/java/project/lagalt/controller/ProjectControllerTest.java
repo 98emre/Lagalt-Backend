@@ -1,41 +1,27 @@
 package project.lagalt.controller;
 
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
+import org.springframework.beans.factory.annotation.*;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
-import static org.mockito.ArgumentMatchers.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 
 import org.springframework.http.MediaType;
-import org.springframework.security.oauth2.jwt.Jwt;
-import org.springframework.security.oauth2.jwt.JwtDecoder;
-import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.security.oauth2.jwt.*;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.RequestPostProcessor;
 import project.lagalt.mapper.CollaboratorMapper;
 import project.lagalt.mapper.ProjectMapper;
-import project.lagalt.model.dtos.project.ProjectDTO;
-import project.lagalt.model.dtos.project.ProjectPostDTO;
-import project.lagalt.model.dtos.project.ProjectUpdateDTO;
-import project.lagalt.model.entities.Collaborator;
-import project.lagalt.model.entities.Project;
-import project.lagalt.model.entities.User;
-import project.lagalt.service.CollaboratorService;
-import project.lagalt.service.ProjectService;
-import project.lagalt.service.UserService;
-import project.lagalt.utilites.enums.Application;
+import project.lagalt.model.dtos.project.*;
+import project.lagalt.model.entities.*;
+import project.lagalt.service.*;
 
 import java.util.*;
 
+import static org.mockito.ArgumentMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.mockito.Mockito.when;
 
 @WebMvcTest(value = ProjectController.class)

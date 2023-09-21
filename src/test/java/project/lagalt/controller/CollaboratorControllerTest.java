@@ -1,33 +1,20 @@
 package project.lagalt.controller;
 
-
-import org.checkerframework.checker.units.qual.C;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.security.oauth2.jwt.Jwt;
-import org.springframework.security.oauth2.jwt.JwtDecoder;
+import org.springframework.security.oauth2.jwt.*;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.RequestPostProcessor;
 import project.lagalt.mapper.CollaboratorMapper;
-import project.lagalt.model.dtos.collaborator.CollaboratorDTO;
-import project.lagalt.model.dtos.collaborator.CollaboratorPostDTO;
-import project.lagalt.model.dtos.collaborator.CollaboratorUpdateDTO;
-import project.lagalt.model.entities.Collaborator;
-import project.lagalt.model.entities.Project;
-import project.lagalt.model.entities.User;
-import project.lagalt.service.CollaboratorService;
-import project.lagalt.service.ProjectService;
-import project.lagalt.service.UserService;
+import project.lagalt.model.dtos.collaborator.*;
+import project.lagalt.model.entities.*;
+import project.lagalt.service.*;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -120,7 +107,7 @@ public class CollaboratorControllerTest {
 
         when(collaboratorService.findById(1)).thenReturn(new Collaborator());
 
-        mockMvc.perform(delete("/api/collaborators/1")
+        mockMvc.perform(delete("/api/collaborators/1/delete")
                 .contentType(MediaType.APPLICATION_JSON)
                 .with(jwt()))
                 .andExpect(status().isNoContent());

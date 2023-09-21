@@ -1,38 +1,23 @@
 package project.lagalt.controller;
 
 
-import org.checkerframework.checker.units.qual.C;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.security.core.parameters.P;
-import org.springframework.security.oauth2.jwt.Jwt;
-import org.springframework.security.oauth2.jwt.JwtDecoder;
+import org.springframework.security.oauth2.jwt.*;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.RequestPostProcessor;
 import project.lagalt.mapper.CommentMapper;
-import project.lagalt.model.dtos.comment.CommentDTO;
-import project.lagalt.model.dtos.comment.CommentPostDTO;
-import project.lagalt.model.dtos.comment.CommentUpdateDTO;
-import project.lagalt.model.dtos.project.ProjectUpdateDTO;
-import project.lagalt.model.entities.Comment;
-import project.lagalt.model.entities.Project;
-import project.lagalt.model.entities.User;
-import project.lagalt.service.CommentService;
-import project.lagalt.service.ProjectService;
-import project.lagalt.service.UserService;
+import project.lagalt.model.dtos.comment.*;
+import project.lagalt.model.entities.*;
+import project.lagalt.service.*;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
