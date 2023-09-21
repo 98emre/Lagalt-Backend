@@ -1,39 +1,26 @@
 package project.lagalt.controller;
 
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.security.oauth2.jwt.Jwt;
-import org.springframework.security.oauth2.jwt.JwtDecoder;
+import org.springframework.security.oauth2.jwt.*;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.request.RequestPostProcessor;
+import org.springframework.test.web.servlet.request.*;
 import project.lagalt.mapper.MessageMapper;
-import project.lagalt.model.dtos.collaborator.CollaboratorDTO;
-import project.lagalt.model.dtos.message.MessageDTO;
-import project.lagalt.model.dtos.message.MessagePostDTO;
-import project.lagalt.model.dtos.message.MessageUpdateDTO;
-import project.lagalt.model.entities.Collaborator;
+import project.lagalt.model.dtos.message.*;
 import project.lagalt.model.entities.Message;
 import project.lagalt.model.entities.User;
 import project.lagalt.service.MessageService;
 import project.lagalt.service.UserService;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
+import java.util.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
-import static org.springframework.http.RequestEntity.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(MessageController.class)

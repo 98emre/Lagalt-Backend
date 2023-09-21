@@ -113,7 +113,7 @@ public class CollaboratorController {
         return ResponseEntity.ok(collaboratorDTO);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{id}/delete")
     public ResponseEntity<Collaborator> deleteCollaborator(@PathVariable(value = "id") int id) {
         Collaborator deletedCollaborator = collaboratorService.findById(id);
 

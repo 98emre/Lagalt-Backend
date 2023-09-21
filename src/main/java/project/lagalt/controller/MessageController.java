@@ -101,7 +101,7 @@ public class MessageController {
         return ResponseEntity.ok(messageDTO);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{id}/delete")
     public ResponseEntity<User> deleteMessage(@PathVariable(value = "id") int id) {
         Message deleteMessage = messageService.findById(id);
 
