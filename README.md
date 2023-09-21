@@ -218,7 +218,7 @@ You can also add headers, body data, and other request parameters as needed for 
 Further down you can find all our endpoints for the application that you can use
 
 ### API Endpoints
-#### | HTTP Verbs | Endpoints | Action |
+| HTTP Verbs | Endpoints | Action |
 | --------- | --------- | --------- |
 | **User** | | |
 | POST | /api/user/add-user | To create a new user |
@@ -229,9 +229,6 @@ Further down you can find all our endpoints for the application that you can use
 | GET | /api/users/username/:username |  To retrieve details of a single user while using username |
 | PATCH | /api/users/:userId/update | To edit/update  the details of a single user |
 | DELETE | /api/user/:userId/delete | To delete a single user |
-
-#### #### | HTTP Verbs | Endpoints | Action |
-| --------- | --------- | --------- |
 | **Project** | | |
 | POST | /api/projects | To create a new project |
 | GET | /api/projects/public | To retrieve all projects on the platform |
@@ -241,27 +238,18 @@ Further down you can find all our endpoints for the application that you can use
 | GET | /api/projects/:projectId/collaborators/all-pending | Project owner, can see all request to the project |
 | PATCH | /api/projects/:projectId/update | To edit/update  the details of a single project |
 | DELETE | /api/projects/:projectId/delete | To delete a single project |
-
-#### | HTTP Verbs | Endpoints | Action |
-| --------- | --------- | --------- |
 | **Comment** | | |
 | POST | /api/comments/project/:projectId/add-comment | To create a new comment on a specific project |
 | GET | /api/comments/public | To retrieve all comments on the platform |
 | GET | /api/comments/public/:commentId | To retrieve details of a single comment |
 | PATCH | /api/comments/:commentId/update | To edit/update  the details of a single comment |
 | DELETE | /api/comments/:commentId/delete | To delete a single comment |
-
-#### | HTTP Verbs | Endpoints | Action |
-| --------- | --------- | --------- |
 | **Collaborator** | | |
 | POST | /api/collaborators/:projectId/add-collaborator |  To create a new collaborator on a specific project |
 | GET | /api/collaborators/public | To retrieve all collaborators on the platform both pending and approved |
 | GET | /api/collaborators/public/:collaboratorId | To retrieve details of a single collaborator |
 | PATCH | /api/collaborators/:collaboratorId/update | To edit/update the details of a single collaborators |
 | DELETE | /api/collaborators/:collaboratorId/update | To delete a single collaborator |
-
-#### | HTTP Verbs | Endpoints | Action |
-| --------- | --------- | --------- |
 | **Message** | | |
 | POST | /api/messages | To create a new message |
 | GET | /api/messages | To retrieve all message on the platform |
