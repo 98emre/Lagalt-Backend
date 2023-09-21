@@ -97,7 +97,48 @@ To clone this application run the following command in your terminal:
 ```bash
 git clone https://github.com/98emre/Lagalt-Backend
 ```
+## Docker Setup Guide
+Docker provides a way to run applications securely isolated in a container, packaged with all its dependencies and libraries. To run the Lagalt API using Docker
 
+## Step 1: Install Docker 
+First, download and install Docker from [Docker's official website](https://www.docker.com/).
+
+## Step 2: Build Docker Image
+Navigate to the root directory of the Lagalt API project and run:
+```bash
+docker build -t lagalt-backend .
+```
+
+## Step 3 (Optional): Push Docker Image to a Registry
+If you want to distribute or deploy your image to a remote server, you can push it to a container registry.
+
+`1. Log in to Docker Hub from the Command Line:`
+```bash
+docker login
+```
+Provide your Docker Hub credentials when prompted.
+
+`2. Tag Your Image:`
+Tag your image with a meaningful name and version. The general format is `username/repository:tag`. For example:
+```bash
+docker tag lagalt-backend yourusername/lagalt-backend:latest
+```
+Replace yourusername with your Docker Hub username.
+
+`3. Push the Image:`
+Push the image to Docker Hub:
+```bash
+docker push yourusername/lagalt-backend:latest
+```
+
+
+## Step 4: Run Docker Container
+To run the application locally:
+
+```bash
+docker run -p 8080:8080 lagalt-backend
+```
+This command runs the "lagalt-backend" image and maps the container's port 8080 to the host's port 8080.
 
 ### Dependencies in your application.properties file
 
@@ -158,11 +199,25 @@ server.port:8081 (You can change it)
 ```
 
 ## Usage
-The application will run on port 8080 by default but this backend is using port 8081. 
+The application will run on port 8080 by default. 
 If another port would be desired, this can be set in the application.properties file.
 
-### API Endpoints
+## Testing with Postman
+Postman is a popular tool for testing APIs. It allows you to send requests to your API and view responses in a user-friendly interface.
 
+### Step 1: Install Postman
+Download and install Postman from [Postman's official website](https://www.postman.com/).
+
+### Step 2: Send Requests
+
+With Postman open, you can send requests to the Lagalt API. For example, to retrieve all users on the platform, set the request type to "GET" and enter the endpoint URL: `http://localhost:8081/api/users/public`.
+
+You can also add headers, body data, and other request parameters as needed for different endpoints.
+
+### Step 3: Lagalt Endpoints
+Further down you can find all our endpoints for the application that you can use
+
+### API Endpoints
 | HTTP Verbs | Endpoints | Action |
 | --------- | --------- | --------- |
 | **User** | | |
