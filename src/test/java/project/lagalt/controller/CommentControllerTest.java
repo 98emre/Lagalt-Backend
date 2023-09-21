@@ -73,7 +73,7 @@ public class CommentControllerTest {
             return mockRequest;
         };
     }
-    
+
     @Test
     public void test_Get_All_Comments() throws Exception {
         List<CommentDTO> mockComments = new ArrayList<>();
@@ -160,7 +160,7 @@ public class CommentControllerTest {
     }
 
     @Test
-    public void test_Delete_Comment() throws Exception {
+    public void test_Delete_Comment_By_Id() throws Exception {
         when(commentService.findById(1)).thenReturn(new Comment());
 
         mockMvc.perform(delete("/api/comments/1/delete")
