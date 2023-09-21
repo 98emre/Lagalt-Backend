@@ -223,31 +223,41 @@ Further down you can find all our endpoints for the application that you can use
 | **User** | | |
 | POST | /api/user/add-user | To create a new user |
 | GET | /api/users/public | To retrieve all users on the platform |
-| GET | /api/users/:movieId | To retrieve details of a single user |
+| GET | /api/users/public/search | Retrieves users matching the provided name query |
+| GET | /api/users/:userId | To retrieve details of a single user |
 | GET | /api/users/public/token/username | To retrieve details of a single user while using token |
 | GET | /api/users/username/:username |  To retrieve details of a single user while using username |
-| PATCH | /api/users/:userId | To edit/update  the details of a single user |
-| DELETE | /api/user/:userId | To delete a single user |
+| PATCH | /api/users/:userId/update | To edit/update  the details of a single user |
+| DELETE | /api/user/:userId/delete | To delete a single user |
 | **Project** | | |
 | POST | /api/projects | To create a new project |
 | GET | /api/projects/public | To retrieve all projects on the platform |
 | GET | /api/projects/:projectId | To retrieve details of a single project |
-| GET | /api/projects/:projectId/collaborators/approved | To retrieve all collaborator who has been accpted in the project |
-| GET | /api/projects/public/collaborators/pending | Project owner, can see all request to the project |
-| PATCH | /api/projects/:projectId | To edit/update  the details of a single project |
-| DELETE | /api/projects/:projectId | To delete a single project |
+| GET | /api/projects/search | Retrieves projects matching the provided name query |
+| GET | /api/projects/:projectId/collaborators/all-approved | To retrieve all collaborator who has been accpted in the project |
+| GET | /api/projects/:projectId/collaborators/all-pending | Project owner, can see all request to the project |
+| PATCH | /api/projects/:projectId/update | To edit/update  the details of a single project |
+| DELETE | /api/projects/:projectId/delete | To delete a single project |
 | **Comment** | | |
-| POST | /api/comments/project/:projectId | To create a new comment on a specific project |
-| GET | /api/comments | To retrieve all comments on the platform |
-| GET | /api/comments/:commentId | To retrieve details of a single comment |
-| PATCH | /api/comments/:commentId | To edit/update  the details of a single comment |
-| DELETE | /api/comments/:commentId | To delete a single comment |
+| POST | /api/comments/project/:projectId/add-comment | To create a new comment on a specific project |
+| GET | /api/comments/public | To retrieve all comments on the platform |
+| GET | /api/comments/public/:commentId | To retrieve details of a single comment |
+| PATCH | /api/comments/:commentId/update | To edit/update  the details of a single comment |
+| DELETE | /api/comments/:commentId/delete | To delete a single comment |
 | **Collaborator** | | |
-| POST | /api/collaborators/:collaboratorId/collaborator | To create a request on a specific project |
-| GET | /api/collaborators | To retrieve all collaborators on the platform both pending and approved |
-| GET | /api/collaborators/:collaboratorId | To retrieve details of a single collaborator |
-| PATCH | /api/collaborators/:collaboratorId | To edit/update the details of a single collaborators |
-| DELETE | /api/collaborators/:collaboratorId | To delete a single collaborator |
+| POST | /api/collaborators/:projectId/add-collaborator |  To create a new collaborator on a specific project |
+| GET | /api/collaborators/public | To retrieve all collaborators on the platform both pending and approved |
+| GET | /api/collaborators/public/:collaboratorId | To retrieve details of a single collaborator |
+| PATCH | /api/collaborators/:collaboratorId/update | To edit/update the details of a single collaborators |
+| DELETE | /api/collaborators/:collaboratorId/update | To delete a single collaborator |
+| **Message** | | |
+| POST | /api/messages | To create a new message |
+| GET | /api/messages | To retrieve all message on the platform |
+| GET | /api/messages/:messagesId | To retrieve details of a single message |
+| GET | /api/messages/:userId/received-messages | A specificis user ID is provided to retrieve all messages the user has received |
+| GET | /api/messages/:userId/sent-messages | A specificis user ID is provided to retrieve all messages the user has sent |
+| PATCH | /api/messages/:messagesId/update | To edit/update of a single message |
+| DELETE | /api/messages/:messagesId/delete | To delete a single message |
 
 ## Authors
 Emre Demirel @98emre
