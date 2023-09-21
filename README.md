@@ -1,8 +1,8 @@
 # Lagalt-Backend
 Lagalt API is a RESTful API containing a datastore and an interface allowing users to store and manipulate users, projects. collaborators, users skill and commentss. The application constructed in Spring Web is comprised of database created through Hibernate. The data consists of user information such as the email, fullname, username and skills. A user can have multiple projects, where each project can have many collaborators and each project can also have comments from all user that comment on the project. A Project has a title as well as an description, github lin, category and status of the project which is the progress. Comment only has the date the comment was made and contains the text from the user. 
 
- 
 ## Java Installation Guide
+We used the programming language Java
 
 ### Step 1: Download Java
 First download latest version of [Java](https://www.oracle.com/java/) to install.
@@ -49,6 +49,9 @@ mvn --version
 
 This should display Maven's version, indicating a successful installation.
 
+## Spring boot
+We utilized the Spring Boot framework to manage our database and handle our REST APIs.
+You can create your Spring Boot project directly on their [website](https://start.spring.io/).
 
 ## Keycloak Client Setup Guide
 We use Keycloak for authentication. You need to use Keycloak to access the endpoints since you won't be able to perform authorization to these endpoints without it.
@@ -60,9 +63,9 @@ Visit the [Keycloak](https://www.cloud-iam.com/). Log in using your administrati
 If you're not using the default "Master" realm, navigate to the left sidebar and click on Add Realm. Provide a name for the new realm and save.
 
 ### Step 3: Create a New Client
-  1. On the left sidebar, navigate to `Clients`.
-  2. Click on `Create` at the top right corner.
-  3. Fill in the mandatory fields:
+  **1.** On the left sidebar, navigate to `Clients`.
+  **2.** Click on `Create` at the top right corner.
+  **3.** Fill in the mandatory fields:
       * **Client ID:** Enter a unique ID for your client.
       * **Client Protocol:** Choose `openid-connect`.
       * **Root URL:** Enter your application's root URL if needed.
@@ -71,14 +74,14 @@ If you're not using the default "Master" realm, navigate to the left sidebar and
 ### Step 4: Configure the Client
 After saving, you'll be redirected to the client's settings page:
 
-1. Set `Access Type` to either `Access Type`, `Access Type`, or `bearer-only` depending on your application's needs.
-2. Fill in other details like `Valid Redirect URIs`, which is crucial for security.
-3. Under the `Credentials` tab, you can find the secret for confidential clients which might be needed for server-to-server authentication.
+**1.** Set `Access Type` to either `Access Type`, `Access Type`, or `bearer-only` depending on your application's needs.
+**2.** Fill in other details like `Valid Redirect URIs`, which is crucial for security.
+**3.** Under the `Credentials` tab, you can find the secret for confidential clients which might be needed for server-to-server authentication.
 
 ### Step 5: Assign Roles & Users (Optional)
 If you want specific roles or users to access this client:
-1. Navigate to the `Roles` tab in your client and add necessary roles.
-2. Link users to roles by navigating to `Users`, selecting a user, and then navigating to the `Role Mappings` tab to assign roles to the use.
+**1.** Navigate to the `Roles` tab in your client and add necessary roles.
+**2.** Link users to roles by navigating to `Users`, selecting a user, and then navigating to the `Role Mappings` tab to assign roles to the use.
 
 ### Step 6: Verify Client Setup
 1. Head to the main clients list.
@@ -88,10 +91,10 @@ Remember to secure your Keycloak and application setup by following best practic
    
 ## Database
 
-- A relational database management system (RDBMS) supporting SQL, suggestively PostgreSQL
+- A relational database management system (RDBMS) supporting SQL, suggestively [PostgreSQL](https://www.postgresql.org/)
+- We used the tool [DBeaver](https://dbeaver.io/), which allowed us to view relationships, tables, and values within the tables.
 
-
-## Configuration
+### Configuration
 
 To clone this application run the following command in your terminal:
 ```bash
@@ -100,39 +103,39 @@ git clone https://github.com/98emre/Lagalt-Backend
 ## Docker Setup Guide
 Docker provides a way to run applications securely isolated in a container, packaged with all its dependencies and libraries. To run the Lagalt API using Docker
 
-## Step 1: Install Docker 
+### Step 1: Install Docker 
 First, download and install Docker from [Docker's official website](https://www.docker.com/).
 
-## Step 2: Build Docker Image
+### Step 2: Build Docker Image
 Navigate to the root directory of the Lagalt API project and run:
 ```bash
 docker build -t lagalt-backend .
 ```
 
-## Step 3 (Optional): Push Docker Image to a Registry
+### Step 3 (Optional): Push Docker Image to a Registry
 If you want to distribute or deploy your image to a remote server, you can push it to a container registry.
 
-`1. Log in to Docker Hub from the Command Line:`
+**1. Log in to Docker Hub from the Command Line:**
 ```bash
 docker login
 ```
 Provide your Docker Hub credentials when prompted.
 
-`2. Tag Your Image:`
+**2. Tag Your Image:**
 Tag your image with a meaningful name and version. The general format is `username/repository:tag`. For example:
 ```bash
 docker tag lagalt-backend yourusername/lagalt-backend:latest
 ```
 Replace yourusername with your Docker Hub username.
 
-`3. Push the Image:`
+**3. Push the Image:**
 Push the image to Docker Hub:
 ```bash
 docker push yourusername/lagalt-backend:latest
 ```
 
 
-## Step 4: Run Docker Container
+### Step 4: Run Docker Container
 To run the application locally:
 
 ```bash
@@ -158,7 +161,6 @@ Make sure all you have all of the following dependencies in your pom.xml file an
 
   
 As well as verifying that your maven plugin version exists and is not later than your installed maven version.
-
   
 In the application.properties file, to configure to your database, set your environment variables alternatively set them explicitly:
 ```
