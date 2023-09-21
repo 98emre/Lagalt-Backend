@@ -111,7 +111,6 @@ Navigate to the root directory of the Lagalt API project and run:
 ```bash
 docker build -t lagalt-backend .
 ```
-
 ### Step 3 (Optional): Push Docker Image to a Registry
 If you want to distribute or deploy your image to a remote server, you can push it to a container registry.
 
@@ -133,7 +132,6 @@ Push the image to Docker Hub:
 ```bash
 docker push yourusername/lagalt-backend:latest
 ```
-
 
 ### Step 4: Run Docker Container
 To run the application locally:
