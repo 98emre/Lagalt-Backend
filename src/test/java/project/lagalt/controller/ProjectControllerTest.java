@@ -59,13 +59,11 @@ public class ProjectControllerTest {
     @MockBean
     private ProjectMapper projectMapper;
 
-
     @MockBean
     private JwtDecoder jwtDecoder;
 
     @Value("${keycloak.client-id}")
     private String clientId;
-
 
     private RequestPostProcessor jwt() {
         Jwt mockJwt = Jwt.withTokenValue("mock.token.value")
@@ -79,7 +77,6 @@ public class ProjectControllerTest {
             return mockRequest;
         };
     }
-
 
     @Test
     public void test_Get_All_Project() throws Exception {
@@ -129,9 +126,6 @@ public class ProjectControllerTest {
 
     @Test
     public void test_Add_Project() throws Exception {
-        ProjectPostDTO projectPostDTO = new ProjectPostDTO();
-        projectPostDTO.setTitle("Hello Emre");
-
         when(userService.findByUsername("user")).thenReturn(new User());
         when(projectMapper.projectPostDtoToProject(any(ProjectPostDTO.class))).thenReturn(new Project());
         when(projectService.add(any(Project.class))).thenReturn(new Project());
@@ -160,12 +154,8 @@ public class ProjectControllerTest {
 
     }
 
-
     @Test
     public void test_Update_Project() throws Exception {
-        ProjectUpdateDTO projectUpdateDTO = new ProjectUpdateDTO();
-        projectUpdateDTO.setTitle("Hello Emre Update");
-
         when(projectService.findById(1)).thenReturn(new Project());
         when(projectMapper.projectUpdateDtoToProject(any(ProjectUpdateDTO.class))).thenReturn(new Project());
         when(projectService.update(any(Project.class))).thenReturn(new Project());
